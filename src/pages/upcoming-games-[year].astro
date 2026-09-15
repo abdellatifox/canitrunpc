@@ -1,0 +1,264 @@
+---
+/**
+ * The year hub: /upcoming-games-2027.
+ *
+ * The year is a route parameter rather than a hardcoded page, so when titles
+ * slip into 2028 the page for that year appears on its own from the data. The
+ * evergreen /upcoming-games redirects here.
+ *
+ * Everything on this page is the publisher's: the date string is Steam's own
+ * text, and a game with no published requirements is listed as exactly that
+ * instead of being given invented specs.
+ */
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { upcomingGames } from '../lib/games';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import Icon from '../components/Icon.astro';
+
+export function getStaticPaths() {
+  const years = new Set<number>();
+  for (const g of upcomingGames()) if (g.release_year) years.add(g.release_year);
+  // The advertised year always exists, even in the gap after a year's games
+  // have all shipped and before the next year's are announced.
+  years.add(SEO_YEAR);
+  return [...years].sort().map(year => ({ params: { year: String(year) } }));
+}
+
+const year = Number(Astro.params.year);
+const all = upcomingGames();
+const dated = all.filter(g => g.release_year === year);
+const undated = year === SEO_YEAR ? all.filter(g => g.release_year == null) : [];
+
+const withReqs = dated.filter(g => g.requirements_published);
+const withoutReqs = dated.filter(g => !g.requirements_published);
+const anticipated = [...dated, ...undated].filter(g => g.buzz);
+
+const url = `${SITE_URL}/upcoming-games-${year}`;
+const title = `Upcoming PC Games ${year} — System Requirements | ${SITE_NAME}`;
+const description = `${dated.length} PC games dated ${year}, with ${withReqs.length} already listing their system requirements. Check any of them against your own PC — free, no download.`;
+
+const FAQ = [
+  {
+    q: `Which ${year} games have PC system requirements already?`,
+    a: withReqs.length
+      ? `${withReqs.length} of the ${dated.length} ${year} releases we track have requirements on their Steam page today, including ${withReqs.slice(0, 3).map(g => g.name).join(', ')}. The rest are announced but have published nothing measurable yet.`
+      : `None of the ${year} releases we track have published PC requirements yet. This page updates as they appear.`
+  },
+  {
+    q: `Can I check a ${year} game against my PC before it launches?`,
+    a: `Yes, for any game whose publisher has already stated requirements. We compare the card, processor and memory named on its Steam page with your parts, exactly as we do for a released game.`
+  },
+  {
+    q: 'Where do these release dates come from?',
+    a: `From each game's own Steam listing, kept in the publisher's wording — a full date, a quarter, or simply "Coming soon". Dates move, so we re-read the listings every month rather than freezing a date we typed once.`
+  },
+  {
+    q: `Will a ${year} game run on a PC I buy now?`,
+    a: `Compare it with what publishers are already asking for. Every ${year} game here that names a card is listed with that card, and the GPU tier list shows where the one you are considering lands against it.`
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `Upcoming PC games ${year}`,
+    "url": url,
+    "numberOfItems": dated.length,
+    "itemListElement": dated.slice(0, 50).map((g, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": `${SITE_URL}/game/${g.slug}`,
+      "name": g.name
+    }))
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": FAQ.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={url}
+  jsonLd={schema}
+  keywords={`upcoming pc games ${year}, ${year} game release dates, ${year} system requirements, new pc games ${year}`}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Games', href: '/games' }, { name: `Upcoming ${year}` }]} />
+
+    <header class="page-head">
+      <span class="eyebrow">Updated monthly from Steam</span>
+      <h1>Upcoming PC Games {year}</h1>
+      <p class="lede">
+        {dated.length} PC releases dated {year}, and what each one asks of your hardware.
+        {withReqs.length > 0 && <> <b>{withReqs.length}</b> already have requirements published by their publisher — you can check those against your own PC today.</>}
+      </p>
+      <dl class="hub-readouts">
+        <div><dt>Games dated {year}</dt><dd>{dated.length}</dd></div>
+        <div><dt>Requirements published</dt><dd>{withReqs.length}</dd></div>
+        <div><dt>Date not announced</dt><dd>{undated.length}</dd></div>
+      </dl>
+    </header>
+
+    {anticipated.length > 0 && (
+      <section class="anticipated">
+        <h2>The most wishlisted of them</h2>
+        <p class="sec-note">Ranked by other people's data, not ours — each claim links to its source.</p>
+        <ul class="ant-list">
+          {anticipated.map(g => (
+            <li>
+              <a href={`/game/${g.slug}`} class="ant-name">{g.name}</a>
+              <span class="ant-date">{g.release_date}</span>
+              <a class="ant-src" href={g.buzz!.source} target="_blank" rel="nofollow noopener">{g.buzz!.label} ↗</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {withReqs.length > 0 && (
+      <section>
+        <h2>{year} games with published requirements</h2>
+        <p class="sec-note">The publisher has stated what it needs. Check any of them against your parts.</p>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr><th>Game</th><th>Due</th><th>Minimum GPU</th><th>RAM</th><th>Storage</th><th></th></tr>
+            </thead>
+            <tbody>
+              {withReqs.map(g => (
+                <tr>
+                  <td><a href={`/game/${g.slug}`}>{g.name}</a></td>
+                  <td class="mono">{g.release_date}</td>
+                  <td>{g.min_gpu_text ?? '—'}</td>
+                  <td class="mono">{g.min_ram_gb != null ? `${g.min_ram_gb} GB` : '—'}</td>
+                  <td class="mono">{g.min_storage_gb != null ? `${g.min_storage_gb} GB` : '—'}</td>
+                  <td><a class="chk" href={`/can-it-run?game=${g.slug}`}>Check<Icon name="arrow-right" /></a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {withoutReqs.length > 0 && (
+      <section>
+        <h2>Dated {year}, requirements not published yet</h2>
+        <p class="sec-note">
+          Announced with a {year} window, but nothing measurable stated yet. Each page fills in
+          automatically once its Steam listing does.
+        </p>
+        <div class="grid-auto">
+          {withoutReqs.map(g => (
+            <a href={`/game/${g.slug}`} class="soon-card">
+              <b>{g.name}</b>
+              <span class="mono">{g.release_date}</span>
+              {g.developer && <small>{g.developer}</small>}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {undated.length > 0 && (
+      <section>
+        <h2>Announced, no date yet</h2>
+        <p class="sec-note">These have a Steam page but no release window, so they may land in {year} or later.</p>
+        <div class="grid-auto">
+          {undated.map(g => (
+            <a href={`/game/${g.slug}`} class="soon-card">
+              <b>{g.name}</b>
+              <span class="mono">{g.release_date ?? 'Coming soon'}</span>
+              {g.requirements_published && <small class="has-req">Requirements published</small>}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="faq">
+      <h2>Questions about {year} releases</h2>
+      {FAQ.map(f => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <div class="related">
+      <h2>Next</h2>
+      <ul>
+        <li><a href="/can-it-run">Check your PC against a game</a></li>
+        <li><a href="/gpu-tier-list">GPU tier list {SEO_YEAR}</a></li>
+        <li><a href="/games">All games we hold requirements for</a></li>
+        <li><a href="/build-suggest">Build a PC for these games</a></li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head .eyebrow { margin-bottom: 10px; }
+  .hub-readouts {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 22px 0 0; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .hub-readouts div { padding: 12px 16px; }
+  .hub-readouts div + div { border-left: 1px solid var(--line); }
+  .hub-readouts dt { font-size: 12px; color: var(--faint); }
+  .hub-readouts dd {
+    margin: 2px 0 0; font-family: var(--font-mono); font-size: 1.5rem;
+    font-weight: 600; color: var(--readout); font-variant-numeric: tabular-nums;
+  }
+
+  section { padding: 40px 0 0; }
+  section h2 { font-size: clamp(1.3rem, 2.6vw, 1.8rem); }
+  .sec-note { color: var(--muted); font-size: 14.5px; margin: 8px 0 18px; max-width: 70ch; }
+
+  .ant-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ant-list li {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    padding: 12px 14px; background: var(--surface);
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+  }
+  .ant-name { font-family: var(--font-display); font-weight: 700; font-size: 1.02rem; }
+  .ant-name:hover { color: var(--accent); }
+  .ant-date { font-family: var(--font-mono); font-size: 12.5px; color: var(--readout); }
+  .ant-src { margin-left: auto; font-size: 12.5px; color: var(--faint); }
+  .ant-src:hover { color: var(--text); }
+
+  .chk { display: inline-flex; align-items: center; gap: 5px; color: var(--accent); font-weight: 700; white-space: nowrap; }
+  .chk:hover { color: var(--accent-deep); }
+
+  .soon-card {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 14px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    transition: border-color .2s;
+  }
+  .soon-card:hover { border-color: rgb(var(--accent-rgb) / 0.55); }
+  .soon-card b { font-size: 0.95rem; line-height: 1.3; }
+  .soon-card span { font-size: 12px; color: var(--readout); }
+  .soon-card small { font-size: 12px; color: var(--faint); }
+  .soon-card .has-req { color: var(--ok); }
+
+  @media (max-width: 640px) {
+    .hub-readouts { grid-template-columns: 1fr; }
+    .hub-readouts div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .ant-src { margin-left: 0; }
+  }
+</style>

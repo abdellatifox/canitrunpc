@@ -1,0 +1,44 @@
+{
+  "name": "canitrunpc",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/write-routes.mjs",
+    "preview": "astro preview",
+    "deploy": "node scripts/cf.mjs pages deploy dist",
+    "db:migrate": "node scripts/cf.mjs d1 migrations apply canitrunpc-db --remote",
+    "db:migrate:local": "node scripts/cf.mjs d1 migrations apply canitrunpc-db --local",
+    "data:index": "node scripts/fetch-steam-index.mjs",
+    "data:reqs": "node scripts/fetch-steam-requirements.mjs",
+    "data:upcoming": "node scripts/fetch-upcoming.mjs",
+    "data:hardware": "node scripts/build-hardware.mjs",
+    "data:build": "node scripts/build-hardware.mjs && node scripts/reresolve-requirements.mjs && node scripts/build-game-index.mjs && node scripts/build-game-reqs.mjs && node scripts/build-blog.mjs && node scripts/build-covers.mjs",
+    "data:refresh": "npm run data:index && npm run data:reqs && npm run data:upcoming && npm run data:build",
+    "data:reresolve": "node scripts/reresolve-requirements.mjs",
+    "data:covers": "node scripts/build-covers.mjs",
+    "seo:audit": "node scripts/audit-seo.mjs",
+    "cf": "node scripts/cf.mjs",
+    "data:blog": "node scripts/build-blog.mjs && node scripts/build-covers.mjs",
+    "check:prelaunch": "node scripts/prelaunch-check.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.0.0",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0",
+    "@cloudflare/workers-types": "^4.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.27.0": true,
+    "esbuild@0.27.7": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.17.19": true,
+    "workerd@1.20260114.0": true,
+    "workerd@1.20250718.0": true,
+    "sharp@0.34.5": true,
+    "sharp@0.33.5": true
+  }
+}

@@ -1,0 +1,101 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { TOOLS } from '../lib/site-data';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+
+// Grouped by the question a visitor arrives with, not by tool type.
+const GROUPS = [
+  { title: 'Will this game run?', note: 'You have a PC and a game in mind.', hrefs: ['/can-it-run', '/what-can-my-pc-run', '/fps-estimator', '/vr-ready'] },
+  { title: 'What should I change?', note: 'You are planning an upgrade or a new build.', hrefs: ['/bottleneck', '/upgrade-advisor', '/build-suggest', '/psu-calculator', '/pc-value'] },
+  { title: 'How do parts compare?', note: 'You are weighing one card or chip against another.', hrefs: ['/compare-gpu', '/compare-cpu', '/gpu-tier-list', '/cpu-tier-list', '/ray-tracing', '/dlss-fsr'] }
+];
+const byHref = new Map(TOOLS.map(t => [t.href, t]));
+const groups = GROUPS.map(g => ({ ...g, tools: g.hrefs.map(h => byHref.get(h)).filter(Boolean) as typeof TOOLS }));
+const grouped = new Set(GROUPS.flatMap(g => g.hrefs));
+const rest = TOOLS.filter(t => !grouped.has(t.href));
+if (rest.length) groups.push({ title: 'Also here', note: '', hrefs: [], tools: rest });
+
+const description = `${TOOLS.length} free tools for PC gamers, grouped by the question you have: will a game run, what to upgrade, and how two parts compare. Nothing to install.`;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `PC gaming tools ${SEO_YEAR}`,
+    "description": description,
+    "url": `${SITE_URL}/tools`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": TOOLS.length,
+      "itemListElement": groups.flatMap(g => g.tools).map((t, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}${t.href}`, "name": t.name }))
+    }
+  }
+];
+---
+<BaseLayout title={`PC Gaming Tools: Game Checks, FPS & Upgrades | ${SITE_NAME}`} description={description}
+  keywords={`pc gaming tools, can i run it, fps calculator, bottleneck calculator, psu calculator, pc upgrade tool ${SEO_YEAR}`} jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Toolbox · {TOOLS.length} tools</span>
+      <h1>Start with your question</h1>
+      <p class="lede">
+        Every tool here runs in the browser and works from the same hardware index and requirement data, so their answers line up.
+        No account, no download, and nothing you type is stored.
+      </p>
+    </header>
+
+    {groups.map((g, gi) => (
+      <section class="grp">
+        <div class="grp-head">
+          <span class="mono n">0{gi + 1}</span>
+          <div><h2>{g.title}</h2>{g.note && <p>{g.note}</p>}</div>
+        </div>
+        <ul class="tl">
+          {g.tools.map(t => (
+            <li>
+              <a href={t.href}>
+                <span class="ic"><Icon name={t.icon} /></span>
+                <span class="tx"><b>{t.name}</b><small>{t.blurb}</small></span>
+                <span class="ar" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <nav class="related" aria-label="Browse instead">
+      <h2>Rather browse?</h2>
+      <ul>
+        <li><a href="/games">Requirements for every game, A–Z</a></li>
+        <li><a href={`/upcoming-games-${SEO_YEAR}`}>Games coming in {SEO_YEAR}</a></li>
+        <li><a href="/benchmarks">Frame rates in the heaviest games</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .grp { margin-bottom: 36px; }
+  .grp-head { display: flex; gap: 14px; align-items: baseline; margin-bottom: 12px; }
+  .n { color: var(--readout); font-size: 14px; }
+  .grp-head h2 { font-size: 20px; }
+  .grp-head p { color: var(--muted); font-size: 14px; }
+  .tl { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 8px; }
+  .tl a { display: grid; grid-template-columns: 40px 1fr 16px; gap: 12px; align-items: center; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); height: 100%; }
+  .tl a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .tl a:hover .ar { color: var(--accent); transform: translateX(2px); }
+  .ic { width: 40px; height: 40px; display: grid; place-items: center; background: rgb(var(--accent-rgb) / .1); color: var(--accent); font-size: 18px; border-radius: var(--radius-sm); }
+  .tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .tx b { font-size: 15px; }
+  .tx small { color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .ar { color: var(--faint); transition: transform .15s var(--ease); }
+</style>

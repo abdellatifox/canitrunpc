@@ -1,0 +1,197 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { releasedGames } from '../lib/games';
+import { estimateFps } from '../lib/perf';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitMeta } from '../lib/seo';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+
+/* The model is only meaningful where a publisher named both a graphics card and
+   a processor; with a missing CPU score the ceiling collapses to nothing. */
+const games = releasedGames()
+  .filter(g => g.rec_gpu_score != null && g.rec_cpu_score != null && g.demandPercentile != null)
+  .sort((a, b) => b.demandPercentile! - a.demandPercentile!)
+  .slice(0, 8);
+
+// Desktop cards from the last five launch years, spread across the whole speed range
+// rather than only the flagships.
+const desktop = gpus.filter(g => !/laptop/i.test(g.name));
+const latest = Math.max(...desktop.map(g => g.release_year));
+const recent = desktop.filter(g => g.release_year >= latest - 4);
+const PICK = 14;
+const cards = recent.length <= PICK
+  ? recent
+  : Array.from({ length: PICK }, (_, i) => recent[Math.round((i * (recent.length - 1)) / (PICK - 1))]);
+
+const cpu = cpus[0]; // fastest chip, so the graphics card is what varies
+const CAP = 300;
+const show = (n: number) => (n >= CAP ? `${CAP}+` : String(n));
+const RES = [['1080p', '1080p'], ['1440p', '1440p'], ['4k', '4K']] as const;
+
+const panels = games.map(game => {
+  const rows = cards.map(card => ({
+    card,
+    fps: RES.map(([r]) => estimateFps(game, card.score, cpu.score, r, 'high'))
+  }));
+  // The slowest recent card that still averages 60 at 1440p high.
+  const entry = [...desktop]
+    .filter(c => c.release_year >= latest - 4)
+    .sort((a, b) => a.score - b.score)
+    .find(c => estimateFps(game, c.score, cpu.score, '1440p', 'high') >= 60) ?? null;
+  const top = Math.max(1, ...rows.map(r => Math.min(CAP, r.fps[0])));
+  return { game, rows, entry, top };
+});
+
+const description = fitMeta([
+  `Modelled average frame rates for ${cards.length} graphics cards in the ${games.length} heaviest PC games we track, at 1080p, 1440p and 4K on high settings.`,
+  'Includes the cheapest route to 60 FPS at 1440p.'
+]);
+
+const faq = [
+  {
+    q: 'Where do these frame rates come from?',
+    a: `A model, not a capture. Each game's recommended graphics card is set at 60 FPS on high at 1080p; every card is then scaled by how far above or below that it scores, adjusted for resolution, with a processor ceiling on top. The processor is fixed at the ${cpu.name} so only the card changes.`
+  },
+  {
+    q: 'Why these games?',
+    a: `They are the ${games.length} released games with the highest publisher-recommended graphics card that also name a processor. Heavier games separate cards more clearly than light ones.`
+  },
+  {
+    q: 'How close will my own numbers be?',
+    a: 'Close enough to rank cards against each other; not close enough to promise a figure. Drivers, patches, memory speed, cooling and the scene you test all move a real result.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": `Modelled PC game frame rates, ${SEO_YEAR}`,
+    "description": description,
+    "url": `${SITE_URL}/benchmarks`,
+    "creator": { "@id": `${SITE_URL}/#organization` },
+    "license": `${SITE_URL}/terms`,
+    "variableMeasured": ["Average frames per second", "Resolution", "Graphics card"],
+    "measurementTechnique": "Modelled from publisher-recommended hardware"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout title={`GPU Benchmarks ${SEO_YEAR}: FPS in the Heaviest PC Games | ${SITE_NAME}`} description={description}
+  keywords={`gpu benchmarks ${SEO_YEAR}, graphics card fps, 1440p fps benchmarks, 4k gaming fps, gpu fps comparison`} jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Benchmarks' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Frame-rate model · high preset · no upscaling</span>
+      <h1>GPU benchmarks for the heaviest PC games</h1>
+      <p class="lede">
+        Pick a game to see {cards.length} graphics cards from {latest - 4} to {latest} side by side, each at three resolutions.
+        The processor stays fixed at the <a href={`/cpu/${cpu.slug}`}>{cpu.name}</a>, so the gaps you see belong to the card.
+      </p>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Game">
+      {panels.map((p, i) => (
+        <button role="tab" class="tab" id={`tab-${i}`} aria-controls={`panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'}>{p.game.name}</button>
+      ))}
+    </div>
+
+    {panels.map((p, i) => (
+      <section class="panel" id={`panel-${i}`} role="tabpanel" aria-labelledby={`tab-${i}`} data-panel>
+        <div class="panel-head">
+          <h2><a href={`/game/${p.game.slug}`}>{p.game.name}</a></h2>
+          {p.entry
+            ? <p>Slowest recent card to average 60 FPS at 1440p: <a href={`/gpu/${p.entry.slug}`}><b>{p.entry.name}</b></a>{p.entry.msrp_usd ? ` ($${p.entry.msrp_usd} at launch)` : ''}.</p>
+            : <p>No recent card reaches 60 FPS at 1440p on high in this model.</p>}
+        </div>
+        <ol class="bars">
+          {p.rows.map(r => (
+            <li>
+              <a class="card" href={`/gpu/${r.card.slug}`}>{r.card.name}</a>
+              <span class="track" aria-hidden="true"><i style={`width:${Math.round((Math.min(CAP, r.fps[0]) / p.top) * 100)}%`}></i></span>
+              <span class="nums mono">
+                {RES.map(([, label], k) => (
+                  <span class={r.fps[k] >= 60 ? 'ok' : r.fps[k] >= 30 ? 'warn' : 'bad'}><small>{label}</small>{show(r.fps[k])}</span>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+
+    <p class="key"><span class="ok">60+ smooth</span> <span class="warn">30–59 playable</span> <span class="bad">under 30</span> · bar length is 1080p</p>
+
+    <section class="faq">
+      <h2>How to read this</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/fps-estimator">Estimate FPS for your exact parts</a></li>
+        <li><a href="/game-list/most-demanding-pc-games">The most demanding PC games</a></li>
+        <li><a href="/dlss-fsr">How much upscaling gets back</a></li>
+        <li><a href="/gpu-tier-list">{SEO_YEAR} graphics card tiers</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(28px, 4.6vw, 42px); margin: 6px 0 12px; }
+  .lede a { color: var(--accent); }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .tab { background: var(--surface); border: 1px solid var(--line); color: var(--muted); font: inherit; font-size: 13.5px; padding: 8px 12px; border-radius: 3px; cursor: pointer; min-height: 40px; text-align: left; }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] { border-color: var(--accent); color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
+
+  .panel { margin-bottom: 26px; }
+  .panel-head { margin-bottom: 12px; }
+  .panel-head h2 { font-size: 21px; }
+  .panel-head h2 a:hover { color: var(--accent); }
+  .panel-head p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .panel-head p a { color: var(--accent); }
+
+  .bars { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .bars li { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(80px, 1fr) auto; gap: 14px; align-items: center; padding: 8px 14px; background: var(--surface); }
+  .bars li + li { border-top: 1px solid var(--line); }
+  .card { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card:hover { color: var(--accent); }
+  .track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .track i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--readout)); }
+  .nums { display: flex; gap: 14px; font-size: 14px; }
+  .nums span { display: flex; flex-direction: column; align-items: flex-end; min-width: 44px; font-weight: 600; }
+  .nums small { font-size: 10px; color: var(--faint); font-weight: 400; }
+  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+  .key { font-size: 13px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+
+  @media (max-width: 640px) {
+    .bars li { grid-template-columns: minmax(0, 1fr) auto; }
+    .track { display: none; }
+  }
+</style>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('.tab')];
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-panel]')];
+  function select(i: number) {
+    tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
+    panels.forEach((p, k) => { p.hidden = k !== i; });
+  }
+  tabs.forEach((t, i) => t.addEventListener('click', () => select(i)));
+  select(0);
+</script>

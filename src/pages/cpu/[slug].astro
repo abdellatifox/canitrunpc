@@ -1,0 +1,345 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCpu, getCpus, getGpus } from '../../lib/db';
+import { releasedGames, upcomingGames } from '../../lib/games';
+import { bottleneck, cpuNeeded, perfOf, PAIRING_RES } from '../../lib/perf';
+import { SITE_URL, SITE_NAME } from '../../lib/site';
+import { SEO_YEAR } from '../../lib/year';
+import { fitTitle, fitMeta } from '../../lib/seo';
+import hardwareForPaths from '../../lib/hardware-data.json';
+
+export function getStaticPaths() {
+  return (hardwareForPaths as { cpus: { slug: string }[] }).cpus.map(c => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const cpu = await getCpu(Astro.locals, slug!);
+if (!cpu) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const [allCpus, gpus] = await Promise.all([getCpus(Astro.locals), getGpus(Astro.locals)]);
+const rank = allCpus.findIndex(c => c.slug === cpu.slug) + 1;
+const beatsPct = Math.round((allCpus.filter(c => c.score < cpu.score).length / Math.max(1, allCpus.length - 1)) * 100);
+
+/* Only games whose publisher named a processor we could place. The old page
+   compared against missing scores, and `90 >= null` is true in JavaScript, so
+   every game without a CPU requirement was counted as handled. */
+const measurable = (g: any) => g.min_cpu_score != null && g.rec_cpu_score != null;
+const released = releasedGames().filter(measurable);
+const atRec = released.filter(g => cpu.score >= g.rec_cpu_score!);
+const atMin = released.filter(g => cpu.score >= g.min_cpu_score! && cpu.score < g.rec_cpu_score!);
+const below = released.filter(g => cpu.score < g.min_cpu_score!);
+const share = (n: number) => Math.round((n / Math.max(1, released.length)) * 100);
+
+const upcoming = upcomingGames().filter(measurable);
+const upRec = upcoming.filter(g => cpu.score >= g.rec_cpu_score!);
+const upMin = upcoming.filter(g => cpu.score >= g.min_cpu_score! && cpu.score < g.rec_cpu_score!);
+const upBelow = upcoming.filter(g => cpu.score < g.min_cpu_score!);
+
+/* Pairings from the same model /bottleneck uses (src/lib/perf.ts), at 1440p,
+   so the tool and this page cannot disagree. "Balanced" means the chip feeds the card
+   with under 10% to spare; the ceiling is the fastest card it can still feed. */
+const desktop = gpus.filter(g => !/laptop/i.test(g.name));
+const pairing = (g: typeof desktop[number]) => bottleneck(perfOf(g), perfOf(cpu), PAIRING_RES).component;
+// Cards this chip fully feeds with under 10% processor to spare.
+const balanced = desktop.filter(g => pairing(g) === 'balanced' && cpuNeeded(perfOf(g), PAIRING_RES) <= perfOf(cpu)).sort((a, b) => b.score - a.score);
+const pairPicks = balanced.filter(g => g.msrp_usd).sort((a, b) => b.release_year - a.release_year || b.score - a.score).slice(0, 6);
+const ceilingCard = desktop.filter(g => cpuNeeded(perfOf(g), PAIRING_RES) <= perfOf(cpu)).sort((a, b) => b.score - a.score)[0] ?? null;
+
+// Games that lean on the processor, where this chip matters most.
+const cpuHeavy = released
+  .filter(g => g.cpu_intensive === 1)
+  .sort((a, b) => b.rec_cpu_score! - a.rec_cpu_score!)
+  .slice(0, 8);
+
+const role =
+  cpu.score >= 85 ? 'a top-end gaming chip that leaves any current graphics card room to run'
+  : cpu.score >= 70 ? 'a fast gaming chip for upper-mid-range and high-end cards'
+  : cpu.score >= 55 ? 'a sound mid-range gaming chip for mid-tier cards'
+  : cpu.score >= 40 ? 'an entry gaming chip that will hold fast cards back in processor-heavy games'
+  : 'an older chip that limits most recent games';
+
+const title = fitTitle(cpu.name, [' — Gaming Benchmarks & Specs', ' — Gaming Benchmarks', ' Benchmarks'], ` | ${SITE_NAME}`);
+const description = fitMeta([
+  `${cpu.name}: ${cpu.cores} cores, ${cpu.threads} threads, faster than ${beatsPct}% of the CPUs we track.`,
+  ceilingCard ? `Keeps up with cards up to the ${ceilingCard.name} at 1440p.` : '',
+  'See which games it handles.'
+]);
+
+const faq: { q: string; a: string }[] = [
+  {
+    q: `Which graphics card suits the ${cpu.name}?`,
+    a: ceilingCard
+      ? `At 1440p it keeps a card up to the ${ceilingCard.name} fully used, by our bottleneck model. ${balanced.length} desktop cards are an even match for it. A faster card than the ${ceilingCard.name} will spend time waiting on the processor, more so at 1080p.`
+      : `No card in our index is an even match for it; use the bottleneck calculator to see how far apart a specific pairing is.`
+  },
+  {
+    q: `Will the ${cpu.name} run ${SEO_YEAR} games?`,
+    a: upcoming.length
+      ? `Of the ${upcoming.length} upcoming games that name a processor, it meets the recommended one for ${upRec.length}, only the minimum for ${upMin.length}, and falls short of ${upBelow.length}.`
+      : `No upcoming game we track names a processor we can measure yet.`
+  },
+  {
+    q: `How many cores does the ${cpu.name} have?`,
+    a: `${cpu.cores} cores and ${cpu.threads} threads, with a top clock speed of ${cpu.boost_ghz} GHz.`
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": cpu.name,
+    "url": `${SITE_URL}/cpu/${cpu.slug}`,
+    "brand": { "@type": "Brand", "name": cpu.brand },
+    "category": "Computer Processor",
+    "description": description,
+    "releaseDate": String(cpu.release_year),
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Cores", "value": cpu.cores },
+      { "@type": "PropertyValue", "name": "Threads", "value": cpu.threads },
+      { "@type": "PropertyValue", "name": "Top clock speed", "value": `${cpu.boost_ghz} GHz` },
+      { "@type": "PropertyValue", "name": "TDP", "value": `${cpu.tdp_watts} W` },
+      { "@type": "PropertyValue", "name": "Performance index", "value": `${cpu.score}/100` }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+
+const above = allCpus.filter(c => c.score > cpu.score).sort((a, b) => a.score - b.score).slice(0, 3);
+const beneath = allCpus.filter(c => c.score < cpu.score).sort((a, b) => b.score - a.score).slice(0, 3);
+const neighbours = [...above.reverse(), ...beneath];
+---
+<BaseLayout title={title} description={description} jsonLd={schema}
+  keywords={`${cpu.name} gaming, ${cpu.name} bottleneck, best gpu for ${cpu.name}, ${cpu.name} benchmark`}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Processors', href: '/cpus' }, { name: cpu.name }]} />
+
+    <header class="dossier">
+      <span class="eyebrow">Processor · {cpu.brand} · {cpu.release_year}</span>
+      <h1>{cpu.name}</h1>
+      <p class="summary">
+        In gaming terms, <b>{role}</b>. It outscores <b>{beatsPct}%</b> of the {allCpus.length} processors in our index
+        {ceilingCard && <> and keeps graphics cards up to the <b>{ceilingCard.name}</b> fully used at 1440p</>}.
+      </p>
+      <dl class="readouts">
+        <div><dt>Index</dt><dd class="mono">{cpu.score}<small>/100</small></dd></div>
+        <div><dt>Rank</dt><dd class="mono">#{rank}</dd></div>
+        <div><dt>Cores / threads</dt><dd class="mono">{cpu.cores}/{cpu.threads}</dd></div>
+        <div><dt>Top speed</dt><dd class="mono">{cpu.boost_ghz} GHz</dd></div>
+        <div><dt>Power</dt><dd class="mono">{cpu.tdp_watts} W</dd></div>
+      </dl>
+    </header>
+
+    {/* ============ PAIRING ============ */}
+    <section class="block">
+      <div class="block-head">
+        <h2>Graphics cards that match it</h2>
+        <p>Recent cards the {cpu.name} keeps fully used at 1440p without much processor to spare, by our bottleneck model.</p>
+      </div>
+      {pairPicks.length ? (
+        <ul class="pairs">
+          {pairPicks.map(g => (
+            <li>
+              <a href={`/gpu/${g.slug}`}><b>{g.name}</b></a>
+              <small>{g.vram_gb} GB · {g.release_year} · ${g.msrp_usd} at launch</small>
+              <a class="try" href="/bottleneck">Check the pairing →</a>
+            </li>
+          ))}
+        </ul>
+      ) : <p class="none">No close match in our index — try a specific pairing in the <a href="/bottleneck">bottleneck calculator</a>.</p>}
+    </section>
+
+    {/* ============ COVERAGE ============ */}
+    <section class="block">
+      <div class="block-head">
+        <h2>Games it handles, by the processor requirement</h2>
+        <p>Against the {released.length} released games whose publisher names a processor we can place.</p>
+      </div>
+      <div class="coverage" role="img" aria-label={`${share(atRec.length)}% at recommended, ${share(atMin.length)}% at minimum, ${share(below.length)}% below minimum`}>
+        <span class="seg ok" style={`flex:${atRec.length || 0.0001}`}></span>
+        <span class="seg warn" style={`flex:${atMin.length || 0.0001}`}></span>
+        <span class="seg bad" style={`flex:${below.length || 0.0001}`}></span>
+      </div>
+      <ul class="legend">
+        <li><i class="ok"></i><b class="mono">{atRec.length}</b> recommended processor or better <span>{share(atRec.length)}%</span></li>
+        <li><i class="warn"></i><b class="mono">{atMin.length}</b> minimum only <span>{share(atMin.length)}%</span></li>
+        <li><i class="bad"></i><b class="mono">{below.length}</b> below minimum <span>{share(below.length)}%</span></li>
+      </ul>
+    </section>
+
+    {upcoming.length > 0 && (
+      <section class="block">
+        <div class="block-head">
+          <h2>Upcoming releases on the {cpu.name}</h2>
+          <p>Unreleased games whose publishers have already named a processor.</p>
+        </div>
+        <div class="up-grid">
+          {[
+            { key: 'ok', label: 'Recommended spec', list: upRec },
+            { key: 'warn', label: 'Minimum spec', list: upMin },
+            { key: 'bad', label: 'Below minimum', list: upBelow }
+          ].map(col => (
+            <div class={`up-col ${col.key}`}>
+              <h3>{col.label} <span class="mono">{col.list.length}</span></h3>
+              {col.list.length
+                ? <ul>{col.list.map(g => <li><a href={`/game/${g.slug}`}>{g.name}</a> <small>{g.release_date}</small></li>)}</ul>
+                : <p class="none">None</p>}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {cpuHeavy.length > 0 && (
+      <section class="block">
+        <div class="block-head">
+          <h2>Where the processor decides the frame rate</h2>
+          <p>Games that lean on the CPU more than the graphics card, and where this chip lands against each.</p>
+        </div>
+        <ul class="heavy">
+          {cpuHeavy.map(g => {
+            const band = cpu.score >= g.rec_cpu_score! ? 'ok' : cpu.score >= g.min_cpu_score! ? 'warn' : 'bad';
+            return (
+              <li>
+                <a href={`/game/${g.slug}`}>{g.name}</a>
+                <span class={`v ${band}`}>{band === 'ok' ? 'Recommended' : band === 'warn' ? 'Minimum' : 'Too slow'}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    )}
+
+    <section class="block">
+      <div class="block-head"><h2>Spec card</h2></div>
+      <dl class="spec-grid">
+        <div><dt>Maker</dt><dd>{cpu.brand}</dd></div>
+        <div><dt>Released</dt><dd>{cpu.release_year}</dd></div>
+        <div><dt>Cores</dt><dd>{cpu.cores}</dd></div>
+        <div><dt>Threads</dt><dd>{cpu.threads}</dd></div>
+        <div><dt>Base speed</dt><dd>{cpu.base_ghz} GHz</dd></div>
+        <div><dt>Top speed</dt><dd>{cpu.boost_ghz} GHz</dd></div>
+        <div><dt>Rated power</dt><dd>{cpu.tdp_watts} W</dd></div>
+        <div><dt>Tier</dt><dd><span class={`pill t-${cpu.tier}`}>{cpu.tier}</span></dd></div>
+      </dl>
+    </section>
+
+    {neighbours.length > 0 && (
+      <section class="block">
+        <div class="block-head">
+          <h2>The processors either side of it</h2>
+          <p>Nearest in our index. Pick one to compare them directly.</p>
+        </div>
+        <ul class="near">
+          {neighbours.map(n => {
+            const d = n.score - cpu.score;
+            return (
+              <li>
+                <a href={`/compare-cpu?a=${cpu.slug}&b=${n.slug}`}>
+                  <span class={`delta mono ${d > 0 ? 'up' : 'down'}`}>{d > 0 ? `+${d}` : d}</span>
+                  <span class="near-name">{n.name}</span>
+                  <small>{n.cores} cores · {n.release_year}</small>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    )}
+
+    <section class="faq">
+      <h2>{cpu.name}: quick answers</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/bottleneck">Test it with your graphics card</a></li>
+        <li><a href="/cpu-tier-list">Where it sits in the {SEO_YEAR} CPU ranking</a></li>
+        <li><a href="/upgrade-advisor">Is it time to upgrade?</a></li>
+        <li><a href="/game-list/cpu-intensive-games">Processor-heavy games</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .dossier { padding: 30px 0 32px; margin-bottom: 40px; border-bottom: 1px dashed var(--line-strong); }
+  .dossier h1 { font-size: clamp(28px, 4.5vw, 44px); margin: 6px 0 12px; }
+  .summary { color: var(--muted); max-width: 66ch; line-height: 1.7; }
+  .summary b { color: var(--text); }
+  .readouts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 20px 0 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .readouts div { padding: 11px 14px; min-width: 0; }
+  .readouts div + div { border-left: 1px solid var(--line); }
+  .readouts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .readouts dd { margin: 3px 0 0; font-size: 1.35rem; font-weight: 600; color: var(--readout); }
+  .readouts small { font-size: .8rem; color: var(--faint); }
+
+  .block { margin-bottom: 46px; padding: 0; }
+  .block-head { margin-bottom: 16px; }
+  .block-head h2 { font-size: 22px; }
+  .block-head p { color: var(--muted); font-size: 14.5px; margin-top: 6px; max-width: 72ch; }
+  .none a { color: var(--accent); }
+
+  .pairs { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
+  .pairs li { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--readout); border-radius: var(--radius-sm); }
+  .pairs b:hover { color: var(--accent); }
+  .pairs small { color: var(--faint); font-size: 12.5px; }
+  .pairs .try { margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--accent); }
+
+  .coverage { display: flex; height: 14px; border-radius: 3px; overflow: hidden; background: var(--surface-2); gap: 2px; }
+  .seg.ok { background: var(--ok); } .seg.warn { background: var(--warn); } .seg.bad { background: var(--bad); }
+  .legend { list-style: none; padding: 0; margin: 12px 0 0; display: flex; gap: 8px 22px; flex-wrap: wrap; }
+  .legend li { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+  .legend i { width: 10px; height: 10px; display: inline-block; border-radius: 2px; }
+  .legend i.ok { background: var(--ok); } .legend i.warn { background: var(--warn); } .legend i.bad { background: var(--bad); }
+  .legend b { color: var(--text); }
+  .legend span { color: var(--faint); font-family: var(--font-mono); font-size: 12px; }
+
+  .up-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .up-col { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid; border-radius: var(--radius-sm); padding: 12px 14px; }
+  .up-col.ok { border-top-color: var(--ok); } .up-col.warn { border-top-color: var(--warn); } .up-col.bad { border-top-color: var(--bad); }
+  .up-col h3 { font-size: 14px; display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .up-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+  .up-col li { font-size: 14px; line-height: 1.35; }
+  .up-col small { display: block; color: var(--faint); font-size: 12px; }
+  .none { color: var(--faint); font-size: 13px; }
+
+  .heavy { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 6px; }
+  .heavy li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; }
+  .heavy a:hover { color: var(--accent); }
+  .v { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 3px; white-space: nowrap; }
+  .v.ok { background: rgb(var(--ok-rgb) / .12); color: var(--ok); }
+  .v.warn { background: rgb(var(--warn-rgb) / .12); color: var(--warn); }
+  .v.bad { background: rgb(var(--bad-rgb) / .12); color: var(--bad); }
+
+  .spec-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+  .spec-grid div { background: var(--surface); padding: 12px 14px; }
+  .spec-grid dt { font-size: 12px; color: var(--faint); }
+  .spec-grid dd { margin: 2px 0 0; font-weight: 700; }
+
+  .near { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+  .near a { display: grid; grid-template-columns: 48px 1fr; column-gap: 10px; padding: 11px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  .near a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .delta { grid-row: 1 / 3; align-self: center; font-weight: 600; }
+  .delta.up { color: var(--ok); } .delta.down { color: var(--bad); }
+  .near-name { font-weight: 700; font-size: 14px; }
+  .near small { color: var(--faint); font-size: 12px; }
+
+  @media (max-width: 760px) {
+    .readouts { grid-template-columns: 1fr 1fr; }
+    .readouts div:nth-child(odd) { border-left: 0; }
+    .readouts div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .up-grid { grid-template-columns: 1fr; }
+    .spec-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+import { getGameArt } from '../lib/images';
+import GameArt from './GameArt.astro';
+
+interface Props {
+  slug: string;
+  name: string;
+  genre?: string;
+  year?: number;
+  /** Set on the first row of cards so the LCP image is not lazy-loaded. */
+  eager?: boolean;
+  /** Publisher's release-date text for an unreleased game; marks the card. */
+  upcoming?: string | null;
+  /** Replaces the genre · year line when set. */
+  note?: string | null;
+}
+
+const { slug, name, genre, year, eager = false, upcoming = null, note = null } = Astro.props;
+const art = getGameArt(slug, name);
+---
+<a href={`/game/${slug}`} class="gcard" data-kind={art.kind}>
+  <div class="gcard-art" style={art.kind !== 'cover' ? `--hue:${art.hue}` : undefined}>
+    <GameArt
+      slug={slug}
+      art={art}
+      eager={eager}
+      sizes="(max-width: 480px) 36vw, (max-width: 900px) 24vw, 190px"
+      className={art.kind === 'logo' ? 'logo' : ''}
+    />
+  </div>
+  <div class="gcard-body">
+    {upcoming !== null && <span class="gcard-soon">Unreleased</span>}
+    <h3>{name}</h3>
+    {note ? <p class="meta">{note}</p> : (genre || year) && (
+      <p class="meta">{[genre, year].filter(Boolean).join(' · ')}</p>
+    )}
+  </div>
+</a>
+
+<style>
+  .gcard-soon {
+    display: inline-block;
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .gcard {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+    transition: transform .25s var(--ease), border-color .25s var(--ease);
+  }
+  .gcard:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+
+  .gcard-art {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gcard[data-kind="cover"] .gcard-art :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .35s var(--ease);
+  }
+  .gcard:hover .gcard-art :global(img) { transform: scale(1.04); }
+
+  /* Logo + generated tiles share a deterministic gradient ground.
+     The hue glow is pushed to the top edge and a dark scrim sits behind the
+     middle: game logos are almost all white or light, and a bright glow
+     directly behind them washed them out on cyan, olive and green hues. */
+  .gcard[data-kind="logo"] .gcard-art,
+  .gcard[data-kind="none"] .gcard-art {
+    background:
+      radial-gradient(70% 46% at 50% 50%, rgba(6,8,14,.90) 0%, rgba(6,8,14,.45) 62%, rgba(6,8,14,0) 100%),
+      radial-gradient(105% 62% at 50% 0%, hsl(var(--hue) 48% 19%) 0%, transparent 72%),
+      var(--tile);
+  }
+  /* Lets the <img> be the flex child itself, so it centres exactly — as an
+     inline child of <picture> it sat 4px high on the text baseline. */
+  .gcard-art :global(picture) { display: contents; }
+  .gcard-art :global(.logo) {
+    display: block;
+    max-width: 78%;
+    max-height: 58%;
+    object-fit: contain;
+    filter:
+      drop-shadow(0 1px 2px rgba(0,0,0,.9))
+      drop-shadow(0 6px 22px rgba(0,0,0,.7));
+  }
+  .gcard-art :global(.art-initials) {
+    font-family: var(--font-display);
+    font-size: 46px;
+    font-weight: 700;
+    color: hsl(var(--hue) 70% 72%);
+    letter-spacing: .04em;
+  }
+
+  .gcard-body { padding: 12px 14px 14px; }
+  .gcard-body h3 {
+    font-size: 15px;
+    margin: 0 0 4px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .gcard-body .meta { margin: 0; font-size: 12.5px; color: var(--muted); }
+</style>

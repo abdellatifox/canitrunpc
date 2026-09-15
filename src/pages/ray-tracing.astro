@@ -1,0 +1,182 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGames, getGpus } from '../lib/db';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitMeta } from '../lib/seo';
+
+const [games, gpus] = await Promise.all([getGames(Astro.locals), getGpus(Astro.locals)]);
+
+/* Steam has no ray-tracing field, so support is only known for the games we
+   checked by hand. Every count on this page is framed against that set. */
+const checked = games.filter(g => g.supports_ray_tracing !== null);
+const rtGames = checked.filter(g => g.supports_ray_tracing === 1);
+
+const LEVELS = [
+  { key: 'path', label: 'Path traced', note: 'All lighting is traced. The heaviest setting in PC gaming.' },
+  { key: 'heavy', label: 'Heavy', note: 'Several traced effects at once — typically reflections, shadows and global illumination.' },
+  { key: 'medium', label: 'Medium', note: 'One or two traced effects on top of traditional lighting.' },
+  { key: 'light', label: 'Light', note: 'A single effect, often shadows or ambient occlusion.' }
+];
+const byLevel = LEVELS.map(l => ({
+  ...l,
+  games: rtGames
+    .filter(g => (g.ray_tracing_intensity ?? 'medium').toLowerCase() === l.key)
+    .sort((a, b) => a.name.localeCompare(b.name))
+})).filter(l => l.games.length > 0);
+
+/* What each hardware ray-tracing card is suited to. The bands are our own
+   judgement, pinned to named cards so they follow the index when it is rescaled. */
+const rtCards = gpus.filter(g => g.supports_ray_tracing === 1);
+const scoreOf = (slug: string, fallback: number) => gpus.find(g => g.slug === slug)?.score ?? fallback;
+const BANDS = [
+  { key: 'path', label: 'Path tracing, with upscaling', min: scoreOf('nvidia-geforce-rtx-4080', 64) },
+  { key: 'heavy', label: 'Heavy ray tracing, with upscaling', min: scoreOf('nvidia-geforce-rtx-4070', 43) },
+  { key: 'medium', label: 'Light to medium ray tracing', min: scoreOf('nvidia-geforce-rtx-4060', 27) },
+  { key: 'light', label: 'Light effects at lower resolutions', min: 0 }
+];
+const bandFor = (score: number) => BANDS.find(b => score >= b.min)!;
+const cardBands = BANDS.map(b => ({
+  ...b,
+  cards: rtCards.filter(c => bandFor(c.score).key === b.key).sort((x, y) => y.release_year - x.release_year || x.name.localeCompare(y.name))
+})).filter(b => b.cards.length > 0);
+const noRt = gpus.length - rtCards.length;
+
+const description = fitMeta([
+  `${rtGames.length} PC games with confirmed ray tracing, grouped from light effects to full path tracing, and ${rtCards.length} graphics cards sorted by how much of it they can take.`,
+  `Updated for ${SEO_YEAR}.`
+]);
+
+const faq = [
+  {
+    q: 'Which graphics cards can do ray tracing at all?',
+    a: 'NVIDIA from the RTX 20 series onward, AMD from the Radeon RX 6000 series onward, and every Intel Arc card. Older cards such as the GTX range lack the dedicated hardware.'
+  },
+  {
+    q: 'Why does the same card handle one ray-traced game and struggle in another?',
+    a: 'Because "ray tracing" covers anything from one traced shadow pass to fully traced lighting. That is why the games here are grouped by how heavy their implementation is rather than listed together.'
+  },
+  {
+    q: 'What should I lower first if ray tracing is too slow?',
+    a: 'Turn on upscaling (DLSS, FSR or XeSS) before anything else, then step the ray-tracing preset down. Switching it off entirely is the last resort in games designed around it.'
+  },
+  {
+    q: 'Is a game missing from this page unsupported?',
+    a: `Not necessarily. We have confirmed features for ${checked.length} games so far; a game outside that set may well have ray tracing.`
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `Ray tracing games and graphics cards ${SEO_YEAR}`,
+    "description": description,
+    "url": `${SITE_URL}/ray-tracing`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": rtGames.length,
+      "itemListElement": rtGames.map((g, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/game/${g.slug}`, "name": g.name }))
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout title={`Ray Tracing Games & GPUs ${SEO_YEAR} | ${SITE_NAME}`} description={description}
+  keywords={`ray tracing games ${SEO_YEAR}, path tracing games, best gpu for ray tracing, ray tracing graphics cards`} jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Graphics cards', href: '/gpus' }, { name: 'Ray tracing' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Ray tracing · {rtGames.length} games · {rtCards.length} capable cards</span>
+      <h1>Ray tracing: which games have it, which cards can take it</h1>
+      <p class="lede">
+        Of the {checked.length} games whose features we have confirmed, {rtGames.length} use ray tracing — but a traced shadow and
+        fully traced lighting are very different loads. Games are grouped by how heavy their version is, and cards by how far up
+        that scale they reach.
+      </p>
+    </header>
+
+    <section class="block">
+      <h2>Games, heaviest implementation first</h2>
+      {byLevel.map(l => (
+        <div class={`lvl lvl-${l.key}`}>
+          <div class="lvl-head">
+            <h3>{l.label} <span class="mono">{l.games.length}</span></h3>
+            <p>{l.note}</p>
+          </div>
+          <ul class="glist">
+            {l.games.map(g => (
+              <li>
+                <a href={`/game/${g.slug}`}>{g.name}</a>
+                <small>{g.rec_gpu_text ? `Recommended: ${g.rec_gpu_text}` : 'Recommended card not stated'}</small>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="block">
+      <h2>Cards, by how much ray tracing they can take</h2>
+      <p class="sub">Our own banding, set at the RTX 4080, RTX 4070 and RTX 4060 on the performance index. {noRt} of the {gpus.length} cards we track have no ray-tracing hardware and are left out.</p>
+      <div class="bands">
+        {cardBands.map(b => (
+          <div class={`band lvl-${b.key}`}>
+            <h3>{b.label} <span class="mono">{b.cards.length}</span></h3>
+            <ul>
+              {b.cards.map(c => <li><a href={`/gpu/${c.slug}`}>{c.name}</a> <small class="mono">{c.release_year}</small></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>Ray tracing questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/dlss-fsr">Upscaling: DLSS, FSR and XeSS</a></li>
+        <li><a href="/game-list/ray-tracing-games">Ray tracing games as a ranked list</a></li>
+        <li><a href="/compare-gpu">Compare two cards</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(28px, 4.4vw, 40px); margin: 6px 0 12px; }
+  .block { margin-bottom: 48px; }
+  .block > h2 { font-size: 22px; margin-bottom: 14px; }
+  .sub { color: var(--muted); font-size: 14px; margin: -6px 0 14px; max-width: 72ch; }
+
+  .lvl { border-left: 3px solid var(--lc); padding: 2px 0 2px 16px; margin-bottom: 22px; }
+  .lvl-path { --lc: var(--bad); } .lvl-heavy { --lc: var(--warn); } .lvl-medium { --lc: var(--readout); } .lvl-light { --lc: var(--ok); }
+  .lvl-head h3 { font-size: 17px; display: flex; gap: 10px; align-items: baseline; }
+  .lvl-head h3 span { color: var(--lc); font-size: 14px; }
+  .lvl-head p { color: var(--muted); font-size: 14px; margin: 2px 0 10px; }
+  .glist { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; }
+  .glist li { display: flex; flex-direction: column; padding: 9px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  .glist a { font-weight: 600; font-size: 14px; }
+  .glist a:hover { color: var(--accent); }
+  .glist small { color: var(--faint); font-size: 12px; overflow-wrap: anywhere; }
+
+  .bands { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .band { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--lc); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .band h3 { font-size: 14px; display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  .band ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; max-height: 360px; overflow-y: auto; }
+  .band li { font-size: 13.5px; display: flex; justify-content: space-between; gap: 8px; }
+  .band a:hover { color: var(--accent); }
+  .band small { color: var(--faint); }
+</style>

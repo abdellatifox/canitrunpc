@@ -1,0 +1,110 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { SITE_URL, CONTACT_EMAIL, SITE_NAME } from '../lib/site';
+
+const EMAIL = CONTACT_EMAIL;
+const TOPICS = [
+  {
+    icon: 'exclamation-triangle',
+    title: 'Something is wrong',
+    body: 'A requirement that doesn’t match the store page, a wrong spec, a card in the wrong place. The page address and the correct value (with a source, if you have one) are all we need.',
+    subject: 'Correction'
+  },
+  {
+    icon: 'plus-circle',
+    title: 'Something is missing',
+    body: 'A game, graphics card or processor you expected to find. Its name is enough; for a game, the Steam link helps.',
+    subject: 'Missing from the site'
+  },
+  {
+    icon: 'question-circle',
+    title: 'How did you get this number?',
+    body: 'Most answers are on the editorial standards page. If yours isn’t, ask, and say which page the number was on.',
+    subject: 'Question about a number'
+  },
+  {
+    icon: 'briefcase',
+    title: 'Press or partnerships',
+    body: 'Media requests and data licensing. Scores, tiers and list positions are not for sale.',
+    subject: 'Press or partnership'
+  }
+];
+---
+<BaseLayout
+  title={`Contact ${SITE_NAME} | ${SITE_NAME}`}
+  description={`Email ${SITE_NAME} to correct a requirement or spec, ask for a game or part to be added, question a number, or for press and partnerships.`}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": `Contact ${SITE_NAME}`,
+    "url": `${SITE_URL}/contact`,
+    "mainEntity": { "@id": `${SITE_URL}/#organization` }
+  }}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Contact' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Contact</span>
+      <h1>Write to us</h1>
+      <p class="lede">
+        One address for everything: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. Pick the closest topic below and the subject line
+        is filled in for you. Corrections are read first.
+      </p>
+    </header>
+
+    <ul class="topics">
+      {TOPICS.map(t => (
+        <li>
+          <a href={`mailto:${EMAIL}?subject=${encodeURIComponent(t.subject)}`}>
+            <span class="ic"><Icon name={t.icon} /></span>
+            <span class="tx">
+              <b>{t.title}</b>
+              <small>{t.body}</small>
+              <em>Email about this →</em>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <section class="note">
+      <h2>Worth knowing first</h2>
+      <ul>
+        <li>Frame rates here are modelled. Where a review measured the game on your card, trust the review.</li>
+        <li>Hardware scores are relative to the fastest part we list, so they shift when something faster launches.</li>
+        <li>We don’t test parts ourselves, so we can’t help with a single faulty card or overclocking a specific chip.</li>
+      </ul>
+    </section>
+
+    <nav class="related" aria-label="More about the site">
+      <h2>More about the site</h2>
+      <ul>
+        <li><a href="/about">What the site does</a></li>
+        <li><a href="/editorial-standards">How numbers are produced</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms of use</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .lede a { color: var(--accent); overflow-wrap: anywhere; }
+  .topics { list-style: none; padding: 0; margin: 0 0 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+  .topics a { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 16px; height: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+  .topics a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .ic { width: 40px; height: 40px; display: grid; place-items: center; background: rgb(var(--accent-rgb) / .1); color: var(--accent); font-size: 18px; border-radius: var(--radius-sm); }
+  .tx { display: flex; flex-direction: column; gap: 4px; }
+  .tx b { font-size: 16px; }
+  .tx small { color: var(--muted); font-size: 14px; line-height: 1.55; }
+  .tx em { font-style: normal; color: var(--accent); font-size: 13px; font-weight: 600; margin-top: 4px; }
+  .note { margin-bottom: 40px; }
+  .note h2 { font-size: 20px; margin-bottom: 10px; }
+  .note ul { color: var(--muted); padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+</style>

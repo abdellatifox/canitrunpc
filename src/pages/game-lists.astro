@@ -1,0 +1,88 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { getReleasedGames } from '../lib/db';
+import { GAME_LISTS } from '../lib/site-data';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+
+const all = await getReleasedGames(Astro.locals);
+const lists = GAME_LISTS.map(l => {
+  let members = l.appids ? all.filter(g => g.steam_id != null && l.appids!.includes(g.steam_id)) : all.filter(l.filter);
+  if (l.sort) members = [...members].sort(l.sort);
+  return { ...l, count: members.length, preview: members.slice(0, 3) };
+});
+
+const description = `${GAME_LISTS.length} ways into ${all.length} PC games: what runs on weak hardware, what needs a flagship, ray tracing and DLSS titles, CPU-heavy games, 8GB-friendly games and more.`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `PC game lists ${SEO_YEAR}`,
+  "description": description,
+  "url": `${SITE_URL}/game-lists`,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": lists.length,
+    "itemListElement": lists.map((l, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/game-list/${l.slug}`, "name": l.title }))
+  }
+};
+---
+<BaseLayout title={`PC Game Lists ${SEO_YEAR}: Sorted by Hardware | ${SITE_NAME}`} description={description}
+  keywords={`pc game lists ${SEO_YEAR}, low end pc games, most demanding pc games, dlss games list, ray tracing games list`} jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Games', href: '/games' }, { name: 'Lists' }]} />
+
+    <header class="head">
+      <span class="eyebrow">{lists.length} lists · {all.length} released games</span>
+      <h1>Game lists, sorted by hardware</h1>
+      <p class="lede">
+        Shortcuts through the library. Each list is rebuilt from the requirement data whenever games are added,
+        so the counts below are always current.
+      </p>
+    </header>
+
+    <ul class="lists">
+      {lists.map(l => (
+        <li>
+          <a href={`/game-list/${l.slug}`} class="lc">
+            <span class="top">
+              <span class="ic"><Icon name={l.icon} /></span>
+              <span class="cnt mono">{l.count}</span>
+            </span>
+            <h2>{l.title}</h2>
+            <p>{l.blurb}</p>
+            {l.preview.length > 0 && (
+              <span class="pv">Starts with {l.preview.map(g => g.name).join(', ')}</span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/what-can-my-pc-run">Every game your own PC can run</a></li>
+        <li><a href={`/upcoming-games-${SEO_YEAR}`}>Games due in {SEO_YEAR}</a></li>
+        <li><a href="/games">The full A–Z library</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(28px, 4.6vw, 42px); margin: 6px 0 12px; }
+  .lists { list-style: none; padding: 0; margin: 0 0 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .lc { display: flex; flex-direction: column; height: 100%; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+  .lc:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .ic { color: var(--accent); font-size: 20px; }
+  .cnt { color: var(--readout); font-size: 20px; font-weight: 600; }
+  .lc h2 { font-size: 17px; margin-bottom: 6px; }
+  .lc p { color: var(--muted); font-size: 14px; line-height: 1.55; flex: 1; }
+  .pv { margin-top: 10px; font-size: 12.5px; color: var(--faint); }
+</style>

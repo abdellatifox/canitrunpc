@@ -1,0 +1,179 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GameCard from '../../components/GameCard.astro';
+import Icon from '../../components/Icon.astro';
+import { upcomingGames, releasedGames } from '../../lib/games';
+import { GAME_LISTS } from '../../lib/site-data';
+import { SITE_URL, SITE_NAME } from '../../lib/site';
+import { SEO_YEAR } from '../../lib/year';
+import { fitMeta } from '../../lib/seo';
+
+/* Prerendered: a ?q= search is applied in the browser by the script below.
+   Every game is in the page, so the result matches what the server would give. */
+const upcoming = upcomingGames();
+const released = [...releasedGames()].sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+const total = upcoming.length + released.length;
+
+const weight = (p: number | null) =>
+  p == null ? 'not scored' : p >= 0.85 ? 'heavy' : p >= 0.6 ? 'mid-weight' : p >= 0.3 ? 'light' : 'very light';
+
+const letterOf = (name: string) => {
+  const c = name[0]?.toUpperCase() ?? '#';
+  return c >= 'A' && c <= 'Z' ? c : '#';
+};
+const letters = [...new Set(released.map(g => letterOf(g.name)))];
+const genres = [...new Set([...upcoming, ...released].map(g => g.genre).filter(Boolean))].sort();
+
+const description = fitMeta([
+  `System requirements for ${total} PC games, A to Z, plus ${upcoming.length} unreleased ${SEO_YEAR} titles.`,
+  'Open any game to test it against your graphics card, processor and memory.'
+]);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "PC game system requirements, A to Z",
+  "description": description,
+  "url": `${SITE_URL}/games`,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": total,
+    "itemListElement": [...upcoming, ...released].slice(0, 40).map((g, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/game/${g.slug}`, "name": g.name }))
+  }
+};
+---
+<BaseLayout title={`PC Game System Requirements A–Z: ${total} Games | ${SITE_NAME}`} description={description}
+  keywords={`pc game system requirements, game requirements list, ${SEO_YEAR} pc game requirements, can my pc run it`}
+  canonical={`${SITE_URL}/games`} jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Games' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Requirements library · {total} games</span>
+      <h1>PC game system requirements, A to Z</h1>
+      <p class="lede">
+        The minimum and recommended hardware each publisher lists, turned into a check against your own parts.
+        Unreleased games come first; everything already out follows alphabetically. The small label under each
+        title says how heavy it is compared with the rest of the library.
+      </p>
+    </header>
+
+    <form class="finder" method="get" action="/games" role="search">
+      <Icon name="search" />
+      <input type="search" name="q" id="q" placeholder="Game title" aria-label="Find a game" autocomplete="off">
+      <select id="genre" aria-label="Genre">
+        <option value="">All genres</option>
+        {genres.map(g => <option value={g}>{g}</option>)}
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm">Find</button>
+    </form>
+    <p class="count mono" id="count" aria-live="polite" hidden></p>
+
+    {upcoming.length > 0 && (
+      <section class="shelf" data-shelf>
+        <div class="shelf-head">
+          <h2>Not out yet</h2>
+          <p>Release dates as the publisher lists them. <a href={`/upcoming-games-${SEO_YEAR}`}>The full {SEO_YEAR} release guide →</a></p>
+        </div>
+        <div class="grid-auto">
+          {upcoming.map((g, i) => (
+            <div class="slot" data-genre={g.genre} data-name={g.name.toLowerCase()}>
+              <GameCard slug={g.slug} name={g.name} eager={i < 6} upcoming={g.release_date ?? ''}
+                note={g.release_date || 'Date not announced'} />
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="shelf" data-shelf>
+      <div class="shelf-head">
+        <h2>Out now</h2>
+        <nav class="letters" aria-label="Jump to letter">
+          {letters.map(l => <a href={`#letter-${l === '#' ? 'num' : l}`}>{l}</a>)}
+        </nav>
+      </div>
+      {letters.map(l => {
+        const group = released.filter(g => letterOf(g.name) === l);
+        return (
+          <div class="letter-group" id={`letter-${l === '#' ? 'num' : l}`}>
+            <h3 class="mono">{l}</h3>
+            <div class="grid-auto">
+              {group.map(g => (
+                <div class="slot" data-genre={g.genre} data-name={g.name.toLowerCase()}>
+                  <GameCard slug={g.slug} name={g.name} note={`${g.release_year ?? ''}${g.release_year ? ' · ' : ''}${weight(g.demandPercentile)}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </section>
+
+    <p class="empty" id="empty" hidden>Nothing matches. Try part of the title, or clear the genre.</p>
+
+    <nav class="related" aria-label="Game lists">
+      <h2>Hand-picked lists</h2>
+      <ul>
+        {GAME_LISTS.map(l => <li><a href={`/game-list/${l.slug}`}>{l.title}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(28px, 4.6vw, 42px); margin: 6px 0 12px; }
+
+  .finder { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 8px 12px; margin-bottom: 10px; }
+  .finder :global(.icon) { color: var(--muted); }
+  .finder input { flex: 1 1 180px; background: none; border: 0; color: var(--text); font: inherit; outline: none; min-width: 0; min-height: 40px; }
+  .finder select { background: var(--surface-2); border: 1px solid var(--line); color: var(--text); font: inherit; border-radius: var(--radius-sm); padding: 8px 10px; min-height: 40px; }
+  .count { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
+
+  .shelf { margin-top: 36px; }
+  .shelf-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px dashed var(--line-strong); }
+  .shelf-head h2 { font-size: 22px; }
+  .shelf-head p { color: var(--muted); font-size: 14px; }
+  .shelf-head a { color: var(--accent); }
+  .letters { display: flex; flex-wrap: wrap; gap: 4px; }
+  .letters a { font-family: var(--font-mono); font-size: 13px; min-width: 30px; min-height: 30px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); }
+  .letters a:hover { color: var(--text); border-color: var(--accent); }
+
+  .letter-group { margin-bottom: 26px; scroll-margin-top: 80px; }
+  .letter-group h3 { font-size: 15px; color: var(--readout); margin-bottom: 10px; }
+  .empty { color: var(--muted); text-align: center; padding: 40px 0; }
+</style>
+
+<script>
+  const slots = [...document.querySelectorAll<HTMLElement>('.slot')];
+  const groups = [...document.querySelectorAll<HTMLElement>('.letter-group, [data-shelf]')];
+  const q = document.getElementById('q') as HTMLInputElement;
+  const genre = document.getElementById('genre') as HTMLSelectElement;
+  const count = document.getElementById('count')!;
+  const empty = document.getElementById('empty')!;
+
+  function apply() {
+    const term = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const s of slots) {
+      const ok = (!term || (s.dataset.name || '').includes(term)) && (!genre.value || s.dataset.genre === genre.value);
+      s.hidden = !ok;
+      if (ok) shown++;
+    }
+    // Hide headings whose games are all filtered out.
+    for (const g of groups) g.hidden = !g.querySelector('.slot:not([hidden])');
+    const filtering = Boolean(term || genre.value);
+    count.hidden = !filtering;
+    if (filtering) count.textContent = `${shown} ${shown === 1 ? 'game' : 'games'}${term ? ` matching “${q.value.trim()}”` : ''}`;
+    empty.hidden = shown !== 0;
+  }
+  q.addEventListener('input', apply);
+  genre.addEventListener('input', apply);
+
+  // A search submitted to /games?q= (also the sitelinks SearchAction in BaseLayout).
+  const initial = new URLSearchParams(location.search).get('q')?.trim();
+  if (initial) { q.value = initial; apply(); }
+</script>

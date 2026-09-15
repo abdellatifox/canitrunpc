@@ -1,0 +1,65 @@
+# HTTPS only, for a year. No includeSubDomains or preload: those commit every
+# future subdomain to HTTPS and are hard to undo.
+# X-Frame-Options: nothing here needs to be framed by another site (clickjacking).
+# Permissions-Policy: the site uses no camera, microphone, location or payment APIs.
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+/*.txt
+  Cache-Control: public, max-age=3600
+
+# Cloudflare Pages default is Cache-Control: max-age=14400 (4h) for everything
+# under public/. Game art, covers and fonts never change once built under a
+# given filename, so Lighthouse flags the short TTL as "inefficient cache
+# policy". Long-cache only the things that are actually static per-filename.
+
+/art/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Not immutable: covers are regenerated under the same filename whenever an
+# article's title changes (the advertised year rolls over, a data refresh
+# renames a post), so a year-long immutable cache would pin the old image.
+/covers/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/og/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
+/favicon-*.png
+  Cache-Control: public, max-age=604800
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
+
+/icon-*.png
+  Cache-Control: public, max-age=604800
+
+/logo.*
+  Cache-Control: public, max-age=31536000, immutable
+
+/logo-512.png
+  Cache-Control: public, max-age=604800
+
+/og-default.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/og-default.png
+  Cache-Control: public, max-age=31536000, immutable
+
+# Astro/Vite fingerprints every filename under _astro/ with a content hash, so
+# a change ships as a new URL by construction — safe to cache forever too.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/og/*
+  Cache-Control: public, max-age=604800

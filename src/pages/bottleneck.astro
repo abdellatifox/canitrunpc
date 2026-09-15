@@ -1,0 +1,218 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Autocomplete from '../components/Autocomplete.astro';
+import Icon from '../components/Icon.astro';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+const PATH = '/bottleneck';
+
+const RES_OPTIONS = [
+  { label: '1080p (1920 × 1080)', value: '1080p', meta: 'Where a slow processor shows most' },
+  { label: '1440p (2560 × 1440)', value: '1440p', meta: 'Middle ground' },
+  { label: '4K (3840 × 2160)', value: '4k', meta: 'The graphics card nearly always limits' }
+];
+
+const faq = [
+  {
+    q: 'What does "bottleneck" actually mean here?',
+    a: 'The part that hits its limit first. When the processor can’t hand frames over as fast as the graphics card can draw them, the card waits — that is a CPU bottleneck. When the card is flat out, it is a GPU bottleneck.'
+  },
+  {
+    q: 'Which kind is worse?',
+    a: 'A CPU bottleneck. Being limited by the graphics card is normal and means you are using what you paid for; lowering settings still helps. When the processor is the limit, lowering settings does little.'
+  },
+  {
+    q: 'Why does the result change with resolution?',
+    a: 'More pixels are extra work for the graphics card only. So the same pair can lean on the processor at 1080p and on the card at 4K.'
+  },
+  {
+    q: 'How big a gap should worry me?',
+    a: 'Below about 10% you will not notice it. Between 10% and 25% it is worth remembering when you next upgrade. Past 25% the slower part is clearly holding the faster one back.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `Bottleneck Calculator (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": 'Shows whether a processor or graphics card limits a gaming PC, and by roughly how much, at a chosen resolution.',
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`CPU & GPU Bottleneck Calculator (${SEO_YEAR}) | ${SITE_NAME}`}
+  description="Is your processor or your graphics card the weak link? Pick both and a resolution to see which one limits your frame rate, and by roughly how much."
+  keywords={`bottleneck calculator, cpu bottleneck calculator, gpu bottleneck, cpu gpu pairing, bottleneck calculator ${SEO_YEAR}`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'Bottleneck Calculator' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Pairing check</span>
+      <h1>Bottleneck Calculator</h1>
+      <p class="lede">
+        Every gaming PC has a weaker half. Choose your processor, graphics card and screen resolution to see which half it is
+        and how large the gap between them is.
+      </p>
+    </header>
+
+    <section class="tool">
+      <form class="panel" id="bn-form" novalidate>
+        <Autocomplete id="cpu" label="Processor" placeholder="Your chip, e.g. Ryzen 5 7600" endpoint="/api/cpus/search" required />
+        <Autocomplete id="gpu" label="Graphics card" placeholder="Your card, e.g. RX 7700 XT" endpoint="/api/gpus/search" required />
+        <Autocomplete id="res" label="Resolution" placeholder="Pick a resolution" endpoint="" options={RES_OPTIONS} value="1440p (2560 × 1440)" required />
+        <button type="submit" class="btn btn-primary submit">Find the weak link &rarr;</button>
+        <p class="err" id="bn-err" role="alert" hidden></p>
+      </form>
+
+      <div class="results" id="bn-results" aria-live="polite">
+        <div class="placeholder">
+          <Icon name="diagram-3" />
+          <h2>The verdict appears here</h2>
+          <p>Both parts are placed on the same index and compared at your resolution.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div><h2>What the card needs</h2><p>Every graphics card is matched to the processor we judge it needs to stay fully used — an RTX 3070 to a Ryzen 5 5600 at 1080p, for example. Yours is measured against that.</p></div>
+      <div><h2>Resolution shifts the balance</h2><p>The higher the resolution, the less processor it takes to keep a given card busy.</p></div>
+      <div><h2>Games differ</h2><p>Strategy and simulation games lean on the processor far more than a linear shooter. Read the result as a rule of thumb.</p></div>
+    </section>
+
+    <section class="faq">
+      <h2>Bottleneck questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/upgrade-advisor">Decide what to replace first</a></li>
+        <li><a href="/cpu-tier-list">Processors ranked for {SEO_YEAR}</a></li>
+        <li><a href="/game-list/cpu-intensive-games">Games that lean on the processor</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .tool { display: grid; grid-template-columns: minmax(290px, 370px) 1fr; gap: 24px; align-items: start; margin-bottom: 52px; }
+  @media (max-width: 900px) { .tool { grid-template-columns: 1fr; } }
+  .panel { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 22px; display: grid; gap: 16px; }
+  .submit { width: 100%; margin-top: 4px; }
+  .err { color: var(--bad); font-size: 13.5px; margin: 0; }
+
+  .results { min-height: 300px; }
+  .placeholder {
+    min-height: 300px; display: grid; place-content: center; justify-items: center; gap: 10px;
+    text-align: center; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 40px 24px;
+  }
+  .placeholder :global(.icon) { font-size: 38px; color: var(--faint); }
+  .placeholder h2 { font-size: 18px; margin: 0; }
+  .placeholder p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  :global(.bn-card) { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 26px; }
+  :global(.bn-verdict) { display: inline-flex; align-items: center; gap: 9px; padding: 8px 16px; border-radius: 3px; font-weight: 600; font-size: 15px; margin-bottom: 14px; }
+  :global(.bn-verdict.ok) { background: rgb(var(--ok-rgb) / .1); color: var(--ok); border: 1px solid rgb(var(--ok-rgb) / .25); }
+  :global(.bn-verdict.mild) { background: rgb(var(--warn-rgb) / .1); color: var(--warn); border: 1px solid rgb(var(--warn-rgb) / .25); }
+  :global(.bn-verdict.bad) { background: rgb(var(--bad-rgb) / .1); color: var(--bad); border: 1px solid rgb(var(--bad-rgb) / .25); }
+  :global(.bn-detail) { color: var(--muted); line-height: 1.75; margin: 0 0 24px; max-width: 62ch; }
+  :global(.bn-detail b) { color: var(--text); }
+
+  :global(.bn-bars) { display: grid; gap: 12px; margin-bottom: 22px; }
+  :global(.bn-row) { display: grid; grid-template-columns: 108px 1fr 58px; align-items: center; gap: 12px; }
+  :global(.bn-row span.lbl) { font-size: 12.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :global(.bn-row b) { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
+  :global(.bn-track) { height: 10px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  :global(.bn-fill) { height: 100%; border-radius: 3px; transition: width .5s var(--ease); }
+  :global(.bn-fill.cpu) { background: var(--readout); }
+  :global(.bn-fill.gpu) { background: var(--accent); }
+
+  :global(.bn-advice) { margin: 0; padding-left: 20px; }
+  :global(.bn-advice li) { color: var(--muted); line-height: 1.7; margin-bottom: 9px; }
+  :global(.bn-advice a) { color: var(--accent); }
+  :global(.bn-note) { color: var(--faint); font-size: 12.5px; line-height: 1.6; margin-top: 16px; }
+
+  .method { margin-bottom: 48px; }
+  .method h2 { font-size: 22px; margin-bottom: 14px; }
+  .method p { color: var(--muted); line-height: 1.75; max-width: 74ch; }
+  .method .fine { color: var(--faint); font-size: 13.5px; }
+</style>
+
+<script>
+  const form = document.getElementById('bn-form') as HTMLFormElement;
+  const out = document.getElementById('bn-results')!;
+  const err = document.getElementById('bn-err') as HTMLElement;
+
+  const val = (id: string) => (document.getElementById(`${id}-value`) as HTMLInputElement)?.value?.trim() || '';
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+
+  async function part(kind: 'cpus' | 'gpus', slug: string) {
+    const r = await fetch(`/api/${kind}/search?q=${encodeURIComponent(slug.replace(/-/g, ' '))}`);
+    const j = await r.json();
+    return (j.data || []).find((d: any) => d.value === slug) || null;
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    err.hidden = true;
+
+    const cpuSlug = val('cpu'), gpuSlug = val('gpu'), res = val('res') || '1440p';
+    if (!cpuSlug || !gpuSlug) {
+      err.textContent = 'Pick both a processor and a graphics card from the suggestions.';
+      err.hidden = false;
+      return;
+    }
+
+    const r = await fetch('/api/tools/bottleneck', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cpu: cpuSlug, gpu: gpuSlug, resolution: res })
+    });
+    const d = await r.json();
+    if (!r.ok) { err.textContent = d.error || 'Could not calculate that.'; err.hidden = false; return; }
+
+    out.innerHTML = `
+      <div class="bn-card">
+        <div class="bn-verdict ${d.severity}">${esc(d.headline)}</div>
+        <p class="bn-detail">${d.detail}</p>
+        <div class="bn-bars">
+          <div class="bn-row">
+            <span class="lbl">${esc(d.cpu.name)} has</span>
+            <div class="bn-track"><div class="bn-fill cpu" style="width:${d.cpuBar}%"></div></div>
+            <b>${d.cpuHas}</b>
+          </div>
+          <div class="bn-row">
+            <span class="lbl">${esc(d.gpu.name)} needs</span>
+            <div class="bn-track"><div class="bn-fill gpu" style="width:${d.gpuBar}%"></div></div>
+            <b>${d.cpuNeeded}</b>
+          </div>
+        </div>
+        <ul class="bn-advice">${d.advice.map((a: string) => `<li>${a}</li>`).join('')}</ul>
+        <p class="bn-note">${esc(d.note)}</p>
+      </div>`;
+  });
+</script>

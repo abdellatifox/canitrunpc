@@ -1,0 +1,392 @@
+---
+import Icon from './Icon.astro';
+/**
+ * Type-ahead picker used for game / GPU / CPU / RAM fields.
+ *
+ * Progressive enhancement: the visible control is a real text input inside the
+ * form, so it still submits without JS. The script upgrades it to a combobox
+ * following the WAI-ARIA pattern (aria-expanded / aria-activedescendant, arrow
+ * + enter + escape handling), because these fields are the primary interaction
+ * on the site and keyboard users should not have to mouse through them.
+ *
+ * `endpoint` returns { data: [{ label, value, meta?, badge? }] }.
+ */
+interface Props {
+  id: string;
+  name?: string;
+  label: string;
+  placeholder?: string;
+  endpoint: string;
+  /** Preloaded options; when set the field filters locally and never fetches. */
+  options?: Array<{ label: string; value: string; meta?: string; badge?: string }>;
+  /** Allow a value that matches no suggestion (used by the RAM field). */
+  freeText?: boolean;
+  required?: boolean;
+  value?: string;
+  hint?: string;
+}
+
+const {
+  id, name, label, placeholder = 'Start typing…', endpoint,
+  options, freeText = false, required = false, value = '', hint
+} = Astro.props;
+---
+<div class="ac" data-ac data-endpoint={endpoint} data-freetext={freeText ? '1' : '0'}>
+  <label for={id}>{label}</label>
+
+  <div class="ac-shell">
+    <input
+      type="text"
+      id={id}
+      class="ac-input"
+      placeholder={placeholder}
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      required={required}
+      value={value}
+      role="combobox"
+      aria-expanded="false"
+      aria-autocomplete="list"
+      aria-controls={`${id}-list`}
+      aria-describedby={hint ? `${id}-hint` : undefined}
+    />
+    <span class="ac-spinner" hidden aria-hidden="true"></span>
+    <button type="button" class="ac-clear" hidden aria-label={`Clear ${label}`}>
+      <Icon name="x-lg" />
+    </button>
+    {options && options.length > 0 && (
+      <svg class="ac-chevron" aria-hidden="true" viewBox="0 0 16 16" width="12" height="12">
+        <path fill="currentColor" d="M3.7 5.5a.75.75 0 0 1 1.06.04L8 9.148l3.24-3.608a.75.75 0 1 1 1.12 1l-3.8 4.23a.75.75 0 0 1-1.12 0l-3.8-4.23a.75.75 0 0 1 .06-1.04Z" />
+      </svg>
+    )}
+  </div>
+
+  {hint && <small class="ac-hint" id={`${id}-hint`}>{hint}</small>}
+
+  {/* Resolved selection travels with the form; the text input stays human-readable. */}
+  <input type="hidden" id={`${id}-value`} name={name ?? id} value="" />
+
+  <ul class="ac-list" id={`${id}-list`} role="listbox" aria-label={label} hidden></ul>
+
+  {options && (
+    <script
+      type="application/json"
+      data-ac-options
+      set:html={JSON.stringify(options)}
+    ></script>
+  )}
+
+  <p class="ac-status" role="status" aria-live="polite"></p>
+</div>
+
+<style>
+  .ac { position: relative; display: block; }
+  .ac > label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--faint);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+  }
+
+  .ac-shell { position: relative; display: flex; align-items: center; }
+  .ac-input {
+    width: 100%;
+    background: var(--bg-soft);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 11px 68px 11px 13px;
+    color: var(--text);
+    font: inherit;
+    outline: none;
+    transition: border-color .18s var(--ease);
+  }
+  .ac-input:focus { border-color: var(--accent); }
+  .ac-input::placeholder { color: var(--faint); }
+
+  .ac-clear {
+    position: absolute; right: 8px;
+    background: none; border: 0; cursor: pointer;
+    color: var(--faint); font-size: 12px; padding: 6px;
+    line-height: 1; border-radius: 6px;
+  }
+  .ac-clear:hover { color: var(--text); }
+  /* The visible icon stays small; the hit area does not. It was 25px. */
+  @media (pointer: coarse) {
+    .ac-clear { min-width: 40px; min-height: 40px; right: 2px; display: grid; place-items: center; }
+  }
+
+  .ac-spinner {
+    position: absolute; right: 32px;
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 2px solid var(--line-strong);
+    border-top-color: var(--accent);
+    animation: ac-spin .6s linear infinite;
+  }
+  @keyframes ac-spin { to { transform: rotate(360deg); } }
+
+  /* A locally-optioned field (RAM) is a closed list, not a search box — the
+     chevron says so at a glance, the way a native <select> would. It shares
+     the spinner's slot because the two never appear together: a local list
+     never hits the network, so the spinner is always hidden here. */
+  .ac-chevron { position: absolute; right: 32px; color: var(--faint); pointer-events: none; }
+
+  .ac-hint { display: block; margin-top: 5px; font-size: 11.5px; color: var(--faint); }
+
+  .ac-list {
+    position: absolute;
+    z-index: 60;
+    left: 0; right: 0;
+    margin: 6px 0 0;
+    padding: 5px;
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+  .ac-list[hidden] { display: none; }
+
+  /*
+   * Options are built with innerHTML at runtime, so they never receive Astro's
+   * scoping attribute and a plain `.ac-opt { ... }` rule silently does not
+   * apply — the list rendered as unstyled <li>s with the browser's default
+   * yellow <mark>. Scoping through the template-owned .ac-list and marking the
+   * dynamic part :global fixes that without leaking these names site-wide.
+   */
+  .ac-list :global(.ac-opt) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 11px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.35;
+    list-style: none;
+  }
+  .ac-list :global(.ac-opt[aria-selected="true"]),
+  .ac-list :global(.ac-opt:hover) { background: rgb(var(--accent-rgb) / .12); }
+
+  .ac-list :global(.ac-opt-main) { min-width: 0; }
+  .ac-list :global(.ac-opt-label) {
+    display: block;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ac-list :global(.ac-opt-label mark) {
+    background: none;
+    color: var(--readout);
+    font-weight: 700;
+  }
+  .ac-list :global(.ac-opt-meta) {
+    display: block;
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ac-list :global(.ac-opt-badge) {
+    flex: none;
+    font-size: 10px; font-weight: 700; letter-spacing: .04em;
+    padding: 3px 7px; border-radius: 3px;
+    background: rgb(var(--accent-rgb) / .12); color: var(--accent);
+  }
+
+  .ac-list :global(.ac-empty) {
+    padding: 12px; color: var(--muted); font-size: 13.5px; text-align: center;
+    list-style: none;
+  }
+  @media (max-width: 640px) {
+    .ac-list { max-height: 46vh; }
+    .ac-list :global(.ac-opt) { padding: 12px 11px; align-items: flex-start; }
+
+    /*
+     * On a narrow column the single-line ellipsis cut every suggestion down to
+     * "NVIDIA GeForc…", which makes the list useless — telling an RTX 4090 from
+     * a 4080 is the entire job. Wrap to two lines instead of truncating.
+     */
+    .ac-list :global(.ac-opt-label) {
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 1.3;
+    }
+    .ac-list :global(.ac-opt-badge) { align-self: flex-start; margin-top: 1px; }
+  }
+
+  .ac-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: -1px; }
+</style>
+
+<script>
+  type Opt = { label: string; value: string; meta?: string; badge?: string };
+
+  function escapeHtml(s: string) {
+    return s.replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+  }
+
+  /** Bold the matched span without letting user text become markup. */
+  function highlight(label: string, query: string) {
+    const safe = escapeHtml(label);
+    if (!query) return safe;
+    const i = label.toLowerCase().indexOf(query.toLowerCase());
+    if (i === -1) return safe;
+    const a = escapeHtml(label.slice(0, i));
+    const b = escapeHtml(label.slice(i, i + query.length));
+    const c = escapeHtml(label.slice(i + query.length));
+    return `${a}<mark>${b}</mark>${c}`;
+  }
+
+  function initAutocomplete(root: HTMLElement) {
+    const input = root.querySelector<HTMLInputElement>('.ac-input')!;
+    const hidden = root.querySelector<HTMLInputElement>('input[type="hidden"]')!;
+    const list = root.querySelector<HTMLUListElement>('.ac-list')!;
+    const clearBtn = root.querySelector<HTMLButtonElement>('.ac-clear')!;
+    const spinner = root.querySelector<HTMLElement>('.ac-spinner')!;
+    const status = root.querySelector<HTMLElement>('.ac-status')!;
+
+    const endpoint = root.dataset.endpoint || '';
+    const freeText = root.dataset.freetext === '1';
+
+    const localTag = root.querySelector<HTMLScriptElement>('script[data-ac-options]');
+    const localOptions: Opt[] | null = localTag ? JSON.parse(localTag.textContent || '[]') : null;
+
+    let items: Opt[] = [];
+    let active = -1;
+    let seq = 0;
+    let debounce: number | undefined;
+
+    const close = () => {
+      list.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
+      active = -1;
+    };
+
+    function render(query: string) {
+      list.innerHTML = '';
+      if (!items.length) {
+        list.innerHTML = '<li class="ac-empty">No matches</li>';
+        list.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+        status.textContent = 'No matches';
+        return;
+      }
+      items.forEach((o, i) => {
+        const li = document.createElement('li');
+        li.className = 'ac-opt';
+        li.id = `${input.id}-opt-${i}`;
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', 'false');
+        li.innerHTML =
+          `<span class="ac-opt-main">
+             <span class="ac-opt-label">${highlight(o.label, query)}</span>
+             ${o.meta ? `<span class="ac-opt-meta">${escapeHtml(o.meta)}</span>` : ''}
+           </span>
+           ${o.badge ? `<span class="ac-opt-badge">${escapeHtml(o.badge)}</span>` : ''}`;
+        li.addEventListener('mousedown', e => { e.preventDefault(); choose(i); });
+        list.appendChild(li);
+      });
+      list.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      status.textContent = `${items.length} suggestion${items.length === 1 ? '' : 's'}`;
+    }
+
+    function setActive(next: number) {
+      const opts = [...list.querySelectorAll<HTMLLIElement>('.ac-opt')];
+      if (!opts.length) return;
+      if (active >= 0 && opts[active]) opts[active].setAttribute('aria-selected', 'false');
+      active = (next + opts.length) % opts.length;
+      const el = opts[active];
+      el.setAttribute('aria-selected', 'true');
+      input.setAttribute('aria-activedescendant', el.id);
+      el.scrollIntoView({ block: 'nearest' });
+    }
+
+    function choose(i: number) {
+      const o = items[i];
+      if (!o) return;
+      input.value = o.label;
+      hidden.value = o.value;
+      clearBtn.hidden = false;
+      close();
+      input.dispatchEvent(new CustomEvent('ac:select', { detail: o, bubbles: true }));
+    }
+
+    async function search(q: string) {
+      // Local option sets filter in-memory; no network round trip.
+      if (localOptions) {
+        const needle = q.toLowerCase();
+        items = localOptions.filter(o => o.label.toLowerCase().includes(needle)).slice(0, 12);
+        render(q);
+        return;
+      }
+      if (q.trim().length < 2) { close(); return; }
+
+      const mine = ++seq;
+      spinner.hidden = false;
+      try {
+        const r = await fetch(`${endpoint}${endpoint.includes('?') ? '&' : '?'}q=${encodeURIComponent(q)}`);
+        if (mine !== seq) return;            // a newer keystroke already won
+        const j = await r.json();
+        items = Array.isArray(j.data) ? j.data : [];
+        render(q);
+      } catch {
+        if (mine === seq) { items = []; render(q); }
+      } finally {
+        if (mine === seq) spinner.hidden = true;
+      }
+    }
+
+    input.addEventListener('input', () => {
+      hidden.value = freeText ? input.value : '';
+      clearBtn.hidden = !input.value;
+      window.clearTimeout(debounce);
+      const q = input.value;
+      debounce = window.setTimeout(() => search(q), localOptions ? 0 : 160);
+    });
+
+    input.addEventListener('focus', () => {
+      // A closed list should open showing every option, the way a native
+      // <select> does — filtering by whatever is already typed just showed a
+      // list of one and made it look broken for a field that starts pre-filled.
+      if (localOptions) { search(''); return; }
+      if (input.value) search(input.value);
+    });
+
+    input.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); if (list.hidden) search(input.value); else setActive(active + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+      else if (e.key === 'Enter') { if (!list.hidden && active >= 0) { e.preventDefault(); choose(active); } }
+      else if (e.key === 'Escape') { close(); }
+      else if (e.key === 'Tab') { if (!list.hidden && active >= 0) choose(active); else close(); }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      input.value = ''; hidden.value = ''; clearBtn.hidden = true;
+      close(); input.focus();
+      input.dispatchEvent(new CustomEvent('ac:select', { detail: null, bubbles: true }));
+    });
+
+    document.addEventListener('click', e => {
+      if (!root.contains(e.target as Node)) close();
+    });
+
+    if (input.value) clearBtn.hidden = false;
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ac]').forEach(initAutocomplete);
+</script>

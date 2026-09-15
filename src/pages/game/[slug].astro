@@ -1,0 +1,488 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GameCard from '../../components/GameCard.astro';
+import GameArt from '../../components/GameArt.astro';
+import Icon from '../../components/Icon.astro';
+import { getGame, getGpus, getCpus } from '../../lib/db';
+import { allGames, releasedGames, demandLabelFor } from '../../lib/games';
+import { getGameArt, getGameOgImage } from '../../lib/images';
+import { estimateFps } from '../../lib/perf';
+import { SITE_URL, SITE_NAME } from '../../lib/site';
+import { SEO_YEAR } from '../../lib/year';
+import { fitMeta, fitTitle } from '../../lib/seo';
+
+export function getStaticPaths() {
+  // Every game in the bundle, released and upcoming. An unknown slug is a
+  // static miss, which Pages answers with 404.html and a real 404 status.
+  return allGames().map(g => ({ params: { slug: g.slug } }));
+}
+
+const { slug } = Astro.params;
+const game = await getGame(Astro.locals, slug!);
+if (!game) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+const desktopGpus = gpus.filter(g => !/laptop/i.test(g.name));
+
+const art = getGameArt(game.slug, game.name);
+const ogImage = getGameOgImage(game.slug);
+
+const unpublished = game.upcoming && !game.requirements_published;
+/* Scores exist only when the publisher named parts we can place. Nothing on
+   this page that compares, ranks or estimates may render without them: a null
+   score becomes 1 inside the FPS model and produced four-digit frame rates for
+   games that had published nothing. */
+const scorable = game.min_gpu_score != null && game.rec_gpu_score != null;
+
+/** Cheapest-to-strongest card that meets a score: the plain-English equivalent. */
+const lowestAtOrAbove = (list: any[], score: number | null) =>
+  score == null ? null : list.filter(x => x.score >= score).sort((a, b) => a.score - b.score)[0] ?? null;
+
+const minGpuEq = lowestAtOrAbove(desktopGpus, game.min_gpu_score);
+const recGpuEq = lowestAtOrAbove(desktopGpus, game.rec_gpu_score);
+const minCpuEq = lowestAtOrAbove(cpus, game.min_cpu_score);
+const recCpuEq = lowestAtOrAbove(cpus, game.rec_cpu_score);
+
+// ---------------------------------------------------------------- the ladder
+/*
+ * Where every desktop graphics card we track lands against this game: short of
+ * the minimum, between minimum and recommended, or at the recommended card and
+ * above. A VRAM figure the publisher stated is part of the bar.
+ */
+const clearsMin = (g: any) => scorable && g.score >= game.min_gpu_score! && (game.min_vram_gb == null || g.vram_gb >= game.min_vram_gb);
+const clearsRec = (g: any) => scorable && g.score >= game.rec_gpu_score! && (game.rec_vram_gb == null || g.vram_gb >= game.rec_vram_gb);
+const bands = scorable ? [
+  { key: 'bad',  label: 'Short of the minimum', cards: desktopGpus.filter(g => !clearsMin(g)) },
+  { key: 'warn', label: 'Minimum, not recommended', cards: desktopGpus.filter(g => clearsMin(g) && !clearsRec(g)) },
+  { key: 'ok',   label: 'At or above recommended', cards: desktopGpus.filter(clearsRec) }
+] : [];
+const cheapest = (cards: any[]) => cards.filter(c => c.msrp_usd).sort((a, b) => a.msrp_usd - b.msrp_usd)[0] ?? null;
+
+// ------------------------------------------------------- frame-rate outlook
+/* A reference processor at the recommended level (or mid-range when the
+   publisher named none), so the numbers isolate the graphics card. */
+const refCpu = lowestAtOrAbove(cpus, game.rec_cpu_score) ?? cpus[Math.floor(cpus.length / 3)];
+const OUTLOOK = ['nvidia-geforce-gtx-1650', 'nvidia-geforce-gtx-1660-super', 'amd-radeon-rx-6600', 'nvidia-geforce-rtx-2060',
+  'amd-radeon-rx-7600', 'nvidia-geforce-rtx-4060', 'intel-arc-b580', 'nvidia-geforce-rtx-4060-ti', 'amd-radeon-rx-7800-xt',
+  'nvidia-geforce-rtx-4070-super', 'amd-radeon-rx-9070-xt', 'nvidia-geforce-rtx-5080'];
+/* The model is anchored at 60 FPS on the recommended card. For a light game on
+   a strong card it extrapolates to 700+ FPS, which no one should read as a
+   prediction; past this point the engine, the CPU and the monitor decide. */
+const FPS_CEILING = 300;
+const showFps = (v: number) => (v >= FPS_CEILING ? `${FPS_CEILING}+` : String(v));
+
+const outlook = scorable
+  ? OUTLOOK.map(s => desktopGpus.find(g => g.slug === s)).filter(Boolean).map((g: any) => ({
+      gpu: g,
+      fps: ['1080p', '1440p', '4k'].map(r => estimateFps(game, g.score, refCpu.score, r, 'high')),
+      band: clearsRec(g) ? 'ok' : clearsMin(g) ? 'warn' : 'bad'
+    }))
+  : [];
+
+// --------------------------------------------------------------- also runs
+/* Released games that ask less of a graphics card than this one: if a PC runs
+   this game at its recommended spec, it runs these too. Closest first. */
+const alsoRuns = scorable
+  ? releasedGames()
+      .filter(g => g.slug !== game.slug && g.rec_gpu_score != null && g.rec_gpu_score <= game.rec_gpu_score!)
+      .sort((a, b) => b.rec_gpu_score! - a.rec_gpu_score! || (b.release_year ?? 0) - (a.release_year ?? 0))
+      .slice(0, 6)
+  : releasedGames().filter(g => g.slug !== game.slug && g.genre === game.genre)
+      .sort((a, b) => (b.release_year ?? 0) - (a.release_year ?? 0)).slice(0, 6);
+
+// ---------------------------------------------------------------- wording
+const demand = demandLabelFor(game);
+const gb = (n: number | null | undefined) => (n != null ? `${n} GB` : null);
+const dueText = game.release_date && /\d{4}/.test(game.release_date)
+  ? `due ${game.release_date}` : 'with no announced release date';
+const upscalers = [game.supports_dlss === 1 && 'NVIDIA DLSS', game.supports_fsr === 1 && 'AMD FSR'].filter(Boolean) as string[];
+
+const titleYear = game.upcoming ? (game.release_year ?? SEO_YEAR) : SEO_YEAR;
+const title = fitTitle(
+  game.name,
+  [` System Requirements (${titleYear})`, ` PC Requirements (${titleYear})`, ` Requirements (${titleYear})`],
+  ` | ${SITE_NAME}`
+);
+
+const description = unpublished
+  ? fitMeta([
+      `${game.name} is ${dueText}.`,
+      'Its PC requirements are not published yet.',
+      "We re-read the game's Steam listing every month and fill them in the day they appear."
+    ])
+  : fitMeta([
+      scorable && minGpuEq ? `${game.name} runs on a ${minGpuEq.name} or better.` : `What ${game.name} needs on PC.`,
+      game.rec_ram_gb != null && `Recommended: ${game.rec_ram_gb} GB RAM${recGpuEq ? ` and a ${recGpuEq.name}-class card` : ''}.`,
+      game.upcoming ? `Due ${game.release_date}.` : 'Check it against your own parts.'
+    ]);
+
+// ------------------------------------------------------------------- FAQ
+/* One list feeds both the visible answers and the FAQPage schema, and every
+   entry needs the data it quotes — an answer is left out rather than printed
+   with a blank or a "null" in it. */
+const popularCards = ['nvidia-geforce-rtx-4060', 'amd-radeon-rx-6600', 'nvidia-geforce-gtx-1660-super']
+  .map(s => desktopGpus.find(g => g.slug === s)).filter(Boolean) as any[];
+
+const faq: { q: string; a: string }[] = [];
+if (unpublished) {
+  faq.push({
+    q: `When will ${game.name}'s PC requirements be published?`,
+    a: `Its publisher has not said. ${game.name} is ${dueText}; system requirements usually appear on the Steam page in the months before launch, and this page picks them up on our next monthly check.`
+  });
+} else {
+  if (game.min_gpu_text) faq.push({
+    q: `What is the lowest graphics card that runs ${game.name}?`,
+    a: `The publisher's minimum is ${game.min_gpu_text}.${minGpuEq ? ` The least powerful card we track that matches it is the ${minGpuEq.name}.` : ''}`
+  });
+  if (game.min_ram_gb != null || game.rec_ram_gb != null) faq.push({
+    q: `How much RAM does ${game.name} need?`,
+    a: [game.min_ram_gb != null && `${game.min_ram_gb} GB at minimum`, game.rec_ram_gb != null && `${game.rec_ram_gb} GB recommended`].filter(Boolean).join(', ') + '.'
+  });
+  if (game.min_storage_gb != null) faq.push({
+    q: `How much storage space does ${game.name} take?`,
+    a: `${game.min_storage_gb} GB of free space.${game.rec_storage_gb != null && game.rec_storage_gb >= 70 ? ' An SSD will noticeably shorten loading at that size.' : ''}`
+  });
+  if (scorable) for (const card of popularCards.slice(0, 2)) faq.push({
+    q: `Can a ${card.name} run ${game.name}?`,
+    a: clearsRec(card)
+      ? `Yes — it meets the recommended graphics card.`
+      : clearsMin(card)
+      ? `Yes, at the minimum spec: it clears the minimum card but not the recommended one, so expect lower settings.`
+      : `Not by the publisher's numbers: it falls short of the minimum graphics card.`
+  });
+  if (upscalers.length) faq.push({
+    q: `Does ${game.name} support DLSS or FSR?`,
+    a: `It supports ${upscalers.join(' and ')}. Turning it on is the cheapest way to more frames on a card near the minimum.`
+  });
+}
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": game.name,
+    "url": `${SITE_URL}/game/${game.slug}`,
+    "gamePlatform": "PC",
+    "genre": game.genre,
+    "applicationCategory": "Game",
+    ...(ogImage ? { "image": ogImage } : {}),
+    ...(game.developer ? { "author": { "@type": "Organization", "name": game.developer } } : {}),
+    ...(game.publisher ? { "publisher": { "@type": "Organization", "name": game.publisher } } : {}),
+    ...(game.upcoming
+      ? { "releasedEvent": { "@type": "PublicationEvent", "startDate": String(game.release_year ?? '') } }
+      : game.release_year ? { "datePublished": String(game.release_year) } : {}),
+    ...(game.min_os ? { "operatingSystem": game.min_os } : {}),
+    ...(game.min_cpu_text ? { "processorRequirements": game.min_cpu_text } : {}),
+    ...(game.min_ram_gb != null ? { "memoryRequirements": `${game.min_ram_gb} GB` } : {}),
+    ...(game.min_storage_gb != null ? { "storageRequirements": `${game.min_storage_gb} GB` } : {})
+  },
+  ...(faq.length ? [{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }] : [])
+];
+
+const rows: { part: string; min: string | null; rec: string | null; minEq?: any; recEq?: any; kind?: string }[] = [
+  { part: 'Graphics card', min: game.min_gpu_text, rec: game.rec_gpu_text, minEq: minGpuEq, recEq: recGpuEq, kind: 'gpu' },
+  { part: 'Processor', min: game.min_cpu_text, rec: game.rec_cpu_text, minEq: minCpuEq, recEq: recCpuEq, kind: 'cpu' },
+  { part: 'Memory', min: gb(game.min_ram_gb), rec: gb(game.rec_ram_gb) },
+  { part: 'Video memory', min: gb(game.min_vram_gb), rec: gb(game.rec_vram_gb) },
+  { part: 'Storage', min: gb(game.min_storage_gb), rec: gb(game.rec_storage_gb) },
+  { part: 'Windows', min: game.min_os, rec: null },
+  { part: 'DirectX', min: game.min_directx, rec: null }
+];
+---
+<BaseLayout title={title} description={description} jsonLd={schema} ogImage={ogImage}
+  keywords={`${game.name} system requirements, will ${game.name} run on my pc, ${game.name} minimum gpu, ${game.name} ram`}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Games', href: '/games' }, { name: game.name }]} />
+
+    {game.upcoming && (
+      <div class="release-bar">
+        <span class="rb-tag">Unreleased</span>
+        <span class="rb-date">
+          {game.release_date && /\d{4}/.test(game.release_date)
+            ? <>Due <b>{game.release_date}</b> on Steam</>
+            : <>Release date not announced yet</>}
+        </span>
+        {game.buzz && (
+          <a class="rb-buzz" href={game.buzz.source} target="_blank" rel="nofollow noopener">{game.buzz.label} ↗</a>
+        )}
+        <a class="rb-all" href={`/upcoming-games-${game.release_year ?? SEO_YEAR}`}>All {game.release_year ?? SEO_YEAR} releases →</a>
+      </div>
+    )}
+
+    {/* ============ SPEC SHEET HEADER ============ */}
+    <header class="sheet">
+      <div class="cover" data-kind={art.kind} style={art.kind !== 'cover' ? `--hue:${art.hue}` : undefined}>
+        <GameArt slug={game.slug} art={art} eager={true} sizes="(max-width: 720px) 160px, 220px"
+          className={art.kind === 'logo' ? 'logo' : art.kind === 'none' ? 'initials' : ''} />
+      </div>
+
+      <div class="sheet-main">
+        <span class="eyebrow">Spec sheet · {game.genre}{game.release_year ? ` · ${game.release_year}` : ''}</span>
+        <h1>{game.name} PC Requirements</h1>
+
+        {unpublished ? (
+          <p class="summary">
+            {game.name} is {dueText}, and its publisher <b>has not posted PC requirements yet</b>.
+            Everything below fills in automatically from the game's Steam listing once they do.
+          </p>
+        ) : (
+          <p class="summary">
+            {minGpuEq
+              ? <>To play it you need at least a <b>{minGpuEq.name}</b>-class graphics card</>
+              : <>The publisher's listing names no graphics card we can measure, so the table below gives their wording as written</>}
+            {recGpuEq && <>; to play it as the developers intended, aim for a <b>{recGpuEq.name}</b></>}.
+            {demand && <> Among the games we track, it is <b>{demand}</b>.</>}
+          </p>
+        )}
+
+        {!unpublished && (
+          <dl class="readouts">
+            <div><dt>Minimum GPU</dt><dd>{minGpuEq?.name ?? '—'}</dd></div>
+            <div><dt>Recommended GPU</dt><dd>{recGpuEq?.name ?? '—'}</dd></div>
+            <div><dt>RAM</dt><dd class="mono">{game.min_ram_gb != null ? `${game.min_ram_gb}${game.rec_ram_gb != null && game.rec_ram_gb !== game.min_ram_gb ? `–${game.rec_ram_gb}` : ''} GB` : '—'}</dd></div>
+            <div><dt>Disk</dt><dd class="mono">{gb(game.min_storage_gb) ?? '—'}</dd></div>
+          </dl>
+        )}
+
+        <div class="cta-row">
+          <a href={`/can-it-run?game=${game.slug}`} class="btn-primary">Will it run on my PC? <Icon name="arrow-right" /></a>
+          {upscalers.length > 0 && <span class="chips">{upscalers.map(u => <span class="chip-flag">{u.replace(/^(NVIDIA|AMD) /, '')}</span>)}{game.supports_ray_tracing === 1 && <span class="chip-flag">Ray tracing</span>}</span>}
+        </div>
+      </div>
+    </header>
+
+    {/* ============ THE LADDER ============ */}
+    {scorable && (
+      <section class="block">
+        <div class="block-head">
+          <h2>Which graphics cards clear it</h2>
+          <p>All {desktopGpus.length} desktop cards we track, sorted against the publisher's minimum and recommended card.</p>
+        </div>
+        <div class="ladder">
+          {bands.map(b => {
+            const c = cheapest(b.cards);
+            return (
+              <div class={`rung rung-${b.key}`}>
+                <span class="rung-count mono">{b.cards.length}</span>
+                <span class="rung-label">{b.label}</span>
+                {c && b.key !== 'bad' && <span class="rung-note">from the <a href={`/gpu/${c.slug}`}>{c.name}</a> (${c.msrp_usd} at launch)</span>}
+                {b.key === 'bad' && b.cards.length > 0 && <span class="rung-note">including the {b.cards.sort((x: any, y: any) => y.score - x.score)[0].name}</span>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    {/* ============ PUBLISHER TABLE ============ */}
+    <section class="block">
+      <div class="block-head">
+        <h2>What the publisher lists</h2>
+        <p>Quoted from the Steam store page{game.source ? <> — <a href={game.source} rel="nofollow noopener" target="_blank">see the original</a></> : ''}. Where we could place a named part, our closest match is underneath.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table spec">
+          <thead><tr><th>Part</th><th>Minimum</th><th>Recommended</th></tr></thead>
+          <tbody>
+            {rows.map(r => (
+              <tr>
+                <td>{r.part}</td>
+                <td>
+                  {r.min ? <span class="said">{r.min}</span> : <span class="blank">Publisher didn't say</span>}
+                  {r.minEq && <a class="match" href={`/${r.kind}/${r.minEq.slug}`}>matches {r.minEq.name}</a>}
+                </td>
+                <td>
+                  {r.rec ? <span class="said">{r.rec}</span> : <span class="blank">{r.part === 'Windows' || r.part === 'DirectX' ? 'Same as minimum' : "Publisher didn't say"}</span>}
+                  {r.recEq && <a class="match" href={`/${r.kind}/${r.recEq.slug}`}>matches {r.recEq.name}</a>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {game.notes && <p class="aside"><b>Publisher note:</b> {game.notes}</p>}
+    </section>
+
+    {/* ============ FRAME-RATE OUTLOOK ============ */}
+    {outlook.length > 0 && (
+      <section class="block">
+        <div class="block-head">
+          <h2>Frame-rate outlook, weakest card to strongest</h2>
+          <p>Modelled at the High preset without upscaling, next to a {refCpu.name}-class processor. Estimates, not recorded benchmarks — <a href="/editorial-standards">how the model works</a>.</p>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Card</th><th>1080p</th><th>1440p</th><th>4K</th><th>Against the specs</th></tr></thead>
+            <tbody>
+              {outlook.map(o => (
+                <tr>
+                  <td><a href={`/can-it-run/${game.slug}/${o.gpu.slug}`}>{o.gpu.name}</a></td>
+                  {o.fps.map(v => <td class="fps mono" data-v={v}>{showFps(v)}</td>)}
+                  <td><span class={`v ${o.band}`}>{o.band === 'ok' ? 'Recommended' : o.band === 'warn' ? 'Minimum' : 'Too slow'}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {/* ============ ANSWERS ============ */}
+    {faq.length > 0 && (
+      <section class="faq">
+        <h2>Answers about {game.name} on PC</h2>
+        {faq.map(f => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </section>
+    )}
+
+    {/* ============ ALSO RUNS ============ */}
+    {alsoRuns.length > 0 && (
+      <section class="block">
+        <div class="block-head">
+          <h2>{scorable ? `If your PC runs ${game.name}, it also runs` : `More ${game.genre} games`}</h2>
+          {scorable && <p>Released games whose recommended graphics card is no more demanding than this one's.</p>}
+        </div>
+        <div class="grid-auto">
+          {alsoRuns.map(g => <GameCard slug={g.slug} name={g.name} genre={g.genre} year={g.release_year} />)}
+        </div>
+      </section>
+    )}
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href={`/can-it-run?game=${game.slug}`}>Test your own parts</a></li>
+        <li><a href="/fps-estimator">Estimate your frame rate</a></li>
+        <li><a href="/bottleneck">Find your bottleneck</a></li>
+        <li><a href={`/gpu-tier-list`}>Graphics cards ranked for {SEO_YEAR}</a></li>
+        {game.upcoming
+          ? <li><a href={`/upcoming-games-${game.release_year ?? SEO_YEAR}`}>Other upcoming releases</a></li>
+          : <li><a href="/games">Browse every game</a></li>}
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .release-bar {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    margin: 0 0 18px; padding: 10px 14px;
+    background: rgb(var(--accent-rgb) / 0.08);
+    border: 1px solid rgb(var(--accent-rgb) / 0.35);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+  }
+  .rb-tag {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent-ink);
+    background: var(--accent); padding: 2px 8px; border-radius: 3px;
+  }
+  .rb-date { color: var(--text); }
+  .rb-buzz { color: var(--readout); font-size: 13px; }
+  .rb-all { margin-left: auto; color: var(--accent); font-weight: 700; }
+
+  /* ---- spec sheet header ---- */
+  .sheet {
+    display: grid; grid-template-columns: 200px 1fr; gap: 30px; align-items: start;
+    padding: 30px 0 34px; margin-bottom: 40px; border-bottom: 1px dashed var(--line-strong);
+  }
+  .cover {
+    aspect-ratio: 3 / 4; border-radius: var(--radius); overflow: hidden;
+    display: flex; align-items: center; justify-content: center; background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+  .cover[data-kind="cover"] :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover[data-kind="logo"], .cover[data-kind="none"] {
+    background:
+      radial-gradient(70% 50% at 50% 50%, rgb(5 7 14 / .9) 0%, rgb(5 7 14 / .4) 65%, transparent 100%),
+      linear-gradient(135deg, hsl(var(--hue) 45% 16%) 0%, var(--tile) 75%);
+  }
+  .cover :global(picture) { display: contents; }
+  .cover :global(.logo) { display: block; max-width: 80%; max-height: 58%; object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / .9)) drop-shadow(0 6px 22px rgb(0 0 0 / .7)); }
+  .cover :global(.initials) { font-family: var(--font-display); font-size: 50px; font-weight: 700; color: hsl(var(--hue) 70% 72%); }
+
+  .sheet-main h1 { font-size: clamp(26px, 4vw, 40px); margin: 6px 0 12px; }
+  .summary { color: var(--muted); line-height: 1.7; max-width: 64ch; }
+  .summary b { color: var(--text); }
+
+  .readouts {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 20px 0 0;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+  }
+  .readouts div { padding: 11px 14px; min-width: 0; }
+  .readouts div + div { border-left: 1px solid var(--line); }
+  .readouts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .readouts dd { margin: 3px 0 0; font-weight: 700; color: var(--readout); overflow-wrap: anywhere; line-height: 1.3; }
+
+  .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip-flag { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; padding: 3px 8px; border: 1px solid var(--line-strong); border-radius: 3px; color: var(--muted); }
+
+  /* ---- sections ---- */
+  .block { margin-bottom: 48px; padding: 0; }
+  .block-head { margin-bottom: 16px; }
+  .block-head h2 { font-size: 22px; }
+  .block-head p { color: var(--muted); font-size: 14.5px; margin-top: 6px; max-width: 72ch; }
+  .block-head a, .aside a { color: var(--accent); }
+
+  .ladder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .rung {
+    display: flex; flex-direction: column; gap: 3px; padding: 14px 16px;
+    background: var(--surface); border: 1px solid var(--line); border-top: 3px solid; border-radius: var(--radius-sm);
+  }
+  .rung-bad { border-top-color: var(--bad); }
+  .rung-warn { border-top-color: var(--warn); }
+  .rung-ok { border-top-color: var(--ok); }
+  .rung-count { font-size: 1.9rem; font-weight: 600; line-height: 1; }
+  .rung-bad .rung-count { color: var(--bad); }
+  .rung-warn .rung-count { color: var(--warn); }
+  .rung-ok .rung-count { color: var(--ok); }
+  .rung-label { font-weight: 700; }
+  .rung-note { color: var(--muted); font-size: 13.5px; }
+  .rung-note a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-strong); }
+
+  .spec td:first-child { color: var(--muted); white-space: nowrap; }
+  .said { display: block; color: var(--text); line-height: 1.45; }
+  .match { display: block; margin-top: 4px; font-size: 12px; color: var(--readout); }
+  .match:hover { color: var(--accent-deep); }
+  .blank { color: var(--faint); font-style: italic; font-size: 13px; }
+  .aside { color: var(--muted); font-size: 14px; margin-top: 14px; }
+
+  .fps { font-weight: 600; }
+  .v { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 3px; white-space: nowrap; }
+  .v.ok { background: rgb(var(--ok-rgb) / .12); color: var(--ok); }
+  .v.warn { background: rgb(var(--warn-rgb) / .12); color: var(--warn); }
+  .v.bad { background: rgb(var(--bad-rgb) / .12); color: var(--bad); }
+
+  @media (max-width: 760px) {
+    .sheet { grid-template-columns: 1fr; }
+    .cover { max-width: 160px; }
+    .readouts { grid-template-columns: 1fr 1fr; }
+    .readouts div:nth-child(3) { border-left: 0; }
+    .readouts div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .ladder { grid-template-columns: 1fr; }
+    .rb-all { margin-left: 0; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.fps').forEach(el => {
+    const v = parseInt(el.dataset.v || '0', 10);
+    el.style.color = v >= 90 ? 'var(--ok)' : v >= 60 ? 'var(--readout)' : v >= 30 ? 'var(--warn)' : 'var(--bad)';
+  });
+</script>

@@ -1,0 +1,95 @@
+---
+/**
+ * Cookie consent for Google Tag Manager, using Google Consent Mode v2.
+ *
+ * BaseLayout sets every consent type to "denied" before GTM loads, so no
+ * analytics cookie is written until the visitor accepts here. The choice is
+ * kept in localStorage under STORAGE_KEY (that storage is strictly necessary:
+ * it only remembers the answer) and re-applied on every page by the head
+ * script in BaseLayout. Rejecting is one click, same size and weight as
+ * accepting. Any element with [data-consent-open] reopens the banner.
+ *
+ * Only analytics_storage is ever granted: the site runs no advertising, so the
+ * ad_* signals stay denied whatever the visitor picks.
+ */
+export const STORAGE_KEY = 'consent.analytics';
+---
+<section class="consent" id="consent" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text" hidden>
+  <div class="consent-body">
+    <p class="consent-title" id="consent-title">Cookies for visit statistics</p>
+    <p class="consent-text" id="consent-text">
+      With your OK, Google Analytics counts visits so we can see which pages and tools are used. No ads, nothing sold.
+      Your answer is remembered and you can change it from the footer. <a href="/privacy">Privacy policy</a>
+    </p>
+  </div>
+  <div class="consent-actions">
+    <button type="button" class="consent-btn" data-consent="denied">Reject</button>
+    <button type="button" class="consent-btn" data-consent="granted">Accept</button>
+  </div>
+</section>
+
+<style>
+  .consent {
+    position: fixed; z-index: 80; left: 16px; right: 16px; bottom: 16px;
+    max-width: 760px; margin: 0 auto;
+    display: flex; gap: 16px; align-items: center;
+    padding: 14px 16px; background: var(--surface-2);
+    border: 1px solid var(--line-strong); border-left: 3px solid var(--readout);
+    border-radius: var(--radius); box-shadow: var(--shadow-soft);
+  }
+  .consent[hidden] { display: none; }
+  .consent-body { flex: 1; min-width: 0; }
+  .consent-title { font-weight: 700; font-size: 14.5px; margin-bottom: 2px; }
+  .consent-text { color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+  .consent-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .consent-actions { display: flex; gap: 8px; flex: none; }
+  /* Equal size and weight: rejecting must be as easy as accepting. */
+  .consent-btn {
+    min-width: 96px; min-height: 44px; padding: 0 16px;
+    font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+    color: var(--text); background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  }
+  .consent-btn:hover { border-color: var(--accent); }
+  @media (max-width: 640px) {
+    .consent { flex-direction: column; align-items: stretch; left: 10px; right: 10px; bottom: 10px; gap: 10px; }
+    .consent-actions > * { flex: 1; }
+  }
+</style>
+
+<script>
+  const KEY = 'consent.analytics';
+  const box = document.getElementById('consent') as HTMLElement | null;
+
+  const read = (): string | null => { try { return localStorage.getItem(KEY); } catch { return null; } };
+  const save = (v: string) => { try { localStorage.setItem(KEY, v); } catch { /* private mode: ask again next visit */ } };
+
+  function apply(choice: 'granted' | 'denied') {
+    const w = window as any;
+    w.dataLayer = w.dataLayer || [];
+    // gtag() is defined in BaseLayout's head; consent commands must reach the
+    // dataLayer as an `arguments` object, which is what gtag pushes.
+    const gtag = w.gtag || function () { w.dataLayer.push(arguments); };
+    gtag('consent', 'update', { analytics_storage: choice });
+    w.dataLayer.push({ event: 'consent_update', analytics_consent: choice });
+  }
+
+  if (box) {
+    if (read() === null) box.hidden = false;
+
+    box.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.consent === 'granted' ? 'granted' : 'denied';
+        save(choice);
+        apply(choice);
+        box.hidden = true;
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-consent-open]').forEach(el => {
+      el.addEventListener('click', () => {
+        box.hidden = false;
+        box.querySelector<HTMLButtonElement>('[data-consent="denied"]')?.focus();
+      });
+    });
+  }
+</script>

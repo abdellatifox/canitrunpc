@@ -1,0 +1,229 @@
+---
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getCpus, getGpus } from '../lib/db';
+import { releasedGames } from '../lib/games';
+import { cpuNeeded, perfOf, PAIRING_RES } from '../lib/perf';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitTitle, fitMeta } from '../lib/seo';
+
+const [cpus, gpus] = await Promise.all([getCpus(Astro.locals), getGpus(Astro.locals)]);
+const aSlug = Astro.url.searchParams.get('a');
+const bSlug = Astro.url.searchParams.get('b');
+const a = cpus.find(c => c.slug === aSlug) ?? null;
+const b = cpus.find(c => c.slug === bSlug) ?? null;
+const paired = Boolean(a && b && a.slug !== b.slug);
+
+const byMaker = [...new Set(cpus.map(c => c.brand))].sort().map(brand => ({
+  brand,
+  items: cpus.filter(c => c.brand === brand).sort((x, y) => x.name.localeCompare(y.name, 'en', { numeric: true }))
+}));
+
+type Chip = typeof cpus[number];
+// Only games that name a processor we can place.
+const games = releasedGames().filter(g => g.rec_cpu_score != null);
+const recCount = (c: Chip) => games.filter(g => c.score >= g.rec_cpu_score!).length;
+const heavyGames = games.filter(g => g.cpu_intensive === 1);
+const desktop = gpus.filter(g => !/laptop/i.test(g.name));
+// The fastest desktop card each chip can keep fully used at 1440p (same model as /bottleneck).
+const ceiling = (c: Chip) => desktop.filter(g => cpuNeeded(perfOf(g), PAIRING_RES) <= perfOf(c)).sort((x, y) => y.score - x.score)[0] ?? null;
+
+let view: any = null;
+if (paired) {
+  const A = a!, B = b!;
+  const lead = A.score === B.score ? null : A.score > B.score ? A : B;
+  const trail = lead ? (lead === A ? B : A) : null;
+  const gap = lead ? Math.round((lead.score / trail!.score - 1) * 100) : 0;
+  const onlyLead = lead ? heavyGames.filter(g => lead.score >= g.rec_cpu_score! && trail!.score < g.rec_cpu_score!) : [];
+  view = { A, B, lead, trail, gap, recA: recCount(A), recB: recCount(B), capA: ceiling(A), capB: ceiling(B), onlyLead };
+}
+
+// Without a pair: AMD against its nearest Intel rival among recent chips.
+const recentYear = Math.max(...cpus.map(c => c.release_year)) - 3;
+const recent = cpus.filter(c => c.release_year >= recentYear);
+const rivals = recent.filter(c => c.brand === 'AMD').slice(0, 10).map(x => {
+  const intel = recent.filter(c => c.brand === 'Intel').sort((p, q) => Math.abs(p.score - x.score) - Math.abs(q.score - x.score))[0];
+  return intel ? [x, intel] as const : null;
+}).filter(Boolean) as (readonly [Chip, Chip])[];
+
+const title = paired
+  ? fitTitle(`${a!.name} vs ${b!.name}`, [` for Gaming (${SEO_YEAR})`, ' for Gaming', ''], ` | ${SITE_NAME}`)
+  : `Compare Two Processors for Gaming (${SEO_YEAR}) | ${SITE_NAME}`;
+const description = paired
+  ? fitMeta([
+      view.lead ? `For gaming, the ${view.lead.name} scores ${view.gap}% higher than the ${view.trail.name} on our index.` : `The ${a!.name} and ${b!.name} score the same for gaming on our index.`,
+      'Cores, speed, power, the fastest card each suits, and games each meets at the recommended processor.'
+    ])
+  : `Put any two of ${cpus.length} processors side by side for gaming: index, cores, threads, speed, power, and how fast a graphics card each can keep up with.`;
+
+const faq = paired ? [
+  {
+    q: `Is the ${a!.name} better than the ${b!.name} for gaming?`,
+    a: view.lead
+      ? `${view.lead === a ? 'Yes' : 'No'} — on our gaming index the ${view.lead.name} scores ${view.lead.score} and the ${view.trail.name} ${view.trail.score}.`
+      : 'They score the same for gaming; cores, power draw and platform cost are the tie-breakers.'
+  },
+  {
+    q: 'What is the fastest graphics card each one can keep up with?',
+    a: `At 1440p, by our bottleneck model: ${view.capA ? `the ${view.capA.name} for the ${a!.name}` : `no close match for the ${a!.name}`}, and ${view.capB ? `the ${view.capB.name} for the ${b!.name}` : `no close match for the ${b!.name}`}.`
+  }
+] : [];
+
+const schema: object[] = [{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": `Processor comparison for gaming (${SEO_YEAR})`,
+  "url": `${SITE_URL}/compare-cpu`,
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}];
+if (faq.length) schema.push({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+});
+
+const rows = paired ? [
+  { label: 'Gaming index', a: view.A.score, b: view.B.score, fmt: (v: number) => String(v), better: 'high' },
+  { label: 'Cores', a: view.A.cores, b: view.B.cores, fmt: (v: number) => String(v), better: 'high' },
+  { label: 'Threads', a: view.A.threads, b: view.B.threads, fmt: (v: number) => String(v), better: 'high' },
+  { label: 'Top speed', a: view.A.boost_ghz, b: view.B.boost_ghz, fmt: (v: number) => `${v} GHz`, better: 'high' },
+  { label: 'Rated power', a: view.A.tdp_watts, b: view.B.tdp_watts, fmt: (v: number) => `${v} W`, better: 'low' },
+  { label: 'Games at recommended', a: view.recA, b: view.recB, fmt: (v: number) => String(v), better: 'high' }
+] : [];
+const winSide = (r: any) => (r.a === r.b ? '' : r.better === 'high' ? (r.a > r.b ? 'a' : 'b') : (r.a < r.b ? 'a' : 'b'));
+const barW = (r: any, v: number) => Math.round((v / Math.max(r.a, r.b, 1)) * 100);
+---
+<BaseLayout title={title} description={description} jsonLd={schema}
+  canonical={paired ? `${SITE_URL}/compare-cpu?a=${a!.slug}&b=${b!.slug}` : `${SITE_URL}/compare-cpu`}
+  keywords={paired ? `${a!.name} vs ${b!.name}, ${a!.name} or ${b!.name} for gaming` : `compare processors, cpu comparison ${SEO_YEAR}, amd vs intel gaming`}>
+  <div class="wrap">
+    <Breadcrumbs items={paired
+      ? [{ name: 'Processors', href: '/cpus' }, { name: 'Compare', href: '/compare-cpu' }, { name: `${a!.name} vs ${b!.name}` }]
+      : [{ name: 'Processors', href: '/cpus' }, { name: 'Compare' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Head to head</span>
+      <h1>{paired ? `${a!.name} vs ${b!.name}` : 'Compare two processors'}</h1>
+      <p class="lede">
+        {paired
+          ? (view.lead
+              ? <>For gaming, the <b>{view.lead.name}</b> is {view.gap}% ahead on our index. The rows below show where the other one still wins.</>
+              : <>Level for gaming on our index. Cores, power and the rest of the platform decide it.</>)
+          : <>Choose two chips. The comparison is about games: gaming index, cores and speed, power, and the fastest graphics card each can keep up with.</>}
+      </p>
+    </header>
+
+    <form class="picker" method="get" action="/compare-cpu">
+      {(['a', 'b'] as const).map((k, i) => (
+        <label>
+          <span>{i === 0 ? 'Processor one' : 'Processor two'}</span>
+          <select name={k} required>
+            <option value="">Choose a processor</option>
+            {byMaker.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(c => <option value={c.slug} selected={c.slug === (k === 'a' ? aSlug : bSlug)}>{c.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+      ))}
+      <button type="submit" class="btn btn-primary">Compare</button>
+    </form>
+
+    {paired && (
+      <>
+        <section class="duel" aria-label="Side by side">
+          <div class="names"><span></span><a href={`/cpu/${a!.slug}`}>{a!.name}</a><a href={`/cpu/${b!.slug}`}>{b!.name}</a></div>
+          {rows.map(r => {
+            const w = winSide(r);
+            return (
+              <div class="row">
+                <span class="lbl">{r.label}</span>
+                <span class={`side ${w === 'a' ? 'win' : ''}`}><i style={`width:${barW(r, r.a)}%`}></i><b class="mono">{r.fmt(r.a)}</b></span>
+                <span class={`side ${w === 'b' ? 'win' : ''}`}><i style={`width:${barW(r, r.b)}%`}></i><b class="mono">{r.fmt(r.b)}</b></span>
+              </div>
+            );
+          })}
+          <div class="row txt"><span class="lbl">Released</span><span>{a!.release_year}</span><span>{b!.release_year}</span></div>
+          <div class="row txt">
+            <span class="lbl">Feeds cards up to (1440p)</span>
+            <span>{view.capA ? <a href={`/gpu/${view.capA.slug}`}>{view.capA.name}</a> : 'no close match'}</span>
+            <span>{view.capB ? <a href={`/gpu/${view.capB.slug}`}>{view.capB.name}</a> : 'no close match'}</span>
+          </div>
+        </section>
+
+        {view.onlyLead.length > 0 && (
+          <section class="block">
+            <h2>Processor-heavy games only the {view.lead.name} meets</h2>
+            <ul class="only">
+              {view.onlyLead.slice(0, 8).map((g: any) => <li><a href={`/game/${g.slug}`}>{g.name}</a></li>)}
+            </ul>
+          </section>
+        )}
+
+        <section class="faq">
+          <h2>Quick answers</h2>
+          {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+        </section>
+      </>
+    )}
+
+    {!paired && rivals.length > 0 && (
+      <section class="block">
+        <h2>AMD against its closest Intel rival</h2>
+        <ul class="only">
+          {rivals.map(([x, y]) => <li><a href={`/compare-cpu?a=${x.slug}&b=${y.slug}`}>{x.name} vs {y.name}</a></li>)}
+        </ul>
+      </section>
+    )}
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/cpu-tier-list">{SEO_YEAR} processor tiers</a></li>
+        <li><a href="/bottleneck">Pair a processor with your card</a></li>
+        <li><a href="/game-list/cpu-intensive-games">Games that lean on the processor</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 20px; }
+  .head h1 { font-size: clamp(26px, 4.4vw, 40px); margin: 6px 0 12px; }
+  .lede b { color: var(--text); }
+  .picker { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 14px; margin-bottom: 32px; }
+  .picker label { display: grid; gap: 6px; }
+  .picker span { font-size: 12px; color: var(--faint); }
+  .picker select { min-height: 44px; background: var(--bg); color: var(--text); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 8px 10px; font: inherit; width: 100%; }
+
+  .duel { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 40px; }
+  .duel > div { display: grid; grid-template-columns: minmax(110px, .8fr) 1fr 1fr; gap: 14px; align-items: center; padding: 10px 14px; background: var(--surface); }
+  .duel > div + div { border-top: 1px solid var(--line); }
+  .names { font-weight: 700; font-size: 14px; background: var(--surface-2) !important; }
+  .names a:hover, .txt a:hover { color: var(--accent); }
+  .lbl { color: var(--muted); font-size: 13px; }
+  .side { position: relative; display: block; height: 26px; }
+  .side i { position: absolute; inset: 0 auto 0 0; background: rgb(var(--readout-rgb) / .14); border-radius: 3px; }
+  .side.win i { background: rgb(var(--ok-rgb) / .22); }
+  .side b { position: relative; line-height: 26px; padding-left: 8px; font-size: 14px; }
+  .side.win b { color: var(--ok); }
+  .txt span { font-size: 13.5px; }
+
+  .block { margin-bottom: 40px; }
+  .block h2 { font-size: 20px; margin-bottom: 12px; }
+  .only { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; }
+  .only a { display: block; padding: 9px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; }
+  .only a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+
+  @media (max-width: 700px) {
+    .picker { grid-template-columns: 1fr; }
+    .duel > div { grid-template-columns: 1fr 1fr; row-gap: 4px; }
+    .duel .lbl { grid-column: 1 / -1; }
+    .names span { display: none; }
+  }
+</style>

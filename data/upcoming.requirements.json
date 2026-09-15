@@ -1,0 +1,2556 @@
+{
+ "games": {
+  "388860": {
+   "appid": 388860,
+   "name": "Judas",
+   "slug": "judas",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Ghost Story Games"
+   ],
+   "publishers": [
+    "Ghost Story Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/388860/93e7815cd551e5e796310ae2a8c6efd980b463dc/header.jpg?t=1775684480",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/388860/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1340720": {
+   "appid": 1340720,
+   "name": "State of Decay 3",
+   "slug": "state-of-decay-3",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Undead Labs"
+   ],
+   "publishers": [
+    "Xbox Game Studios"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1340720/45dc128cbf1d0498c8ca15663d60aafbf33690e6/header.jpg?t=1780854541",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1340720/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1373530": {
+   "appid": 1373530,
+   "name": "Militsioner",
+   "slug": "militsioner",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "TALLBOYS"
+   ],
+   "publishers": [
+    "CRITICAL REFLEX"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Indie"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1373530/ab9a2c7ad1f60db59a73b7938809248e764fd5ee/header.jpg?t=1787921468",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows 7/8/10 64bit",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": "20 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 7",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": 20,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1373530/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1731290": {
+   "appid": 1731290,
+   "name": "SPINE - This is Gun Fu",
+   "slug": "spine-this-is-gun-fu",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Nekki"
+   ],
+   "publishers": [
+    "Nekki"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1731290/c0b2356cff39a427cd398a832e6f34f7db0d4ae1/header.jpg?t=1789118066",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": "Intel Core i5-6400 or equivalent",
+     "gpu": "NVIDIA GeForce GTX 1070 or equivalent",
+     "ram": "8 GB RAM",
+     "storage": "30 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 11",
+    "ramGb": 8,
+    "storageGb": 30,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1070",
+     "perf": 27,
+     "vramGb": 8
+    },
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": "Intel Core i7-8700 or equivalent",
+     "gpu": "NVIDIA GeForce RTX 2070 or equivalent",
+     "ram": "16 GB RAM",
+     "storage": "30 GB available space",
+     "directx": "Version 12",
+     "notes": "Personal Neural Interface is recommended"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 30,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 2070",
+     "perf": 34,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i7-8700",
+     "perf": 59
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1731290/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1757350": {
+   "appid": 1757350,
+   "name": "ILL",
+   "slug": "ill",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Team Clout inc."
+   ],
+   "publishers": [
+    "Team Clout inc."
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1757350/d612df21fe4a2fac7ff8e639ab74fbd059df692c/header.jpg?t=1780439134",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/1757350/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1857810": {
+   "appid": 1857810,
+   "name": "DRAGON BALL XENOVERSE 3",
+   "slug": "dragon-ball-xenoverse-3",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Dimps Corporation"
+   ],
+   "publishers": [
+    "Bandai Namco Entertainment Inc."
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1857810/490f0970c1a2e15663100ae2a265a4b694832e46/header.jpg?t=1788505202",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1857810/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1884870": {
+   "appid": 1884870,
+   "name": "The Wolf Among Us 2",
+   "slug": "the-wolf-among-us-2",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Telltale"
+   ],
+   "publishers": [
+    "Telltale"
+   ],
+   "genres": [
+    "Adventure",
+    "Casual"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1884870/0d38aba1b9452dff25993cf241211c2c8c85221c/header.jpg?t=1781016058",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1884870/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1952620": {
+   "appid": 1952620,
+   "name": "The Lost Wild",
+   "slug": "the-lost-wild",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Great Ape Games"
+   ],
+   "publishers": [
+    "Annapurna Interactive"
+   ],
+   "genres": [
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1952620/c4a4cc62ec8b70700df7aa8f981513f17d170a89/header.jpg?t=1781547914",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1952620/",
+   "fetchedAt": "2026-09-15"
+  },
+  "1967610": {
+   "appid": 1967610,
+   "name": "Turok: Origins",
+   "slug": "turok-origins",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Saber Interactive"
+   ],
+   "publishers": [
+    "Saber Interactive"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1967610/2812e87028a98ee3ee38ec107f88c9e343023263/header.jpg?t=1789045070",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/1967610/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2017940": {
+   "appid": 2017940,
+   "name": "Pony Island 2: Panda Circus",
+   "slug": "pony-island-2-panda-circus",
+   "comingSoon": true,
+   "releaseDate": "Apr 27, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Daniel Mullins Games"
+   ],
+   "publishers": [
+    "Daniel Mullins Games"
+   ],
+   "genres": [
+    "Adventure",
+    "Indie"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2017940/header.jpg?t=1787687297",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 7",
+     "cpu": "Intel Core i5-760 (4 * 2800); AMD Athlon II X4 645 AM3 (4 * 3100)",
+     "gpu": "GeForce GTX 550 Ti (3072 VRAM); Radeon HD 6850 (1024 VRAM)",
+     "ram": "4 GB RAM",
+     "storage": "4 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 7",
+    "directx": null,
+    "ramGb": 4,
+    "storageGb": 4,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 550 Ti",
+     "perf": 4,
+     "vramGb": 1
+    },
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": "Intel Core i5-3470 (4 * 3200); AMD FX-4350 (4 * 4200)",
+     "gpu": "GeForce GTX 1050 2048 VRAM; Radeon RX 460 4096 VRAM",
+     "ram": "8 GB RAM",
+     "storage": "4 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 8,
+    "storageGb": 4,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1050",
+     "perf": 9,
+     "vramGb": 2
+    },
+    "cpu": {
+     "name": "Intel Core i5-3470",
+     "perf": 34
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2017940/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2050420": {
+   "appid": 2050420,
+   "name": "ARK 2",
+   "slug": "ark-2",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Studio Wildcard",
+    "Grove Street Games"
+   ],
+   "publishers": [
+    "Studio Wildcard"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Indie",
+    "Massively Multiplayer",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050420/header.jpg?t=1681748704",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2050420/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2161710": {
+   "appid": 2161710,
+   "name": "NO LAW",
+   "slug": "no-law",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Neon Giant"
+   ],
+   "publishers": [
+    "KRAFTON, Inc."
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2161710/6f386ecc7a0527b0c539b84eb5aa6f8f758e8c11/header.jpg?t=1787883186",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": null,
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": null,
+    "directx": "DirectX 12",
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2161710/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2235430": {
+   "appid": 2235430,
+   "name": "Holstin",
+   "slug": "holstin",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Sonka"
+   ],
+   "publishers": [
+    "Team17"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2235430/7c1bfa85b8656051ee02b8e4b761274a4e4f9fb7/header_alt_assets_0.jpg?t=1788514319",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 7",
+     "cpu": "AMD Ryzen 3 1200 ／ Intel Core i5-7500",
+     "gpu": "3GB VRAM",
+     "ram": "6 GB RAM",
+     "storage": "3 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Windows 7",
+    "directx": "DirectX 11",
+    "ramGb": 6,
+    "storageGb": 3,
+    "vramGb": 3,
+    "gpu": null,
+    "cpu": {
+     "name": "AMD Ryzen 3 1200",
+     "perf": 30
+    },
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2235430/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2439280": {
+   "appid": 2439280,
+   "name": "Clockwork Revolution",
+   "slug": "clockwork-revolution",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "inXile Entertainment"
+   ],
+   "publishers": [
+    "Xbox Game Studios"
+   ],
+   "genres": [
+    "Action",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2439280/19eb8ba017772920c7c6bf4287c0403b9675425d/header.jpg?t=1788707156",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2439280/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2581850": {
+   "appid": 2581850,
+   "name": "HUMANKIND™ 2",
+   "slug": "humankind-2",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "AMPLITUDE Studios"
+   ],
+   "publishers": [
+    "AMPLITUDE Studios"
+   ],
+   "genres": [
+    "Strategy"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2581850/0f791d00cda696baab2225f7b497408ad381f3ca/header.jpg?t=1788275034",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows® 10 (64-bit)",
+     "cpu": "Intel® Core™ i5-4430 (quad-core) / AMD® FX-Series™ FX-8350 (quad-core)",
+     "gpu": "NVIDIA® GeForce® GTX 960 (4 GB) / AMD® Radeon™ RX 5500 XT (8 GB)",
+     "ram": "8 GB RAM",
+     "storage": "20 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Windows",
+    "directx": "DirectX 11",
+    "ramGb": 8,
+    "storageGb": 20,
+    "vramGb": 4,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 960",
+     "perf": 12,
+     "vramGb": 2
+    },
+    "cpu": {
+     "name": "AMD FX-8350",
+     "perf": 21
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows® 11 (64-bit)",
+     "cpu": "Intel® Core™ i7-6700 (quad-core) / AMD® Ryzen™ 5 1500X (quad-core)",
+     "gpu": "NVIDIA® GeForce® GTX 1070 (8 GB) / AMD® Radeon™ RX 5700 XT (8 GB)",
+     "ram": "12 GB RAM",
+     "storage": "20 GB available space",
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": "Windows",
+    "directx": "DirectX 12",
+    "ramGb": 12,
+    "storageGb": 20,
+    "vramGb": 8,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1070",
+     "perf": 27,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 1500X",
+     "perf": 36
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2581850/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2590240": {
+   "appid": 2590240,
+   "name": "METRO 2039",
+   "slug": "metro-2039",
+   "comingSoon": true,
+   "releaseDate": "Feb 4, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "4A Games"
+   ],
+   "publishers": [
+    "Deep Silver"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2590240/6998fb70f896b0f155061de0b472a8262bd06ef9/header.jpg?t=1788444240",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2590240/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2719590": {
+   "appid": 2719590,
+   "name": "Light No Fire",
+   "slug": "light-no-fire",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Hello Games"
+   ],
+   "publishers": [
+    "Hello Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2719590/header.jpg?t=1761303632",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2719590/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2769570": {
+   "appid": 2769570,
+   "name": "Fable",
+   "slug": "fable",
+   "comingSoon": true,
+   "releaseDate": "Feb 23, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Playground Games"
+   ],
+   "publishers": [
+    "Xbox Game Studios"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2769570/d2ffd7e15a91f3e5485601d3d876988ba3a859d7/header.jpg?t=1788984944",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 22H2",
+     "cpu": "AMD Ryzen 5 2600 / Intel i7‐6850K",
+     "gpu": "AMD Radeon RX 6600 / Nvidia RTX 5050 / NVIDIA GeForce RTX 2060 / Intel A580",
+     "ram": "12 GB RAM",
+     "storage": "135 GB available space",
+     "directx": "Version 12",
+     "notes": "SSD required"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 12,
+    "storageGb": 135,
+    "vramGb": null,
+    "gpu": {
+     "name": "AMD Radeon RX 6600",
+     "perf": 29,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 2600",
+     "perf": 44
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10 22H2",
+     "cpu": "AMD Ryzen 5 5600 / Intel i5‐11600KF",
+     "gpu": "AMD Radeon RX 6700 XT/ NVIDIA GeForce RTX 3060TI",
+     "ram": "16 GB RAM",
+     "storage": "135 GB available space",
+     "directx": "Version 12",
+     "notes": "SSD required"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 135,
+    "vramGb": null,
+    "gpu": {
+     "name": "AMD Radeon RX 6700 XT",
+     "perf": 45,
+     "vramGb": 12
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 5600",
+     "perf": 67
+    },
+    "cpuFloor": null
+   },
+   "buzz": {
+    "label": "Jumped to No. 3 in Steam wishlist adds after its June 2026 date reveal (~125k)",
+    "source": "https://www.gamer.org/the-most-wishlisted-games-on-steam-right-now-and-which-ones-will-actually-ship/"
+   },
+   "source": "https://store.steampowered.com/app/2769570/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2838950": {
+   "appid": 2838950,
+   "name": "Game of Thrones: War for Westeros",
+   "slug": "game-of-thrones-war-for-westeros",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "PlaySide"
+   ],
+   "publishers": [
+    "PlaySide"
+   ],
+   "genres": [
+    "Strategy"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2838950/e3bd62fe6ba434d6e333f1b22ea3378e77be932c/header.jpg?t=1787820939",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2838950/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2849490": {
+   "appid": 2849490,
+   "name": "Outward 2",
+   "slug": "outward-2",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Nine Dots Studio"
+   ],
+   "publishers": [
+    "Nine Dots Publishing",
+    "Gamersky Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2849490/9858db3f4e8efe5050f2fb6c1266b377aa958d35/header.jpg?t=1787816529",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "WINDOWS 10",
+     "cpu": "Ryzen 3 1300X",
+     "gpu": "GeForce GTX 960",
+     "ram": "8 GB RAM",
+     "storage": "25 GB available space",
+     "directx": null,
+     "notes": "You can also go below Minimum and play our Potato mode. We don't guarantee a 100% gameplay parity but it should be playable"
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 8,
+    "storageGb": 25,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 960",
+     "perf": 12,
+     "vramGb": 2
+    },
+    "cpu": {
+     "name": "AMD Ryzen 3 1300X",
+     "perf": 32
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": "Ryzen 5 5600X",
+     "gpu": "GeForce RTX 3060",
+     "ram": "16 GB RAM",
+     "storage": "25 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": 25,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 3060 12GB",
+     "perf": 34,
+     "vramGb": 12
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 5600X",
+     "perf": 68
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2849490/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2865960": {
+   "appid": 2865960,
+   "name": "SAW: Genesis",
+   "slug": "saw-genesis",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Broken Mirror Games",
+    "Anshar Studios"
+   ],
+   "publishers": [
+    "Bloober Team NA"
+   ],
+   "genres": [
+    "Action",
+    "Early Access"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2865960/7ff5dae7b5d97701a908f18e828f33a9eaa6ee16/header.jpg?t=1786366758",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 11 (25H2)",
+     "cpu": "Intel Core i5-14400F",
+     "gpu": "NVIDIA GeForce RTX 3070 8GB",
+     "ram": "16 GB RAM",
+     "storage": "15 GB available space",
+     "directx": "Version 12",
+     "notes": "Storage - NVMe SSD"
+    },
+    "os": "Windows 11",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 15,
+    "vramGb": 8,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 3070",
+     "perf": 51,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i5-14400",
+     "perf": 74
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11 (25H2)",
+     "cpu": "Intel Core i5-14400F",
+     "gpu": "NVIDIA GeForce RTX 5060 8GB",
+     "ram": "16 GB RAM",
+     "storage": "15 GB available space",
+     "directx": "Version 12",
+     "notes": "Storage - NVMe SSD"
+    },
+    "os": "Windows 11",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 15,
+    "vramGb": 8,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 5060",
+     "perf": 41,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i5-14400",
+     "perf": 74
+    },
+    "cpuFloor": null
+   },
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/2865960/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2873440": {
+   "appid": 2873440,
+   "name": "Chrono Odyssey",
+   "slug": "chrono-odyssey",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Chrono Studio"
+   ],
+   "publishers": [
+    "Kakao Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Massively Multiplayer",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2873440/de48f2d77db5eb14226739d563fdd68332c39e30/header.jpg?t=1788925974",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Window 10",
+     "cpu": "Intel Core i5-3570K / AMD FX-8310",
+     "gpu": "NVIDIA GeForce GTX 1660 Ti / Radeon RX 6600",
+     "ram": "16 GB RAM",
+     "storage": "50 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Window 10",
+    "directx": "DirectX 11",
+    "ramGb": 16,
+    "storageGb": 50,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1660 Ti",
+     "perf": 25,
+     "vramGb": 6
+    },
+    "cpu": {
+     "name": "Intel Core i5-3570K",
+     "perf": 37
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Window 10",
+     "cpu": "Intel Core i7 - 12700k / AMD Ryzen 5 5600x",
+     "gpu": "NVIDIA GeForce RTX 3070 / Radeon RX 6800 XT",
+     "ram": "32 GB RAM",
+     "storage": "50 GB available space",
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": "Window 10",
+    "directx": "DirectX 12",
+    "ramGb": 32,
+    "storageGb": 50,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 3070",
+     "perf": 51,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 5600X",
+     "perf": 68
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2873440/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2924520": {
+   "appid": 2924520,
+   "name": "ONTOS",
+   "slug": "ontos",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Frictional Games"
+   ],
+   "publishers": [
+    "Frictional Games",
+    "Kepler Interactive"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Indie"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2924520/25a1673ad2ea3c169f67a354fbfa14f37fdd4201/header.jpg?t=1787688809",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2924520/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2956040": {
+   "appid": 2956040,
+   "name": "PVKK: Planetenverteidigungskanonenkommandant",
+   "slug": "pvkk-planetenverteidigungskanonenkommandant",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Bippinbits"
+   ],
+   "publishers": [
+    "Bippinbits",
+    "Kepler Interactive"
+   ],
+   "genres": [
+    "Action",
+    "Indie",
+    "Simulation"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2956040/header.jpg?t=1778169430",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 and later",
+     "cpu": "Intel Core i5-750 / AMD Phenom II X4-810",
+     "gpu": "Nvidia GTX 1070 6GB / AMD Radeon RX 570 8 GB",
+     "ram": "16 GB RAM",
+     "storage": "5 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": 5,
+    "vramGb": 6,
+    "gpu": {
+     "name": "AMD Radeon RX 570 4GB",
+     "perf": 18,
+     "vramGb": 4
+    },
+    "cpu": {
+     "name": "Intel Core i5-750",
+     "perf": 18
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10 and later",
+     "cpu": "Intel Core i7-7700K / AMD Ryzen 5 PRO 3350GE",
+     "gpu": "Nvidia GTX 2080 8 GB / AMD Radeon RX 5700 8 GB",
+     "ram": "16 GB RAM",
+     "storage": "5 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": 5,
+    "vramGb": 8,
+    "gpu": {
+     "name": "AMD Radeon RX 5700",
+     "perf": 34,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i7-7700K",
+     "perf": 57
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2956040/",
+   "fetchedAt": "2026-09-15"
+  },
+  "2963950": {
+   "appid": 2963950,
+   "name": "Persona 4 Revival ",
+   "slug": "persona-4-revival",
+   "comingSoon": true,
+   "releaseDate": "Feb 17, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "ATLUS"
+   ],
+   "publishers": [
+    "SEGA"
+   ],
+   "genres": [
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2963950/e83b7da1c2e9ddbed1a27038bd86e9714b2aa893/header.jpg?t=1788989521",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/2963950/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3010850": {
+   "appid": 3010850,
+   "name": "Gears of War: E-Day",
+   "slug": "gears-of-war-e-day",
+   "comingSoon": true,
+   "releaseDate": "Oct 6, 2026",
+   "expectedYear": 2026,
+   "developers": [
+    "The Coalition"
+   ],
+   "publishers": [
+    "Xbox Game Studios"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3010850/1abb0c5ef76c14f463dd6e3964adb64f984237d2/header.jpg?t=1789417847",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 64-bit 22H 19045.7291",
+     "cpu": "AMD Ryzen 5 2600X / Intel i7‑6850K / i5‑10400",
+     "gpu": "Hardware Ray Tracing capable GPU is required. NVIDIA GeForce RTX 5050 / NVIDIA GeForce RTX 2060 / AMD Radeon RX 6600 / Radeon RX 9060",
+     "ram": "12 GB RAM",
+     "storage": "130 GB available space",
+     "directx": "Version 12",
+     "notes": "Storage: SSD required (solid-state drive)"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 12,
+    "storageGb": 130,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 2060",
+     "perf": 29,
+     "vramGb": 6
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 2600X",
+     "perf": 46
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11 64bit (25H2) or newer",
+     "cpu": "AMD Ryzen 5 5600 / Intel i5-11600K",
+     "gpu": "NVIDIA GeForce RTX 5060 / NVIDIA GeForce RTX 3060ti / AMD Radeon RX 6700 XT / Radeon RX 9060 XT",
+     "ram": "16 GB RAM",
+     "storage": "130 GB available space",
+     "directx": "Version 12",
+     "notes": "Storage: SSD required (solid-state drive)"
+    },
+    "os": "Windows 11",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 130,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 5060",
+     "perf": 41,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 5600",
+     "perf": 67
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3010850/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3130220": {
+   "appid": 3130220,
+   "name": "Sagas of Lumin",
+   "slug": "sagas-of-lumin",
+   "comingSoon": true,
+   "releaseDate": "Feb 4, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Elos Games And Arts"
+   ],
+   "publishers": [
+    "GameDev.ist"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Indie",
+    "RPG",
+    "Simulation"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3130220/edd24b61ce2157f6a90199377527f32eceb986c3/header.jpg?t=1786972100",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 64bit",
+     "cpu": "AMD Ryzen 5 1600 / Intel Core i5-8400",
+     "gpu": "NVIDIA GeForce GTX 1060 6 GB / AMD Radeon RX 580 8GB",
+     "ram": "12 GB RAM",
+     "storage": "60 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 11",
+    "ramGb": 12,
+    "storageGb": 60,
+    "vramGb": 6,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1060 6GB",
+     "perf": 19,
+     "vramGb": 6
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 1600",
+     "perf": 40
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10 64bit",
+     "cpu": "AMD Ryzen 5 5500 / Intel Core i7-8700K",
+     "gpu": "NVIDIA GeForce RTX 2070 / AMD RADEON RX 5700 XT / INTEL Arc A750",
+     "ram": "16 GB RAM",
+     "storage": "60 GB available space",
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 60,
+    "vramGb": null,
+    "gpu": {
+     "name": "Intel Arc A750",
+     "perf": 30,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 5500",
+     "perf": 58
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3130220/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3216600": {
+   "appid": 3216600,
+   "name": "KINGDOM HEARTS IV",
+   "slug": "kingdom-hearts-iv",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Square Enix"
+   ],
+   "publishers": [
+    "Square Enix"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3216600/cb9efcc0c932cb31f32d4f89c0709bcc805798eb/header.jpg?t=1788158325",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3216600/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3230960": {
+   "appid": 3230960,
+   "name": "EXODUS",
+   "slug": "exodus",
+   "comingSoon": true,
+   "releaseDate": "Apr 7, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Archetype Entertainment"
+   ],
+   "publishers": [
+    "Wizards of the Coast"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3230960/c7daff445142b7d24677b2e962bd84314da0b813/header.jpg?t=1787683475",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3230960/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3292470": {
+   "appid": 3292470,
+   "name": "Tides of Annihilation",
+   "slug": "tides-of-annihilation",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Eclipse Glow Games"
+   ],
+   "publishers": [
+    "Eclipse Glow Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3292470/6ff5e6000c8ca199f44af13ec40a683e1921b114/header.jpg?t=1788250889",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": null,
+     "cpu": null,
+     "gpu": null,
+     "ram": "16 GB RAM",
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": null,
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3292470/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3524720": {
+   "appid": 3524720,
+   "name": "HAEX",
+   "slug": "haex",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Dead Astronauts"
+   ],
+   "publishers": [
+    "Dead Astronauts"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Early Access"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3524720/f2b2f31e99d12986502485d9cebff05a10c5c2ac/header.jpg?t=1787250680",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/3524720/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3558670": {
+   "appid": 3558670,
+   "name": "Tomb Raider: Legacy of Atlantis",
+   "slug": "tomb-raider-legacy-of-atlantis",
+   "comingSoon": true,
+   "releaseDate": "Feb 12, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Crystal Dynamics",
+    "Flying Wild Hog"
+   ],
+   "publishers": [
+    "Amazon Game Studios"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3558670/d0d4229807e9bd939c2374cb94a1264aa1386398/header.jpg?t=1780440913",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10/11 64 Bit",
+     "cpu": "Intel i5-8600 || AMD Ryzen 5 3600",
+     "gpu": "GTX 1070 (8GB) / RTX 2060 Super || AMD RX 5700",
+     "ram": "16 GB RAM",
+     "storage": "80 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": 80,
+    "vramGb": 8,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1070",
+     "perf": 27,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 3600",
+     "perf": 55
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10/11 64 Bit",
+     "cpu": "Intel i7-9700K || AMD Ryzen 5 5600X",
+     "gpu": "RTX 3080 || AMD RX 6800 XT",
+     "ram": "16 GB RAM",
+     "storage": "80 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": 80,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 3080",
+     "perf": 63,
+     "vramGb": 10
+    },
+    "cpu": {
+     "name": "Intel Core i7-9700K",
+     "perf": 63
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3558670/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3603000": {
+   "appid": 3603000,
+   "name": "Maneater 2",
+   "slug": "maneater-2",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Tripwire Interactive",
+    "Demiurge Studios"
+   ],
+   "publishers": [
+    "Tripwire Interactive"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3603000/a12fa0b5a47aed63dfb306173b59a5f4e4ab8d38/header.jpg?t=1788466321",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3603000/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3621390": {
+   "appid": 3621390,
+   "name": "Tom Clancy’s Rainbow Six Tactics",
+   "slug": "tom-clancys-rainbow-six-tactics",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Ubisoft"
+   ],
+   "publishers": [
+    "Ubisoft"
+   ],
+   "genres": [
+    "Action",
+    "Strategy"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3621390/98687c2f2ef45f4583ecf8bd3465c8010211011c/header.jpg?t=1788200730",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3621390/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3633680": {
+   "appid": 3633680,
+   "name": "Sea of Remnants",
+   "slug": "sea-of-remnants",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Joker Studio"
+   ],
+   "publishers": [
+    "NetEase Games"
+   ],
+   "genres": [
+    "Adventure",
+    "RPG",
+    "Strategy",
+    "Free To Play"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3633680/580ba61ac8ebbc47c64725be35fe751760e93b0a/header.jpg?t=1789023354",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10/11 64-bit or later",
+     "cpu": "Intel Core i7-9700 / AMD Ryzen 5 3600X",
+     "gpu": "GTX 1060（6GB）/RX 480（8GB）",
+     "ram": "16 GB RAM",
+     "storage": "60 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 11",
+    "ramGb": 16,
+    "storageGb": 60,
+    "vramGb": 6,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1060 6GB",
+     "perf": 19,
+     "vramGb": 6
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 3600X",
+     "perf": 56
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10/11 64-bit or later",
+     "cpu": "Intel Core i7-12700 / AMD Ryzen 7 7700X",
+     "gpu": "RTX 3070 Ti/RX 6800XT",
+     "ram": "32 GB RAM",
+     "storage": "80 GB available space",
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 32,
+    "storageGb": 80,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 3070 Ti",
+     "perf": 54,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i7-12700",
+     "perf": 80
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3633680/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3642020": {
+   "appid": 3642020,
+   "name": "El Paso, Elsewhere 2",
+   "slug": "el-paso-elsewhere-2",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Strange Scaffold"
+   ],
+   "publishers": [
+    "Frosty Pop",
+    "Strange Scaffold"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Indie"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3642020/1e314b78255b4391fff9bfae5b971d31f91bf096/header.jpg?t=1780862466",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 64-bit",
+     "cpu": "Intel i5-11600K or equivalent",
+     "gpu": "NVIDIA GeForce GTX 1080 or equivalent",
+     "ram": "4 GB RAM",
+     "storage": "3 GB available space",
+     "directx": "Version 11",
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 11",
+    "ramGb": 4,
+    "storageGb": 3,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1080",
+     "perf": 32,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i5-11600K",
+     "perf": 67
+    },
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3642020/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3645160": {
+   "appid": 3645160,
+   "name": "Frostpunk: 1886",
+   "slug": "frostpunk-1886",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "11 bit studios"
+   ],
+   "publishers": [
+    "11 bit studios"
+   ],
+   "genres": [
+    "Simulation",
+    "Strategy"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3645160/c267c4bf9e09ae7476a38e705525a414788d2d11/header.jpg?t=1776245317",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3645160/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3703630": {
+   "appid": 3703630,
+   "name": "The Talos Principle 3",
+   "slug": "the-talos-principle-3",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Croteam"
+   ],
+   "publishers": [
+    "Devolver Digital"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3703630/abbf1d19d8f04766dfcdc2af40dbbdad357f97d5/header.jpg?t=1778748637",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 (22H2)",
+     "cpu": "4 core CPU @ 2.5 GHz (AMD Ryzen 5, Intel core i3/i5)",
+     "gpu": "8 GB VRAM; Radeon RX 5700, GeForce GTX 1070, Intel Arc A580",
+     "ram": "8 GB RAM",
+     "storage": "100 GB available space",
+     "directx": "Version 12",
+     "notes": "Intel integrated GPUs are not supported. SSD recommended"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 8,
+    "storageGb": 100,
+    "vramGb": 8,
+    "gpu": {
+     "name": "Intel Arc A580",
+     "perf": 25,
+     "vramGb": 8
+    },
+    "cpu": null,
+    "cpuFloor": {
+     "ghz": 2.5,
+     "cores": 4
+    }
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11 (24H2)",
+     "cpu": "6 or 8 core CPU @ 3.0 GHz (AMD Ryzen 7, Intel core i5/i7)",
+     "gpu": "12+ GB VRAM; Radeon RX 7700XT, GeForce RTX 3080, Intel Arc B580",
+     "ram": "16 GB RAM",
+     "storage": "100 GB available space",
+     "directx": "Version 12",
+     "notes": "Intel integrated GPUs are not supported. SSD recommended"
+    },
+    "os": "Windows 11",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": 100,
+    "vramGb": null,
+    "gpu": {
+     "name": "Intel Arc B580",
+     "perf": 39,
+     "vramGb": 12
+    },
+    "cpu": null,
+    "cpuFloor": {
+     "ghz": 3,
+     "cores": 8
+    }
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3703630/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3727390": {
+   "appid": 3727390,
+   "name": "The Expanse: Osiris Reborn",
+   "slug": "the-expanse-osiris-reborn",
+   "comingSoon": true,
+   "releaseDate": "Q2 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Owlcat Games"
+   ],
+   "publishers": [
+    "Owlcat Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3727390/29369846b5ba94b2b1620eb8dd5aa8488f058d90/header.jpg?t=1781096582",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3727390/",
+   "fetchedAt": "2026-09-15"
+  },
+  "3788800": {
+   "appid": 3788800,
+   "name": "Atomic Heart 2",
+   "slug": "atomic-heart-2",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Mundfish"
+   ],
+   "publishers": [
+    "Mundfish"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3788800/ddbc5938e486052c2b51819e280a1993b5f510ac/header.jpg?t=1749814046",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/3788800/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4039200": {
+   "appid": 4039200,
+   "name": "Exterminauts",
+   "slug": "exterminauts",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Behaviour Interactive Inc."
+   ],
+   "publishers": [
+    "Level Infinite"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4039200/6a891eeac0b69f5b218cf462a4af494815d59427/header.jpg?t=1788748755",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4039200/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4115450": {
+   "appid": 4115450,
+   "name": "Phantom Blade Zero",
+   "slug": "phantom-blade-zero",
+   "comingSoon": true,
+   "releaseDate": "Oct 28, 2026",
+   "expectedYear": 2026,
+   "developers": [
+    "S-GAME Studio"
+   ],
+   "publishers": [
+    "S-GAME Publishing"
+   ],
+   "genres": [
+    "Action",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4115450/7f882f889630270d3d3fb93825ac6f55b55e7a6c/header.jpg?t=1787142639",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10/11 (64bit required)",
+     "cpu": "Intel Core i7-8700K / AMD Ryzen 5 3600",
+     "gpu": "NVIDIA GeForce GTX 1660 6GB / AMD Radeon RX 5500 XT 8GB",
+     "ram": "16 GB RAM",
+     "storage": null,
+     "directx": "Version 12",
+     "notes": "1080p / 30 FPS with upscaling enabled. SSD installation required"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": null,
+    "vramGb": 6,
+    "gpu": {
+     "name": "AMD Radeon RX 5500 XT 8GB",
+     "perf": 20,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 3600",
+     "perf": 55
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10/11 (64bit required)",
+     "cpu": "Intel Core i5-10600K / AMD Ryzen 5 5600X",
+     "gpu": "NVIDIA GeForce RTX 3060 Ti 8GB / AMD Radeon RX 6700 XT 12GB",
+     "ram": "16 GB RAM",
+     "storage": null,
+     "directx": "Version 12",
+     "notes": "1440p / 60 FPS with upscaling enabled. SSD installation required"
+    },
+    "os": "Windows 10",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": null,
+    "vramGb": 8,
+    "gpu": {
+     "name": "NVIDIA GeForce RTX 3060 Ti",
+     "perf": 45,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "Intel Core i5-10600K",
+     "perf": 63
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4115450/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4223290": {
+   "appid": 4223290,
+   "name": "Mega Man: Dual Override",
+   "slug": "mega-man-dual-override",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "CAPCOM Co., Ltd."
+   ],
+   "publishers": [
+    "CAPCOM Co., Ltd."
+   ],
+   "genres": [
+    "Action"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4223290/08af2430e76e5a61a26f5678348f5e1ace2c4b2b/header.jpg?t=1788499171",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4223290/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4245560": {
+   "appid": 4245560,
+   "name": "Spyro™: A Realm Beyond",
+   "slug": "spyro-a-realm-beyond",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "Toys for Bob"
+   ],
+   "publishers": [
+    "Activision"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4245560/09b109726c8458478e4c2f36f3784a9a4c24edac/header.jpg?t=1781623703",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4245560/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4253770": {
+   "appid": 4253770,
+   "name": "Muramasa: Revenant Blades",
+   "slug": "muramasa-revenant-blades",
+   "comingSoon": true,
+   "releaseDate": "Feb 3, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Vanillaware"
+   ],
+   "publishers": [
+    "XSEED Games",
+    "Marvelous USA, Inc.",
+    "Marvelous Europe"
+   ],
+   "genres": [
+    "Action"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4253770/5707e55c90a88cfa12e2931fd9a5b0ec7af8529d/header.jpg?t=1789077364",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4253770/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4354570": {
+   "appid": 4354570,
+   "name": "FINAL FANTASY VII REVELATION",
+   "slug": "final-fantasy-vii-revelation",
+   "comingSoon": true,
+   "releaseDate": "Apr 8, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Square Enix"
+   ],
+   "publishers": [
+    "Square Enix"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4354570/c82a370d62d715234771be34c6ff3c928c7d78e2/header.jpg?t=1788444187",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4354570/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4507990": {
+   "appid": 4507990,
+   "name": "Wo Long 2: Wings of Ember",
+   "slug": "wo-long-2-wings-of-ember",
+   "comingSoon": true,
+   "releaseDate": "Q1 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "KOEI TECMO GAMES CO., LTD."
+   ],
+   "publishers": [
+    "KOEI TECMO GAMES CO., LTD."
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4507990/7e7746ce07e19dc3a0e7f9b08546b9ffb9cbefd0/header.jpg?t=1787014572",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4507990/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4665290": {
+   "appid": 4665290,
+   "name": "Alien: Isolation 2",
+   "slug": "alien-isolation-2",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Creative Assembly"
+   ],
+   "publishers": [
+    "SEGA"
+   ],
+   "genres": [
+    "Action"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4665290/21eb5925869fb99fccbc24e682b0db22b9494543/header.jpg?t=1782805186",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/4665290/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4743930": {
+   "appid": 4743930,
+   "name": "Guild Wars 3™",
+   "slug": "guild-wars-3",
+   "comingSoon": true,
+   "releaseDate": "To be announced",
+   "expectedYear": null,
+   "developers": [
+    "ArenaNet®"
+   ],
+   "publishers": [
+    "ArenaNet®"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "Massively Multiplayer",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4743930/99b550da44eff3a9ba1fb82d17d1fac4ebbcd8ea/header.jpg?t=1781101414",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10 64-bit",
+     "cpu": "Intel Core i5-8400 or AMD Ryzen 5 2600",
+     "gpu": "RTX 2060 / Radeon RX 5700 / Intel Arc A580",
+     "ram": "16 GB RAM",
+     "storage": "65 GB available space",
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": 65,
+    "vramGb": null,
+    "gpu": {
+     "name": "Intel Arc A580",
+     "perf": 25,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 2600",
+     "perf": 44
+    },
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/4743930/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4744030": {
+   "appid": 4744030,
+   "name": "Star Trek: Shadow Frontier",
+   "slug": "star-trek-shadow-frontier",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "Bloober Team"
+   ],
+   "publishers": [
+    "Paramount Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4744030/c745c4778d3cfc2fc2d8c42d3f35091451c9759b/header.jpg?t=1780791459",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": "AMD Ryzen 2700",
+     "gpu": "Nvidia GTX 1660",
+     "ram": "8 GB RAM",
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": 8,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": {
+     "name": "NVIDIA GeForce GTX 1660",
+     "perf": 22,
+     "vramGb": 6
+    },
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": null,
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4744030/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4767480": {
+   "appid": 4767480,
+   "name": "Lords of the Fallen II",
+   "slug": "lords-of-the-fallen-ii",
+   "comingSoon": true,
+   "releaseDate": "Coming soon",
+   "expectedYear": null,
+   "developers": [
+    "CI Games"
+   ],
+   "publishers": [
+    "CI Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4767480/a34e3c4d4088e71c7d2cdc5445dc950abd2521db/header.jpg?t=1782480305",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": "Intel i5 8400 / AMD Ryzen 5 2600",
+     "gpu": "NVIDIA RTX-2060 / AMD Radeon RX 5700",
+     "ram": "12 GB RAM",
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": 12,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": {
+     "name": "AMD Radeon RX 5700",
+     "perf": 34,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 2600",
+     "perf": 44
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 11",
+     "cpu": "Intel i7 8700 / AMD Ryzen 5 3600",
+     "gpu": "NVIDIA RTX-3080 / AMD Radeon RX 6800 XT",
+     "ram": "16 GB RAM",
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 11",
+    "directx": null,
+    "ramGb": 16,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": {
+     "name": "AMD Radeon RX 6800 XT",
+     "perf": 64,
+     "vramGb": 16
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 3600",
+     "perf": 55
+    },
+    "cpuFloor": null
+   },
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/4767480/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4814120": {
+   "appid": 4814120,
+   "name": "ANANTA",
+   "slug": "ananta",
+   "comingSoon": true,
+   "releaseDate": "Jan 15, 2027",
+   "expectedYear": 2027,
+   "developers": [
+    "Naked Rain Studio"
+   ],
+   "publishers": [
+    "NetEase Games"
+   ],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG",
+    "Free To Play"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4814120/3bd40cfd93dfe6e7a21d9f825fa3b82ee1c57105/header.jpg?t=1787884647",
+   "hasRequirements": false,
+   "minimum": {
+    "raw": {
+     "os": "Windows 10/11 64-bit or later",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows 10/11 64-bit or later",
+     "cpu": null,
+     "gpu": null,
+     "ram": null,
+     "storage": null,
+     "directx": null,
+     "notes": null
+    },
+    "os": "Windows 10",
+    "directx": null,
+    "ramGb": null,
+    "storageGb": null,
+    "vramGb": null,
+    "gpu": null,
+    "cpu": null,
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4814120/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4824610": {
+   "appid": 4824610,
+   "name": "Resident Evil Veronica",
+   "slug": "resident-evil-veronica",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "CAPCOM Co., Ltd."
+   ],
+   "publishers": [
+    "CAPCOM Co., Ltd."
+   ],
+   "genres": [
+    "Action",
+    "Adventure"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4824610/28045d733a3ada082858b5b1a5149e33ee40f378/header.jpg?t=1780990195",
+   "hasRequirements": false,
+   "minimum": null,
+   "recommended": null,
+   "buzz": {
+    "label": "In GameDiscoverCo's top 10 most-wishlisted Steam games from Summer Game Fest 2026",
+    "source": "https://newsletter.gamediscover.co/p/what-were-the-top-games-and-showcases"
+   },
+   "source": "https://store.steampowered.com/app/4824610/",
+   "fetchedAt": "2026-09-15"
+  },
+  "4829700": {
+   "appid": 4829700,
+   "name": "Monster Hunter Wilds: Ascendance",
+   "slug": "monster-hunter-wilds-ascendance",
+   "comingSoon": true,
+   "releaseDate": "2027",
+   "expectedYear": 2027,
+   "developers": [
+    "CAPCOM Co., Ltd."
+   ],
+   "publishers": [],
+   "genres": [
+    "Action",
+    "Adventure",
+    "RPG"
+   ],
+   "headerImage": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829700/6a3eec73bed78fafa128e24dddb872df87832dff/header.jpg?t=1788503895",
+   "hasRequirements": true,
+   "minimum": {
+    "raw": {
+     "os": "Windows®10 (64-bit Required)/Windows®11 (64-bit Required)",
+     "cpu": "Intel® Core™ i5-10400 or Intel® Core™ i3-12100 or AMD Ryzen™ 5 3600",
+     "gpu": "NVIDIA® GeForce® GTX 1660(VRAM 6GB) or AMD Radeon™ RX 5500 XT(VRAM 8GB)",
+     "ram": "16 GB RAM",
+     "storage": null,
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": "Windows",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": null,
+    "vramGb": 6,
+    "gpu": {
+     "name": "AMD Radeon RX 5500 XT 8GB",
+     "perf": 20,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 3600",
+     "perf": 55
+    },
+    "cpuFloor": null
+   },
+   "recommended": {
+    "raw": {
+     "os": "Windows®10 (64-bit Required)/Windows®11 (64-bit Required)",
+     "cpu": "Intel® Core™ i5-10400 or Intel® Core™ i3-12100 or AMD Ryzen™ 5 3600",
+     "gpu": "NVIDIA® GeForce® RTX 2060 Super(VRAM 8GB) or AMD Radeon™ RX 6600(VRAM 8GB)",
+     "ram": "16 GB RAM",
+     "storage": null,
+     "directx": "Version 12",
+     "notes": null
+    },
+    "os": "Windows",
+    "directx": "DirectX 12",
+    "ramGb": 16,
+    "storageGb": null,
+    "vramGb": 8,
+    "gpu": {
+     "name": "AMD Radeon RX 6600",
+     "perf": 29,
+     "vramGb": 8
+    },
+    "cpu": {
+     "name": "AMD Ryzen 5 3600",
+     "perf": 55
+    },
+    "cpuFloor": null
+   },
+   "buzz": null,
+   "source": "https://store.steampowered.com/app/4829700/",
+   "fetchedAt": "2026-09-15"
+  }
+ },
+ "meta": {
+  "updated": "2026-09-15T06:42:33.632Z",
+  "source": "Steam store appdetails API (publisher-stated)",
+  "total": 54
+ }
+}

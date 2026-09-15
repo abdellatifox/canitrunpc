@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { SITE_NAME, publicPath } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+const currentPath = publicPath(Astro.url.pathname);
+const links = [
+  { href: '/games', label: 'Games' },
+  { href: `/upcoming-games-${SEO_YEAR}`, label: `${SEO_YEAR} Releases` },
+  { href: '/tools', label: 'Tools' },
+  { href: '/gpu-tier-list', label: 'GPU Tier List' },
+  { href: '/benchmarks', label: 'Benchmarks' },
+  { href: '/blog', label: 'Blog' }
+];
+---
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand" aria-label={`${SITE_NAME} home`}>
+      <Logo class="brand-logo" height={36} eager />
+    </a>
+
+    <nav class="nav-links" aria-label="Main">
+      {links.map(l => (
+        <a href={l.href} class={currentPath.startsWith(l.href) ? 'active' : ''}
+           aria-current={currentPath.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="nav-cta">
+      <a href="/can-it-run" class="btn-primary">Check My PC</a>
+      <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+        <Icon name="list" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.querySelector('.menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('show-mobile');
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+  }
+</script>

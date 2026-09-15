@@ -1,0 +1,355 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import { getPageCover } from '../lib/images';
+import Logo from '../components/Logo.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+import IconSprite from '../components/IconSprite.astro';
+import { SITE_URL, SITE_NAME, ART_BASE, publicPath, SITE_DOMAIN, GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION, GTM_ID } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogImage?: string;
+  canonical?: string;
+  jsonLd?: object | object[];
+  ogType?: string;
+  noindex?: boolean;
+  publishedAt?: string;
+  modifiedAt?: string;
+  author?: string;
+}
+
+const {
+  title,
+  description,
+  keywords = 'can i run it, fps calculator, bottleneck calculator, pc game check, system requirements',
+  ogImage,
+  canonical,
+  jsonLd,
+  ogType = 'website',
+  noindex = false,
+  publishedAt,
+  modifiedAt,
+  author
+} = Astro.props;
+
+const path = publicPath(Astro.url.pathname);
+const canonicalURL = canonical ?? new URL(path, SITE_URL).toString();
+
+/* A page may pass its own image (a game's cover art, a post's card); otherwise
+   it gets the card for its section rather than one generic brand image. */
+const resolvedOg = ogImage ?? getPageCover(path);
+const absOgImage = resolvedOg.startsWith('http') ? resolvedOg : SITE_URL + resolvedOg;
+
+/* Sitewide entity graph — tells Google what the brand is and enables the
+   sitelinks search box. Page-specific schema is appended after it. */
+const siteGraph = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": SITE_URL + "/#organization",
+    "name": SITE_NAME,
+    "url": SITE_URL,
+    "logo": { "@type": "ImageObject", "url": SITE_URL + "/logo-512.png" },
+    "description": "Free PC game compatibility, FPS estimation and hardware ranking tools."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": SITE_URL + "/#website",
+    "name": SITE_NAME,
+    "url": SITE_URL,
+    "publisher": { "@id": SITE_URL + "/#organization" },
+    "inLanguage": "en",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": { "@type": "EntryPoint", "urlTemplate": SITE_URL + "/games?q={search_term_string}" },
+      "query-input": "required name=search_term_string"
+    }
+  }
+];
+
+const pageSchemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const allSchemas = [...siteGraph, ...pageSchemas];
+
+const robotsValue = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+const year = new Date().getFullYear();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  {/* www should 301 to the apex at the edge (a Cloudflare Redirect Rule). Until
+      that rule exists, send visitors on www to the same page on the apex; the
+      canonical tag already tells search engines which host to index. */}
+  <script is:inline define:vars={{ apex: SITE_DOMAIN }}>
+    if (location.hostname === 'www.' + apex) location.replace('https://' + apex + location.pathname + location.search + location.hash);
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {GTM_ID && (
+    <script is:inline>
+      /* Google Consent Mode v2 defaults, set before GTM loads. Everything is
+         denied until the visitor accepts in ConsentBanner; a saved "granted"
+         answer is re-applied here so returning visitors are counted at once.
+         Ads signals stay denied: the site runs no advertising. */
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      var analyticsConsent = 'denied';
+      try { if (localStorage.getItem('consent.analytics') === 'granted') analyticsConsent = 'granted'; } catch (e) {}
+      gtag('consent', 'default', {
+        ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+        analytics_storage: analyticsConsent,
+        functionality_storage: 'granted', security_storage: 'granted',
+        wait_for_update: 500
+      });
+      gtag('set', 'ads_data_redaction', true);
+    </script>
+  )}
+  {GTM_ID && (
+    <script is:inline define:vars={{ gtmId: GTM_ID }}>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    </script>
+  )}
+  {GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />}
+  {BING_SITE_VERIFICATION && <meta name="msvalidate.01" content={BING_SITE_VERIFICATION} />}
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta name="keywords" content={keywords}>
+  <link rel="canonical" href={canonicalURL}>
+  <meta name="robots" content={robotsValue}>
+  <meta name="theme-color" content="#F4F1E8">
+  <meta name="color-scheme" content="dark">
+  {author && <meta name="author" content={author} />}
+
+  {/* Open Graph */}
+  <meta property="og:site_name" content={SITE_NAME}>
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalURL}>
+  <meta property="og:type" content={ogType}>
+  <meta property="og:image" content={absOgImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content={title}>
+  {publishedAt && <meta property="article:published_time" content={publishedAt} />}
+  {modifiedAt && <meta property="article:modified_time" content={modifiedAt} />}
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={absOgImage}>
+
+  {/*
+    Fonts are self-hosted (scripts/fetch-fonts.mjs). The previous Google Fonts
+    <link> was render-blocking and cost two extra third-party connections
+    before any glyph could paint. Preloading the two faces the first screen
+    actually uses lets them start downloading alongside the CSS.
+  */}
+  {/* No font preloads, on purpose. Both faces are font-display: swap, so text
+       paints in the fallback without waiting; preloading 69 KB of fonts only
+       competed with the document for the first round trips. Measured on
+       identical builds: with preloads 100/98, without 100/100 (mobile). */}
+  {ART_BASE && (
+    <>
+      {/* Game art moved to R2, so the first card image now costs a second
+          connection. Warm it while the HTML is still parsing.
+
+          No `crossorigin` here: <img> loads are not CORS requests, and the
+          attribute made the browser reuse an anonymous-CORS connection for
+          them, which R2 rejects because the bucket sends no
+          Access-Control-Allow-Origin. Fonts need it; images must not have it. */}
+      <link rel="preconnect" href={ART_BASE} />
+      <link rel="dns-prefetch" href={ART_BASE} />
+    </>
+  )}
+
+
+  {/* Every reachable game now has locally-built art (scripts/build-art.mjs),
+       so SteamGridDB is no longer on the critical path for any page. If a game
+       is ever added without running that script first, GameArt.astro's plain
+       <img> fallback still points at the remote URL — just without a warm
+       connection, which only matters for that rare, temporary case. */}
+
+  {/* Icons */}
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  {/* iOS ignores SVG here, so this one has to be raster and opaque. */}
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  {/* Feeds */}
+  <link rel="alternate" type="application/rss+xml" title={`${SITE_NAME} Blog`} href="/rss.xml">
+
+  {/* JSON-LD */}
+  {allSchemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)}></script>)}
+</head>
+<body>
+  {GTM_ID && (
+    <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+  )}
+  <IconSprite />
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="progress"></div>
+
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <Navbar />
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-inner">
+        <a href="/" class="brand" aria-label={`${SITE_NAME} home`}>
+          <Logo class="brand-logo" height={40} />
+        </a>
+        <p class="foot-tag">Can your PC run it? Your parts against each game's own Steam requirements, including games still to come in {SEO_YEAR}.</p>
+      </div>
+
+      <div class="foot-cols">
+        <div>
+          <h2>Tools</h2>
+          <a href="/can-it-run">Can I Run It?</a>
+          <a href="/fps-estimator">FPS Calculator</a>
+          <a href="/bottleneck">Bottleneck Calculator</a>
+          <a href="/build-suggest">Build Suggester</a>
+          <a href="/upgrade-advisor">Upgrade Advisor</a>
+          <a href="/psu-calculator">PSU Calculator</a>
+          <a href="/pc-value">PC Value Calculator</a>
+        </div>
+        <div>
+          <h2>Hardware</h2>
+          <a href="/gpu-tier-list">GPU Tier List</a>
+          <a href="/cpu-tier-list">CPU Tier List</a>
+          <a href="/gpus">GPU Database</a>
+          <a href="/cpus">CPU Database</a>
+          <a href="/compare-gpu">Compare GPUs</a>
+          <a href="/compare-cpu">Compare CPUs</a>
+        </div>
+        <div>
+          <h2>Games</h2>
+          <a href="/games">All Games</a>
+          <a href={`/upcoming-games-${SEO_YEAR}`}>Upcoming {SEO_YEAR}</a>
+          <a href="/game-lists">Game Lists</a>
+          <a href="/what-can-my-pc-run">What Can My PC Run?</a>
+          <a href="/vr-ready">VR Ready Test</a>
+          <a href="/ray-tracing">Ray Tracing Games</a>
+          <a href="/dlss-fsr">DLSS vs FSR</a>
+        </div>
+        <div>
+          <h2>Site</h2>
+          <a href="/about">About</a>
+          <a href="/blog">Blog</a>
+          <a href="/benchmarks">Benchmarks</a>
+          <a href="/editorial-standards">Editorial Standards</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+          {GTM_ID && <button type="button" class="foot-consent" data-consent-open>Cookie settings</button>}
+        </div>
+      </div>
+
+      <div class="divider" style="margin: 28px 0 20px;"></div>
+      <small>&copy; {year} {SITE_NAME}. All rights reserved. Independent PC hardware &amp; game performance resource.</small>
+    </div>
+  </footer>
+
+  {/*
+    Labels table cells with their column header so that, on a phone, a table
+    can collapse into cards that still say what each number is (see "Tables on
+    phones" in global.css). Inline and synchronous, placed after the content:
+    it runs before first paint, and the CSS reserves the label line, so the
+    cards do not shift. The observer covers rows the tools render later.
+  */}
+  <script is:inline>
+    (function () {
+      function label(table) {
+        var heads = Array.prototype.map.call(table.querySelectorAll('thead th'), function (th) {
+          return th.textContent.replace(/\s+/g, ' ').trim();
+        });
+        if (!heads.length) return;
+        var rows = table.querySelectorAll('tbody tr');
+        for (var r = 0; r < rows.length; r++) {
+          var col = 0, cells = rows[r].children;
+          for (var c = 0; c < cells.length; c++) {
+            var td = cells[c], span = td.colSpan || 1;
+            if (!td.hasAttribute('data-label')) td.setAttribute('data-label', heads[col] || '');
+            // Long text (a publisher's requirement line) and spanning cells get the full card width.
+            if (span > 1 || td.textContent.trim().length > 24) td.classList.add('cell-wide');
+            col += span;
+          }
+        }
+      }
+      function run(root) {
+        var tables = root.querySelectorAll ? root.querySelectorAll('table.data-table, table.req-table') : [];
+        for (var i = 0; i < tables.length; i++) label(tables[i]);
+      }
+      run(document);
+      if ('MutationObserver' in window) {
+        new MutationObserver(function (records) {
+          for (var i = 0; i < records.length; i++) {
+            var added = records[i].addedNodes;
+            for (var j = 0; j < added.length; j++) {
+              var n = added[j];
+              if (n.nodeType !== 1) continue;
+              var t = n.closest && n.closest('table.data-table, table.req-table');
+              t ? label(t) : run(n);
+            }
+          }
+        }).observe(document.body, { childList: true, subtree: true });
+      }
+    })();
+  </script>
+
+  <script>
+    // Scroll progress: transform only, measured once per resize, one write per frame.
+    const progress = document.querySelector('.progress') as HTMLElement | null;
+    if (progress) {
+      let range = 1;
+      let queued = false;
+      const measure = () => {
+        range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      };
+      const paint = () => {
+        queued = false;
+        progress.style.transform = `scaleX(${Math.min(1, window.scrollY / range)})`;
+      };
+      window.addEventListener('scroll', () => {
+        if (!queued) { queued = true; requestAnimationFrame(paint); }
+      }, { passive: true });
+      window.addEventListener('resize', measure, { passive: true });
+      window.addEventListener('load', measure, { once: true });
+    }
+
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('in');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Tilt effect
+    document.querySelectorAll('.tilt').forEach(el => {
+      el.addEventListener('mousemove', (e: any) => {
+        const rect = el.getBoundingClientRect();
+        (el as HTMLElement).style.setProperty('--mx', `${e.clientX - rect.left}px`);
+        (el as HTMLElement).style.setProperty('--my', `${e.clientY - rect.top}px`);
+      });
+    });
+  </script>
+  {GTM_ID && <ConsentBanner />}
+</body>
+</html>

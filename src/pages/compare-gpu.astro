@@ -1,0 +1,249 @@
+---
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { releasedGames } from '../lib/games';
+import { estimateFps } from '../lib/perf';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitTitle, fitMeta } from '../lib/seo';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+const aSlug = Astro.url.searchParams.get('a');
+const bSlug = Astro.url.searchParams.get('b');
+const a = gpus.find(g => g.slug === aSlug) ?? null;
+const b = gpus.find(g => g.slug === bSlug) ?? null;
+const paired = Boolean(a && b && a.slug !== b.slug);
+
+const byMaker = [...new Set(gpus.map(g => g.brand))].sort().map(brand => ({
+  brand,
+  items: gpus.filter(g => g.brand === brand).sort((x, y) => x.name.localeCompare(y.name, 'en', { numeric: true }))
+}));
+
+type Card = typeof gpus[number];
+// Released games whose recommended card we can place — never compared against a missing score.
+const games = releasedGames().filter(g => g.rec_gpu_score != null);
+const clears = (c: Card, g: typeof games[number]) => c.score >= g.rec_gpu_score! && (g.rec_vram_gb == null || c.vram_gb >= g.rec_vram_gb);
+
+let view: any = null;
+if (paired) {
+  const A = a!, B = b!;
+  const lead = A.score === B.score ? null : A.score > B.score ? A : B;
+  const trail = lead ? (lead === A ? B : A) : null;
+  const gap = lead ? Math.round((lead.score / trail!.score - 1) * 100) : 0;
+  const recA = games.filter(g => clears(A, g)).length;
+  const recB = games.filter(g => clears(B, g)).length;
+  const onlyLead = lead ? games.filter(g => clears(lead, g) && !clears(trail!, g)).sort((x, y) => (y.demandPercentile ?? 0) - (x.demandPercentile ?? 0)) : [];
+  const cpu = cpus[0];
+  const heavy = games.filter(g => g.rec_cpu_score != null && g.demandPercentile != null).sort((x, y) => y.demandPercentile! - x.demandPercentile!).slice(0, 3);
+  const CAP = 300;
+  const show = (n: number) => (n >= CAP ? `${CAP}+` : String(n));
+  const fpsRows = heavy.map(g => ({ g, a: show(estimateFps(g, A.score, cpu.score, '1440p', 'high')), b: show(estimateFps(g, B.score, cpu.score, '1440p', 'high')) }));
+  const per100 = (c: Card) => (c.msrp_usd ? (c.score / c.msrp_usd) * 100 : null);
+  view = { A, B, lead, trail, gap, recA, recB, onlyLead, fpsRows, per100, cpu };
+}
+
+// Without a pair: each recent NVIDIA card against the nearest AMD card by index — the real buying question.
+const recentYear = Math.max(...gpus.map(g => g.release_year)) - 3;
+const desktop = gpus.filter(g => !/laptop/i.test(g.name) && g.release_year >= recentYear);
+const rivals = desktop.filter(g => g.brand === 'NVIDIA').slice(0, 10).map(n => {
+  const amd = desktop.filter(g => g.brand === 'AMD').sort((x, y) => Math.abs(x.score - n.score) - Math.abs(y.score - n.score))[0];
+  return amd ? [n, amd] as const : null;
+}).filter(Boolean) as (readonly [Card, Card])[];
+
+const title = paired
+  ? fitTitle(`${a!.name} vs ${b!.name}`, [` (${SEO_YEAR} Comparison)`, ''], ` | ${SITE_NAME}`)
+  : `Compare Graphics Cards Side by Side (${SEO_YEAR}) | ${SITE_NAME}`;
+const description = paired
+  ? fitMeta([
+      view.lead ? `The ${view.lead.name} scores ${view.gap}% higher than the ${view.trail.name} on our index.` : `The ${a!.name} and ${b!.name} score the same on our index.`,
+      `It meets the recommended card for ${view.lead === b ? view.recB : view.recA} games against ${view.lead === b ? view.recA : view.recB}.`,
+      'Memory, power and launch price compared.'
+    ])
+  : `Put any two of ${gpus.length} graphics cards side by side: index, memory, power, launch price, and how many PC games each one meets at the recommended spec.`;
+
+const faq = paired ? [
+  {
+    q: `Is the ${a!.name} faster than the ${b!.name}?`,
+    a: view.lead
+      ? `${view.lead === a ? 'Yes' : 'No'} — the ${view.lead.name} scores ${view.lead.score} on our index to the ${view.trail.name}'s ${view.trail.score}, a ${view.gap}% gap.`
+      : 'They score the same on our index, so memory, power and price decide it.'
+  },
+  {
+    q: 'Which one runs more games at the recommended spec?',
+    a: `The ${a!.name} meets the recommended graphics card of ${view.recA} of ${games.length} games; the ${b!.name}, ${view.recB}.`
+  }
+] : [];
+
+const schema: object[] = [{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": `Graphics card comparison (${SEO_YEAR})`,
+  "url": `${SITE_URL}/compare-gpu`,
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}];
+if (faq.length) schema.push({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+});
+
+const rows = paired ? [
+  { label: 'Performance index', a: view.A.score, b: view.B.score, fmt: (v: number) => String(v), better: 'high' },
+  { label: 'Video memory', a: view.A.vram_gb, b: view.B.vram_gb, fmt: (v: number) => `${v} GB`, better: 'high' },
+  { label: 'Rated power', a: view.A.tdp_watts, b: view.B.tdp_watts, fmt: (v: number) => `${v} W`, better: 'low' },
+  { label: 'Launch price', a: view.A.msrp_usd, b: view.B.msrp_usd, fmt: (v: number | null) => (v ? `$${v}` : 'no list price'), better: 'low' },
+  { label: 'Index per $100', a: view.per100(view.A), b: view.per100(view.B), fmt: (v: number | null) => (v ? v.toFixed(1) : '—'), better: 'high' },
+  { label: 'Games at recommended', a: view.recA, b: view.recB, fmt: (v: number) => String(v), better: 'high' }
+] : [];
+const winSide = (r: any) => (r.a == null || r.b == null || r.a === r.b) ? '' : (r.better === 'high' ? (r.a > r.b ? 'a' : 'b') : (r.a < r.b ? 'a' : 'b'));
+const barW = (r: any, v: number | null) => (v == null ? 0 : Math.round((v / Math.max(r.a ?? 0, r.b ?? 0, 1)) * 100));
+const feat = (c: Card) => [c.supports_dlss && 'DLSS', c.supports_fsr && 'FSR', c.supports_xess && 'XeSS', c.supports_ray_tracing && 'ray tracing'].filter(Boolean).join(' · ') || 'none';
+---
+<BaseLayout title={title} description={description} jsonLd={schema}
+  canonical={paired ? `${SITE_URL}/compare-gpu?a=${a!.slug}&b=${b!.slug}` : `${SITE_URL}/compare-gpu`}
+  keywords={paired ? `${a!.name} vs ${b!.name}, ${a!.name} or ${b!.name}` : `compare graphics cards, gpu comparison ${SEO_YEAR}, gpu vs gpu`}>
+  <div class="wrap">
+    <Breadcrumbs items={paired
+      ? [{ name: 'Graphics cards', href: '/gpus' }, { name: 'Compare', href: '/compare-gpu' }, { name: `${a!.name} vs ${b!.name}` }]
+      : [{ name: 'Graphics cards', href: '/gpus' }, { name: 'Compare' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Head to head</span>
+      <h1>{paired ? `${a!.name} vs ${b!.name}` : 'Compare two graphics cards'}</h1>
+      <p class="lede">
+        {paired
+          ? (view.lead
+              ? <>The <b>{view.lead.name}</b> is ahead by {view.gap}% on our index and {Math.abs(view.recA - view.recB) === 0 ? 'meets the recommended card of the same number of games' : `meets the recommended card of ${Math.abs(view.recA - view.recB)} more ${Math.abs(view.recA - view.recB) === 1 ? 'game' : 'games'}`}. Below: where each one wins.</>
+              : <>Level on our index. Memory, power and price are what separate them.</>)
+          : <>Choose two cards. You get their index, memory, power and launch price side by side, plus a count of the PC games each one meets at the publisher’s recommended spec.</>}
+      </p>
+    </header>
+
+    <form class="picker" method="get" action="/compare-gpu">
+      {(['a', 'b'] as const).map((k, i) => (
+        <label>
+          <span>{i === 0 ? 'Card one' : 'Card two'}</span>
+          <select name={k} required>
+            <option value="">Choose a card</option>
+            {byMaker.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(g => <option value={g.slug} selected={g.slug === (k === 'a' ? aSlug : bSlug)}>{g.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+      ))}
+      <button type="submit" class="btn btn-primary">Compare</button>
+    </form>
+
+    {paired && (
+      <>
+        <section class="duel" aria-label="Side by side">
+          <div class="names"><span></span><a href={`/gpu/${a!.slug}`}>{a!.name}</a><a href={`/gpu/${b!.slug}`}>{b!.name}</a></div>
+          {rows.map(r => {
+            const w = winSide(r);
+            return (
+              <div class="row">
+                <span class="lbl">{r.label}</span>
+                <span class={`side ${w === 'a' ? 'win' : ''}`}><i style={`width:${barW(r, r.a)}%`}></i><b class="mono">{r.fmt(r.a)}</b></span>
+                <span class={`side ${w === 'b' ? 'win' : ''}`}><i style={`width:${barW(r, r.b)}%`}></i><b class="mono">{r.fmt(r.b)}</b></span>
+              </div>
+            );
+          })}
+          <div class="row txt"><span class="lbl">Released</span><span>{a!.release_year}</span><span>{b!.release_year}</span></div>
+          <div class="row txt"><span class="lbl">Features</span><span>{feat(a!)}</span><span>{feat(b!)}</span></div>
+        </section>
+
+        {view.fpsRows.length > 0 && (
+          <section class="block">
+            <h2>At 1440p in the heaviest games</h2>
+            <ul class="fps">
+              {view.fpsRows.map((r: any) => (
+                <li><a href={`/game/${r.g.slug}`}>{r.g.name}</a><span class="mono">{r.a}</span><span class="mono">{r.b}</span></li>
+              ))}
+            </ul>
+            <p class="fine">Modelled FPS, high preset, {view.cpu.name}. Left: {a!.name}; right: {b!.name}.</p>
+          </section>
+        )}
+
+        {view.onlyLead.length > 0 && (
+          <section class="block">
+            <h2>Games only the {view.lead.name} runs at recommended</h2>
+            <ul class="only">
+              {view.onlyLead.slice(0, 8).map((g: any) => <li><a href={`/can-it-run/${g.slug}/${view.trail.slug}`}>{g.name}</a></li>)}
+            </ul>
+            {view.onlyLead.length > 8 && <p class="fine">And {view.onlyLead.length - 8} more.</p>}
+          </section>
+        )}
+
+        <section class="faq">
+          <h2>Quick answers</h2>
+          {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+        </section>
+      </>
+    )}
+
+    {!paired && rivals.length > 0 && (
+      <section class="block">
+        <h2>NVIDIA against its closest AMD rival</h2>
+        <ul class="only">
+          {rivals.map(([n, r]) => <li><a href={`/compare-gpu?a=${n.slug}&b=${r.slug}`}>{n.name} vs {r.name}</a></li>)}
+        </ul>
+      </section>
+    )}
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/gpu-tier-list">{SEO_YEAR} graphics card tiers</a></li>
+        <li><a href="/bottleneck">Will your processor keep up?</a></li>
+        <li><a href="/psu-calculator">Power supply for either card</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 20px; }
+  .head h1 { font-size: clamp(26px, 4.4vw, 40px); margin: 6px 0 12px; }
+  .lede b { color: var(--text); }
+  .picker { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 14px; margin-bottom: 32px; }
+  .picker label { display: grid; gap: 6px; }
+  .picker span { font-size: 12px; color: var(--faint); }
+  .picker select { min-height: 44px; background: var(--bg); color: var(--text); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 8px 10px; font: inherit; width: 100%; }
+
+  .duel { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 40px; }
+  .duel > div { display: grid; grid-template-columns: minmax(110px, .8fr) 1fr 1fr; gap: 14px; align-items: center; padding: 10px 14px; background: var(--surface); }
+  .duel > div + div { border-top: 1px solid var(--line); }
+  .names { font-weight: 700; font-size: 14px; background: var(--surface-2) !important; }
+  .names a:hover { color: var(--accent); }
+  .lbl { color: var(--muted); font-size: 13px; }
+  .side { position: relative; display: block; height: 26px; }
+  .side i { position: absolute; inset: 0 auto 0 0; background: rgb(var(--readout-rgb) / .14); border-radius: 3px; }
+  .side.win i { background: rgb(var(--ok-rgb) / .22); }
+  .side b { position: relative; line-height: 26px; padding-left: 8px; font-size: 14px; }
+  .side.win b { color: var(--ok); }
+  .txt span { font-size: 13.5px; }
+
+  .block { margin-bottom: 40px; }
+  .block h2 { font-size: 20px; margin-bottom: 12px; }
+  .fps { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+  .fps li { display: grid; grid-template-columns: 1fr 70px 70px; gap: 10px; padding: 9px 14px; background: var(--surface); font-size: 14px; }
+  .fps li + li { border-top: 1px solid var(--line); }
+  .fps span { text-align: right; color: var(--readout); }
+  .fine { color: var(--faint); font-size: 13px; margin-top: 8px; }
+  .only { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; }
+  .only a { display: block; padding: 9px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; }
+  .only a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+
+  @media (max-width: 700px) {
+    .picker { grid-template-columns: 1fr; }
+    .duel > div { grid-template-columns: 1fr 1fr; row-gap: 4px; }
+    .duel .lbl { grid-column: 1 / -1; }
+    .names span { display: none; }
+  }
+</style>

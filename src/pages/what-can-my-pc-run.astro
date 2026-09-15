@@ -1,0 +1,287 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Autocomplete from '../components/Autocomplete.astro';
+import Icon from '../components/Icon.astro';
+import { bundledCount } from '../lib/game-reqs';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+const PATH = '/what-can-my-pc-run';
+
+const bundled = bundledCount();
+
+const RAM_OPTIONS = [4, 6, 8, 12, 16, 24, 32, 48, 64, 96, 128].map(n => ({
+  label: `${n} GB`,
+  value: String(n)
+}));
+
+const faq = [
+  {
+    q: 'How are games sorted?',
+    a: 'Into three groups. Ultra: your graphics card is comfortably above the recommended spec. High: you meet the recommended spec. Medium: you clear the minimum but not the recommended.'
+  },
+  {
+    q: 'What about games my PC can’t run?',
+    a: 'They are left out of the results. To see exactly which part falls short for one game, open it in Can I Run It?.'
+  },
+  {
+    q: 'Why isn’t a game I own in the results?',
+    a: 'Either your PC is below its minimum, or its publisher’s requirements name nothing we can measure — a bare "DirectX 11 card", for example. We leave those out rather than guess.'
+  },
+  {
+    q: `Are ${SEO_YEAR} releases included?`,
+    a: 'No. Only released games are scanned, since an unreleased game’s requirements can still change before launch.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `What Can My PC Run? (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": 'Lists every released PC game a given graphics card, processor and memory can run, grouped by the settings they can manage.',
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`What Can My PC Run? Every Game You Can Play (${SEO_YEAR}) | ${SITE_NAME}`}
+  description="What games can your PC run? Enter your graphics card, processor and memory once and get every game you can play, grouped into Ultra, High and Medium."
+  keywords={`what can my pc run, what games can my pc run, games my pc can run, what will my pc run ${SEO_YEAR}`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'What Can My PC Run' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Library scan</span>
+      <h1>What Can My PC Run?</h1>
+      <p class="lede">
+        The reverse of a single-game check: give us your parts once and we go through
+        {bundled > 0 ? ` all ${bundled.toLocaleString('en-US')} released games` : ' every released game'} on the site,
+        then hand back the ones you can play, grouped by the settings you can expect.
+      </p>
+    </header>
+
+    <section class="tool">
+      <form class="panel" id="scan-form" novalidate>
+        <Autocomplete
+          id="gpu"
+          label="Graphics card"
+          placeholder="Your card, e.g. GTX 1660 Super"
+          endpoint="/api/gpus/search"
+          required
+        />
+        <Autocomplete
+          id="cpu"
+          label="Processor"
+          placeholder="Your chip, e.g. Core i7-9700K"
+          endpoint="/api/cpus/search"
+          hint="Leave empty to judge on the graphics card and memory only."
+        />
+        <Autocomplete
+          id="ram"
+          label="Memory (RAM)"
+          placeholder="How much? e.g. 16 GB"
+          endpoint=""
+          options={RAM_OPTIONS}
+          freeText
+          required
+        />
+        <button type="submit" class="btn btn-primary submit" id="scan-btn">
+          Scan the library <span aria-hidden="true">&rarr;</span>
+        </button>
+        <p class="err" id="form-err" role="alert" hidden></p>
+      </form>
+
+      <div class="results" id="results" aria-live="polite">
+        <div class="placeholder" id="placeholder">
+          <Icon name="joystick" />
+          <h2>Your games appear here</h2>
+          <p>{bundled > 0
+            ? `${bundled.toLocaleString('en-US')} games, each with the publisher’s own requirements.`
+            : 'Every game is judged on its publisher’s own requirements.'}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>Scan questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/can-it-run">Check one game in detail</a></li>
+        <li><a href="/game-list/low-end-pc-games">Games for low-end PCs</a></li>
+        <li><a href="/upgrade-advisor">Unlock more games with one upgrade</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .tool {
+    display: grid;
+    grid-template-columns: minmax(300px, 380px) 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 56px;
+  }
+  @media (max-width: 900px) { .tool { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 22px;
+    display: grid;
+    gap: 16px;
+  }
+  .submit { width: 100%; margin-top: 4px; }
+  .err { color: var(--bad); font-size: 13.5px; margin: 0; }
+
+  .results { min-height: 320px; }
+  .placeholder {
+    height: 100%;
+    min-height: 320px;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 10px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 40px 24px;
+  }
+  .placeholder :global(.icon) { font-size: 40px; color: var(--faint); }
+  .placeholder h2 { font-size: 18px; margin: 0; }
+  .placeholder p { margin: 0; color: var(--muted); font-size: 14px; max-width: 42ch; }
+
+  :global(.scan-summary) {
+    background: var(--surface); border: 1px solid var(--accent);
+    border-radius: var(--radius); padding: 20px 24px; margin-bottom: 20px; font-size: 15px; color: var(--text);
+  }
+  :global(.scan-summary b) { color: var(--accent); }
+  :global(.tier-tabs) { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  :global(.tier-tab) {
+    background: transparent; border: 1px solid var(--line-strong); color: var(--muted);
+    padding: 7px 15px; border-radius: 3px; font: inherit; font-size: 13px; cursor: pointer;
+  }
+  :global(.tier-tab.active) { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  :global(.games-grid) { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  :global(.game-card) {
+    display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface); text-decoration: none; color: var(--text);
+    transition: border-color .2s var(--ease);
+  }
+  :global(.game-card:hover) { border-color: var(--accent); }
+  :global(.game-card b) { display: block; font-size: 13.5px; margin-bottom: 3px; }
+  :global(.game-card span) { display: block; font-size: 12px; color: var(--muted); }
+  :global(.tier-empty) { color: var(--muted); font-size: 14px; padding: 20px 0; }
+</style>
+
+<script>
+  const form = document.getElementById('scan-form') as HTMLFormElement;
+  const results = document.getElementById('results')!;
+  const errEl = document.getElementById('form-err') as HTMLElement;
+  const btn = document.getElementById('scan-btn') as HTMLButtonElement;
+
+  const val = (id: string) =>
+    (document.getElementById(`${id}-value`) as HTMLInputElement | null)?.value?.trim() || '';
+
+  function esc(s: unknown) {
+    return String(s ?? '').replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+  }
+
+  const TIER_LABEL: Record<string, string> = { ultra: 'Ultra', high: 'High', medium: 'Medium' };
+
+  function cardsFor(list: any[]) {
+    if (!list.length) return '<p class="tier-empty">No titles in this tier for your current specs.</p>';
+    return `<div class="games-grid">${list.map(g => `
+      <a class="game-card" href="/can-it-run?game=${esc(g.slug)}">
+        <b>${esc(g.name)}</b>
+        ${g.year ? `<span>${esc(g.year)}</span>` : ''}
+      </a>`).join('')}</div>`;
+  }
+
+  function render(d: any) {
+    const total = d.counts.ultra + d.counts.high + d.counts.medium;
+    const summary = total
+      ? `Running <b>${d.counts.ultra}</b> games at Ultra, <b>${d.counts.high}</b> at High, <b>${d.counts.medium}</b> at Medium` +
+        (d.counts.below ? ` — ${d.counts.below} more fall below your ${esc(d.you.gpu.name)}.` : '.')
+      : `None of our checked titles clear the minimum for a ${esc(d.you.gpu.name)} with ${d.you.ramGb}GB RAM yet.`;
+
+    results.innerHTML = `
+      <div class="scan-summary">${summary}</div>
+      <div class="tier-tabs" role="group" aria-label="Settings tier">
+        <button type="button" class="tier-tab active" data-tier="ultra">Ultra (${d.counts.ultra})</button>
+        <button type="button" class="tier-tab" data-tier="high">High (${d.counts.high})</button>
+        <button type="button" class="tier-tab" data-tier="medium">Medium (${d.counts.medium})</button>
+      </div>
+      <div id="tier-body">${cardsFor(d.games.ultra)}</div>`;
+
+    const body = document.getElementById('tier-body')!;
+    results.querySelectorAll<HTMLButtonElement>('.tier-tab').forEach(t => {
+      t.addEventListener('click', () => {
+        results.querySelectorAll('.tier-tab').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        body.innerHTML = cardsFor(d.games[t.dataset.tier as string] || []);
+      });
+    });
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    errEl.hidden = true;
+
+    const gpu = val('gpu');
+    const cpu = val('cpu');
+    const ram = parseInt(val('ram') || '0', 10);
+
+    if (!gpu) { errEl.textContent = 'Pick your graphics card from the suggestions.'; errEl.hidden = false; return; }
+    if (!ram) { errEl.textContent = 'Choose how much system memory you have.'; errEl.hidden = false; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Scanning…';
+    try {
+      const r = await fetch('/api/tools/what-can-my-pc-run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gpu, cpu, ram })
+      });
+      const d = await r.json();
+      if (!r.ok) {
+        errEl.textContent = d.error || 'That scan could not be completed.';
+        errEl.hidden = false;
+      } else {
+        render(d);
+      }
+    } catch {
+      errEl.textContent = 'Network error — please try again.';
+      errEl.hidden = false;
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'Scan the library <span aria-hidden="true">&rarr;</span>';
+    }
+  });
+</script>

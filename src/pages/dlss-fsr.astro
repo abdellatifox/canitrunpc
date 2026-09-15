@@ -1,0 +1,215 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGames, getGpus } from '../lib/db';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitMeta } from '../lib/seo';
+
+const [games, gpus] = await Promise.all([getGames(Astro.locals), getGpus(Astro.locals)]);
+
+// Hand-checked only; Steam lists no upscaler support.
+const checked = games.filter(g => g.supports_dlss !== null);
+const withUpscaler = checked
+  .filter(g => g.supports_dlss === 1 || g.supports_fsr === 1)
+  .sort((a, b) => a.name.localeCompare(b.name));
+const dlssCount = checked.filter(g => g.supports_dlss === 1).length;
+const fsrCount = checked.filter(g => g.supports_fsr === 1).length;
+const both = checked.filter(g => g.supports_dlss === 1 && g.supports_fsr === 1).length;
+
+/* Per-axis render scale of each DLSS preset (1.5x, 1.72x, 2x, 3x). FSR matches
+   except Balanced at 1.7x; XeSS 1.3+ renames its modes, so its ratios differ. */
+const MODES = [
+  { name: 'Quality', scale: 1 / 1.5 },
+  { name: 'Balanced', scale: 1 / 1.72 },
+  { name: 'Performance', scale: 1 / 2 },
+  { name: 'Ultra Performance', scale: 1 / 3 }
+];
+const OUTPUTS = [
+  { label: '1080p', w: 1920, h: 1080 },
+  { label: '1440p', w: 2560, h: 1440 },
+  { label: '4K', w: 3840, h: 2160 }
+];
+const px = (w: number, h: number, s: number) => `${Math.round(w * s)}×${Math.round(h * s)}`;
+
+// Which upscalers each card can run, grouped so a reader finds their card's group.
+const combo = (g: typeof gpus[number]) =>
+  [g.supports_dlss ? 'DLSS' : '', g.supports_xess ? 'XeSS' : '', g.supports_fsr ? 'FSR' : ''].filter(Boolean).join(' + ') || 'None';
+const groups = [...new Set(gpus.map(combo))]
+  .map(k => ({ key: k, cards: gpus.filter(g => combo(g) === k).sort((a, b) => a.name.localeCompare(b.name)) }))
+  .sort((a, b) => b.key.split('+').length - a.key.split('+').length || b.cards.length - a.cards.length);
+const PICK: Record<string, string> = {
+  'DLSS + FSR': 'Use DLSS where the game offers it; FSR is the fallback.',
+  'DLSS + XeSS + FSR': 'Use DLSS where the game offers it; XeSS or FSR otherwise.',
+  'XeSS + FSR': 'Try XeSS first — Intel cards run its full version — then FSR.',
+  'FSR': 'FSR is the option available to you.',
+  'None': 'No upscaler support recorded for these cards.'
+};
+
+const description = fitMeta([
+  `DLSS, FSR and XeSS explained with numbers: the exact resolution each quality mode renders at for 1080p, 1440p and 4K, which upscalers your graphics card supports, and ${withUpscaler.length} games that have them.`
+]);
+
+const faq = [
+  {
+    q: 'Is DLSS or FSR better?',
+    a: 'On an NVIDIA RTX card, DLSS usually gives the cleaner image, because it runs a trained model on the card’s own AI hardware. FSR’s strength is reach: it runs on NVIDIA, AMD and Intel cards alike, including older ones.'
+  },
+  {
+    q: 'What does Quality mode actually render at?',
+    a: 'Two-thirds of your output resolution on each axis. At 1440p that is 1707×960, at 4K it is 2560×1440 — which is why upscaling holds up so much better on a 4K screen than a 1080p one.'
+  },
+  {
+    q: 'Is frame generation the same thing as upscaling?',
+    a: 'No. Upscaling draws fewer pixels per frame and rebuilds the rest, which also makes the game respond faster. Frame generation inserts extra frames between real ones; motion looks smoother but input does not get quicker, so it works best when the base frame rate is already decent.'
+  },
+  {
+    q: 'Why is a game I know has DLSS missing?',
+    a: `The list covers the ${checked.length} games whose features we have confirmed so far. Anything outside that set simply has not been checked yet.`
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": `DLSS vs FSR vs XeSS (${SEO_YEAR}): render resolutions, card support and games`,
+    "description": description,
+    "author": { "@id": `${SITE_URL}/#organization` },
+    "publisher": { "@id": `${SITE_URL}/#organization` },
+    "mainEntityOfPage": `${SITE_URL}/dlss-fsr`
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout title={`DLSS vs FSR vs XeSS ${SEO_YEAR}: Which Upscaler to Use | ${SITE_NAME}`} description={description}
+  keywords={`dlss vs fsr, dlss vs fsr vs xess, dlss quality mode resolution, fsr performance mode, upscaling ${SEO_YEAR}`} jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Graphics cards', href: '/gpus' }, { name: 'DLSS vs FSR' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Upscaling guide</span>
+      <h1>DLSS vs FSR vs XeSS</h1>
+      <p class="lede">
+        All three do the same job: draw the game at a lower resolution, then rebuild a full-resolution image. The differences are
+        which cards can run them and how clean the rebuilt image looks. Below: the real render resolutions behind each mode,
+        what your card supports, and the games that offer them.
+      </p>
+    </header>
+
+    <section class="block">
+      <h2>What each mode really renders</h2>
+      <p class="sub">Internal resolution before upscaling, using DLSS’s ratios. FSR’s match apart from Balanced, which renders a touch higher. XeSS 1.3 and later shift its mode names down a step, so its Quality renders lower than the row shown here.</p>
+      <div class="table-scroll">
+        <table class="data-table keep-table">
+          <thead><tr><th>Mode</th><th>Share of pixels</th>{OUTPUTS.map(o => <th>On a {o.label} screen</th>)}</tr></thead>
+          <tbody>
+            {MODES.map(m => (
+              <tr>
+                <td><b>{m.name}</b></td>
+                <td class="mono">{Math.round(m.scale * m.scale * 100)}%</td>
+                {OUTPUTS.map(o => <td class="mono">{px(o.w, o.h, m.scale)}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="note">
+        Upscaling helps most when the graphics card is what limits you. If the processor is the ceiling, a lower render
+        resolution changes little — the <a href="/bottleneck">bottleneck calculator</a> shows which case you are in.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>The three upscalers at a glance</h2>
+      <div class="trio">
+        <div><h3>NVIDIA DLSS</h3><p>Needs an RTX card (20 series or newer). Runs on the card’s AI cores. Frame generation needs an RTX 40 series or newer.</p><span class="mono">{dlssCount} confirmed games</span></div>
+        <div><h3>AMD FSR</h3><p>FSR 1 to 3 run on almost any recent card from any maker. FSR 4, the machine-learning version, needs a recent Radeon card.</p><span class="mono">{fsrCount} confirmed games</span></div>
+        <div><h3>Intel XeSS</h3><p>Full version on Intel Arc; a lighter fallback runs on other makers’ cards.</p><span class="mono">support tracked per card</span></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Find your card’s upscalers</h2>
+      <div class="groups">
+        {groups.map(gr => (
+          <details class="grp" open={gr.cards.length <= 30}>
+            <summary><b>{gr.key}</b> <span class="mono">{gr.cards.length} cards</span></summary>
+            <p>{PICK[gr.key] ?? ''}</p>
+            <ul>{gr.cards.map(c => <li><a href={`/gpu/${c.slug}`}>{c.name}</a></li>)}</ul>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Games with an upscaler, A to Z</h2>
+      <p class="sub">{both} of the {withUpscaler.length} offer both DLSS and FSR.</p>
+      <ul class="games">
+        {withUpscaler.map(g => (
+          <li>
+            <a href={`/game/${g.slug}`}>{g.name}</a>
+            <span class="tags">
+              {g.supports_dlss === 1 && <i>DLSS</i>}
+              {g.supports_fsr === 1 && <i>FSR</i>}
+              {g.supports_ray_tracing === 1 && <i class="rt">RT</i>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="faq">
+      <h2>Upscaling questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/ray-tracing">Ray tracing games and cards</a></li>
+        <li><a href="/game-list/dlss-games">DLSS games as a list</a></li>
+        <li><a href="/fps-estimator">Estimate your frame rate</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .block { margin-bottom: 48px; }
+  .block > h2 { font-size: 22px; margin-bottom: 10px; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+  .note { color: var(--muted); font-size: 14px; margin-top: 12px; max-width: 72ch; }
+  .note a { color: var(--accent); }
+
+  .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .trio > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; }
+  .trio h3 { font-size: 16px; color: var(--accent); margin-bottom: 6px; }
+  .trio p { color: var(--muted); font-size: 14px; flex: 1; }
+  .trio span { margin-top: 10px; color: var(--readout); font-size: 12.5px; }
+
+  .groups { display: grid; gap: 8px; }
+  .grp { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px; }
+  .grp summary { cursor: pointer; display: flex; justify-content: space-between; gap: 10px; min-height: 32px; align-items: center; }
+  .grp summary span { color: var(--faint); font-size: 12.5px; }
+  .grp p { color: var(--muted); font-size: 13.5px; margin: 4px 0 8px; }
+  .grp ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 14px; }
+  .grp li { font-size: 13.5px; }
+  .grp a:hover { color: var(--accent); }
+
+  .games { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; }
+  .games li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; }
+  .games a:hover { color: var(--accent); }
+  .tags { display: flex; gap: 4px; }
+  .tags i { font-style: normal; font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 3px; background: rgb(var(--accent-rgb) / .12); color: var(--accent); }
+  .tags i.rt { background: rgb(var(--readout-rgb) / .14); color: var(--readout); }
+
+  @media (max-width: 760px) { .trio { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,165 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GameCard from '../../components/GameCard.astro';
+import Icon from '../../components/Icon.astro';
+import { getReleasedGames } from '../../lib/db';
+import { GAME_LISTS } from '../../lib/site-data';
+import { SITE_URL, SITE_NAME } from '../../lib/site';
+import { SEO_YEAR } from '../../lib/year';
+import { fitTitle, fitMeta } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return GAME_LISTS.map(l => ({ params: { slug: l.slug } }));
+}
+
+const { slug } = Astro.params;
+const list = GAME_LISTS.find(l => l.slug === slug);
+if (!list) return new Response(null, { status: 404, statusText: 'Not Found' });
+
+const all = await getReleasedGames(Astro.locals);
+let games = list.appids
+  ? all.filter(g => g.steam_id != null && list.appids!.includes(g.steam_id))
+  : all.filter(list.filter);
+if (list.sort) games = [...games].sort(list.sort);
+
+/* Feature flags (DLSS, FSR, ray tracing, CPU-bound) are hand-verified — Steam
+   has no such field — so say how many titles the list could have drawn from. */
+const verified = all.filter(g => g.supports_ray_tracing !== null).length;
+const scope = list.featureBased
+  ? `Drawn from the ${verified} games whose graphics features we have checked by hand. A game missing here may still have the feature; we just have not confirmed it.`
+  : list.appids
+    ? 'Picked by hand rather than filtered from a requirement field.'
+    : null;
+
+const pct = (p: number | null) => (p == null ? null : Math.round(p * 100));
+const gb = (v: number | null) => (v == null ? 'not stated' : `${v} GB`);
+
+// The one figure that explains why each game belongs on this particular list.
+const reason = (g: typeof games[number]): string => {
+  switch (list.slug) {
+    case 'low-end-pc-games':
+    case 'esports-games': {
+      const p = pct(g.demandPercentile);
+      return p == null ? 'not scored' : p === 0 ? 'the lightest game we score' : `lighter than ${100 - p}% of games`;
+    }
+    case 'most-demanding-pc-games': {
+      const p = pct(g.demandPercentile);
+      return p == null ? 'not scored' : p === 100 ? 'the heaviest game we score' : `heavier than ${p}% of games`;
+    }
+    case 'ray-tracing-games':
+      return `${(g.ray_tracing_intensity ?? 'medium').toLowerCase()} ray tracing`;
+    case 'dlss-games':
+      return ['DLSS', g.supports_fsr ? 'FSR' : '', g.supports_ray_tracing ? 'ray tracing' : ''].filter(Boolean).join(' + ');
+    case 'cpu-intensive-games':
+      return g.rec_cpu_text ? `asks for ${g.rec_cpu_text}` : 'processor not stated';
+    case 'games-under-8gb-ram':
+      return `${g.min_ram_gb} GB minimum`;
+    case 'newest-pc-games':
+      return `released ${g.release_year}`;
+    default:
+      return '';
+  }
+};
+
+const others = GAME_LISTS.filter(l => l.slug !== slug);
+const title = fitTitle(list.h1, [''], ` | ${SITE_NAME}`);
+const description = fitMeta([list.blurb, `${games.length} games.`]);
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": list.h1,
+    "description": list.blurb,
+    "url": `${SITE_URL}/game-list/${list.slug}`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": list.title,
+      "numberOfItems": games.length,
+      "itemListElement": games.map((g, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/game/${g.slug}`, "name": g.name }))
+    }
+  }
+];
+---
+<BaseLayout title={title} description={description} jsonLd={schema}
+  keywords={`${list.title.toLowerCase()}, ${list.title.toLowerCase()} ${SEO_YEAR}, pc system requirements`}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Games', href: '/games' }, { name: 'Lists', href: '/game-lists' }, { name: list.title }]} />
+
+    <header class="head">
+      <span class="eyebrow"><Icon name={list.icon} /> List · {games.length} games</span>
+      <h1>{list.h1}</h1>
+      <p class="lede">{list.blurb}</p>
+      {scope && <p class="scope">{scope}</p>}
+    </header>
+
+    {games.length === 0 ? (
+      <p class="empty">Nothing qualifies for this list at the moment. <a href="/games">See every game</a>.</p>
+    ) : (
+      <>
+        <div class="strip">
+          {games.slice(0, 6).map((g, i) => (
+            <GameCard slug={g.slug} name={g.name} eager={i < 3} note={`#${i + 1} · ${reason(g)}`} />
+          ))}
+        </div>
+
+        <ol class="ranked">
+          {games.map((g, i) => (
+            <li>
+              <span class="pos mono">{String(i + 1).padStart(2, '0')}</span>
+              <div class="body">
+                <a href={`/game/${g.slug}`} class="nm">{g.name}</a>
+                <span class="why">{reason(g)}</span>
+              </div>
+              <dl class="facts">
+                <div><dt>Lowest graphics card</dt><dd>{g.min_gpu_text ?? 'not stated'}</dd></div>
+                <div><dt>Memory</dt><dd>{gb(g.min_ram_gb)}</dd></div>
+                <div><dt>Disk</dt><dd>{gb(g.min_storage_gb)}</dd></div>
+              </dl>
+            </li>
+          ))}
+        </ol>
+      </>
+    )}
+
+    <nav class="related" aria-label="Other lists">
+      <h2>Other lists</h2>
+      <ul>
+        {others.map(l => <li><a href={`/game-list/${l.slug}`}>{l.title}</a></li>)}
+        <li><a href="/what-can-my-pc-run">Every game your PC can run</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(28px, 4.6vw, 42px); margin: 6px 0 12px; }
+  .eyebrow :global(.icon) { margin-right: 4px; }
+  .scope { color: var(--faint); font-size: 13px; max-width: 72ch; margin-top: 10px; }
+  .empty { color: var(--muted); padding: 40px 0; }
+  .empty a { color: var(--accent); }
+
+  .strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-bottom: 30px; }
+
+  .ranked { list-style: none; padding: 0; margin: 0 0 40px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .ranked li { display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(0, 1.4fr); gap: 14px; align-items: center; padding: 12px 16px; background: var(--surface); }
+  .ranked li + li { border-top: 1px solid var(--line); }
+  .pos { color: var(--faint); font-size: 13px; }
+  .body { display: flex; flex-direction: column; min-width: 0; }
+  .nm { font-weight: 700; }
+  .nm:hover { color: var(--accent); }
+  .why { color: var(--readout); font-size: 12.5px; }
+  .facts { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin: 0; }
+  .facts dt { font-size: 11px; color: var(--faint); }
+  .facts dd { margin: 0; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+
+  @media (max-width: 900px) { .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 720px) {
+    .ranked li { grid-template-columns: 32px minmax(0, 1fr); }
+    .facts { grid-column: 2; grid-template-columns: 1fr 1fr; }
+    .facts div:first-child { grid-column: 1 / -1; }
+  }
+</style>

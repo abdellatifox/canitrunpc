@@ -1,0 +1,98 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { SITE_URL, SITE_NAME, CONTACT_EMAIL } from '../lib/site';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+const topGpu = gpus[0];
+const topCpu = cpus[0];
+---
+<BaseLayout
+  title={`Editorial Standards: Sources, Scoring, Corrections | ${SITE_NAME}`}
+  description={`Where ${SITE_NAME} gets game requirements and hardware data, how the index and frame-rate model work, what we refuse to guess, and how errors get fixed.`}
+  keywords="editorial standards, methodology, gpu performance index, system requirements data sources"
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Editorial standards",
+    "url": `${SITE_URL}/editorial-standards`,
+    "publisher": { "@id": `${SITE_URL}/#organization` }
+  }}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Editorial standards' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Method</span>
+      <h1>Editorial standards</h1>
+      <p class="lede">The rules every number on this site follows, written down so you can hold us to them.</p>
+    </header>
+
+    <div class="prose">
+      <h2>Rule 1: publisher requirements, word for word</h2>
+      <p>
+        Minimum and recommended specs come from each game’s Steam store listing. We keep the publisher’s wording and show it
+        beside every comparison. Unreleased games often list placeholders — “TBD”, “Coming soon”, a bare “OS” — and those are
+        removed, never treated as a requirement.
+      </p>
+
+      <h2>Rule 2: “not stated” beats a guess</h2>
+      <p>
+        If a publisher names no part we can place, the line is shown as not stated and left out of any calculation. A game
+        without a measurable graphics requirement does not appear in rankings or lists that depend on one.
+      </p>
+
+      <h2>Rule 3: one index for all hardware</h2>
+      <p>
+        Each graphics card and processor has a score from published gaming benchmark results, scaled so the fastest part we
+        list sits at the top — currently the {topGpu.name} for cards and the {topCpu.name} for processors. The processor index
+        weighs gaming results, so an eight-core gaming chip can outrank a workstation part with twice the cores.
+      </p>
+      <p>
+        The scale is relative. When a faster part launches, the rest are rescored and their numbers drop, although nothing about
+        them has changed.
+      </p>
+
+      <h2>Rule 4: models are labelled as models</h2>
+      <p>
+        Frame rates are estimated, not recorded. A PC exactly at a game’s recommended spec is taken as 60 FPS at 1080p on high;
+        your parts’ scores against that spec, the resolution and the preset move the figure, and the processor caps it. Every
+        page that shows such a number says it is an estimate, and very high results are shown as “300+” rather than as a
+        precise figure the model can’t support.
+      </p>
+      <p>Judgement calls — tier boundaries, VR headset thresholds, the power-supply headroom — are described as ours where they appear.</p>
+
+      <h2>Rule 5: unreleased means unreleased</h2>
+      <p>
+        Announced games are listed with the publisher’s date text, marked as unreleased, and kept out of anything that tells you
+        what you can play today. Anticipation claims carry a link to the source that measured them.
+      </p>
+
+      <h2>Corrections</h2>
+      <p>
+        Errors are fixed in the underlying data, so every page and tool that reads it updates together. Send the page address and
+        the correct value to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>; reports that point to a checkable source are
+        dealt with first.
+      </p>
+
+      <h2>Independence and money</h2>
+      <p>
+        No hardware maker, developer or publisher pays for a score, a tier or a place on a list, and none can have one changed.
+        If the site ever carries sponsored or affiliate content, it will be labelled on the page where it appears.
+      </p>
+
+      <h2>Images</h2>
+      <p>
+        Game art is limited to official logos from SteamGridDB, converted and served from this site. Logos and trademarks belong
+        to their owners.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 18px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+</style>

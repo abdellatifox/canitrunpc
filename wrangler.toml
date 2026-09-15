@@ -1,0 +1,49 @@
+name = "canitrunpc"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# --------------------------------------------------------------------------
+# CanItRunPC has NO Cloudflare resources yet. Every id below is a
+# placeholder on purpose: this project was forked from RunsOnMyPC, and its
+# ids pointed at RunsOnMyPC's own D1 database and KV namespaces. Deploying
+# with those would have written this site's data into the other site.
+#
+# Before creating anything:
+#   1. `npm run cf -- whoami` and confirm the account is the one meant for
+#      canitrunpc.com. Never the Abdellatifbrands account, never anything
+#      named critvolt-*, and never the RunsOnMyPC or PCGameFit resources.
+#   2. npm run cf -- d1 create canitrunpc-db
+#      npm run cf -- kv namespace create canitrunpc-tools
+#      npm run cf -- kv namespace create canitrunpc-session
+#   3. Paste the returned ids below, then `npm run db:migrate`.
+# --------------------------------------------------------------------------
+
+[[d1_databases]]
+binding = "DB"
+database_name = "canitrunpc-db"
+database_id = "REPLACE_WITH_D1_ID"
+migrations_dir = "migrations"
+
+# Caches tool and autocomplete results. Optional: the APIs query directly when
+# this namespace is missing or erroring.
+[[kv_namespaces]]
+binding = "TOOLS_KV"
+id = "REPLACE_WITH_TOOLS_KV_ID"
+
+# Required by @astrojs/cloudflare's session support. Without it the build
+# warns "Invalid binding `SESSION`".
+[[kv_namespaces]]
+binding = "SESSION"
+id = "REPLACE_WITH_SESSION_KV_ID"
+
+# R2 is deliberately unused. Game art ships as Pages static assets, which the
+# same edge serves with no egress cost and no Worker invocation.
+#
+# Revisit near Pages' 20,000-file cap (~5.9 files per game, so ~3,300 games).
+# Before switching: create a Cache Rule for the CDN hostname (R2 custom-domain
+# traffic is not edge-cached without one), then set ART_BASE in src/lib/site.ts.
+#
+# [[r2_buckets]]
+# binding = "ART_R2"
+# bucket_name = "canitrunpc-assets"

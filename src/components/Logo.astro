@@ -1,0 +1,26 @@
+---
+/**
+ * The CanItRunPC lockup. Files and dimensions come from src/lib/brand-meta.json,
+ * written by scripts/build-brand.mjs from brand/logo.png, so a new master only
+ * needs that script re-run. Width/height attributes reserve the space before the
+ * image arrives, so the header never shifts.
+ */
+import meta from '../lib/brand-meta.json';
+import { SITE_NAME } from '../lib/site';
+
+interface Props {
+  class?: string;
+  /** Rendered height in CSS pixels; the width follows the logo's own ratio. */
+  height?: number;
+  /** Above-the-fold instances load eagerly. */
+  eager?: boolean;
+}
+const { class: className = '', height = 36, eager = false } = Astro.props;
+const width = Math.round(height * meta.ratio);
+---
+<picture class={className}>
+  <source srcset={meta.logo.avif} type="image/avif" />
+  <source srcset={meta.logo.webp} type="image/webp" />
+  <img src={meta.logo.png} alt={SITE_NAME} width={width} height={height}
+    loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} />
+</picture>

@@ -1,0 +1,236 @@
+---
+import { SEO_YEAR } from '../lib/year';
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+const PATH = '/build-suggest';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+
+/* Graphics card: the fastest desktop card from the last few launch years whose
+   launch price fits roughly half the budget. Processor: our pick for the budget,
+   by name — the table has no processor prices, so a score ceiling cannot stand
+   in for cost (it once put an RTX 5080 in the $1,200 build). */
+const BUDGETS = [
+  { key: '600',  label: '$600',   gpuCap: 300,  cpu: 'amd-ryzen-5-5600',    ram: 16, psu: 550,  res: '1080p' },
+  { key: '900',  label: '$900',   gpuCap: 430,  cpu: 'amd-ryzen-5-7600',    ram: 16, psu: 650,  res: '1080p' },
+  { key: '1200', label: '$1,200', gpuCap: 600,  cpu: 'amd-ryzen-7-7700',    ram: 32, psu: 750,  res: '1440p' },
+  { key: '1800', label: '$1,800', gpuCap: 800,  cpu: 'amd-ryzen-7-7800x3d', ram: 32, psu: 850,  res: '1440p' },
+  { key: '2500', label: '$2,500+', gpuCap: 1100, cpu: 'amd-ryzen-7-9800x3d', ram: 32, psu: 1000, res: '4K' }
+];
+const latest = Math.max(...gpus.map(g => g.release_year));
+const recentDesktop = gpus.filter(g => !/laptop/i.test(g.name) && g.msrp_usd && g.release_year >= latest - 3);
+
+const builds = BUDGETS.map(b => {
+  const gpu = recentDesktop.filter(g => g.msrp_usd! <= b.gpuCap).sort((x, y) => y.score - x.score)[0];
+  const cpu = cpus.find(c => c.slug === b.cpu)!;
+  // AM4 Ryzen 5000 chips take DDR4; the AM5 chips used here take DDR5.
+  const memType = /ryzen-\d-5\d{3}/.test(cpu.slug) ? 'DDR4' : 'DDR5';
+  // Same rule as /psu-calculator: parts + 60 W base + three fans and a drive, 40% headroom, next common size.
+  const load = gpu ? gpu.tdp_watts + cpu.tdp_watts + 60 + 9 + 8 : 0;
+  const psu = [450, 550, 650, 750, 850, 1000, 1200, 1300, 1600].find(w => w >= Math.ceil(load * 1.4)) ?? 1600;
+  return { ...b, gpu, cpu, memType, psu };
+}).filter(b => b.gpu && b.cpu);
+
+const description = `Gaming PC builds for ${SEO_YEAR} at five budgets from $600 to $2,500+: a matched graphics card and processor, plus memory, storage, power and cooling.`;
+
+const faq = [
+  {
+    q: `What does a decent gaming PC cost in ${SEO_YEAR}?`,
+    a: 'Roughly $900 for smooth 1080p on high settings, $1,200 to $1,800 for 1440p, and from about $2,500 for 4K at high frame rates — before the monitor.'
+  },
+  {
+    q: 'How are the graphics card and processor chosen?',
+    a: 'The card is the fastest one from recent generations whose launch price fits about half the budget. The processor is our own pick for each budget, chosen so it keeps up with that card. Street prices move, so check both before buying.'
+  },
+  {
+    q: 'Is 16 GB of memory still enough?',
+    a: 'For gaming on its own, yes. The builds move to 32 GB from the $1,200 budget up, where streaming, voice chat and a browser alongside the game are more likely.'
+  },
+  {
+    q: 'Is last generation’s hardware a better deal?',
+    a: 'Frequently. An older card one step higher in the range can match or beat a newer one a step lower for the same money — compare the two before buying.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `Gaming PC Build Suggester (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": description,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`Gaming PC Builds ${SEO_YEAR}: Parts Lists by Budget | ${SITE_NAME}`}
+  description={description}
+  keywords={`gaming pc build ${SEO_YEAR}, best gaming pc build for the money, pc parts list by budget, 1440p gaming pc build`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'Build Suggester' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Parts lists</span>
+      <h1>Gaming PC builds by budget</h1>
+      <p class="lede">
+        Choose a budget. About half goes on the graphics card — the fastest recent one at that launch price — and the rest on a
+        processor that keeps up with it, plus memory, storage, power and cooling to suit.
+      </p>
+    </header>
+
+    <div class="budget-switch" role="group" aria-label="Select budget">
+      {builds.map((b, i) => (
+        <button class={`bbtn ${i === 2 ? 'active' : ''}`} data-budget={b.key}>{b.label}</button>
+      ))}
+    </div>
+
+    {builds.map((b, i) => (
+      <div class="build" data-build={b.key} hidden={i !== 2}>
+        <div class="build-head">
+          <div>
+            <span class="eyebrow">{b.label} build · targets {b.res}</span>
+            <h2>{b.label} PC for {b.res} gaming</h2>
+          </div>
+          <div class="tgt">
+            <b>{b.res}</b>
+            <span>screen it is built for</span>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr><th>Part</th><th>Pick</th><th>Reasoning</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Graphics card</td>
+                <td><a href={`/gpu/${b.gpu.slug}`}>{b.gpu.name}</a> <span class={`pill t-${b.gpu.tier}`}>{b.gpu.tier}</span></td>
+                <td class="why">The fastest recent card with a launch price up to ${b.gpuCap} (${b.gpu.msrp_usd}): {b.gpu.vram_gb} GB of video memory, {b.gpu.tdp_watts} W.</td>
+              </tr>
+              <tr>
+                <td>Processor</td>
+                <td><a href={`/cpu/${b.cpu.slug}`}>{b.cpu.name}</a> <span class={`pill t-${b.cpu.tier}`}>{b.cpu.tier}</span></td>
+                <td class="why">Our processor pick for this budget: {b.cpu.cores} cores, {b.cpu.threads} threads, up to {b.cpu.boost_ghz} GHz.</td>
+              </tr>
+              <tr>
+                <td>Memory</td>
+                <td>{b.ram} GB {b.memType} (2 × {b.ram / 2} GB)</td>
+                <td class="why">Two identical sticks, so the memory runs in dual channel.</td>
+              </tr>
+              <tr>
+                <td>Storage</td>
+                <td>{b.key === '600' ? '1TB' : '2TB'} NVMe SSD</td>
+                <td class="why">Big games take up a lot of room; an NVMe drive also loads open worlds without hitching.</td>
+              </tr>
+              <tr>
+                <td>Power supply</td>
+                <td>{b.psu}W 80+ Gold</td>
+                <td class="why">Room above the parts’ draw for power spikes. Check your exact parts in the <a href="/psu-calculator">PSU calculator</a>.</td>
+              </tr>
+              <tr>
+                <td>Cooling</td>
+                <td>{b.cpu.tdp_watts >= 125 ? '240mm AIO or premium air tower' : 'Quality air tower'}</td>
+                <td class="why">Matched to the processor’s {b.cpu.tdp_watts} W rating.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cta-row">
+          <a href={`/compare-gpu?a=${b.gpu.slug}`} class="btn btn-ghost">Compare this card</a>
+          <a href="/bottleneck" class="btn btn-ghost">Check the pairing</a>
+          <a href="/psu-calculator" class="btn btn-ghost">Check the power supply</a>
+        </div>
+      </div>
+    ))}
+
+    <section class="split-guide">
+      <h2>A rule of thumb for splitting the money</h2>
+      <div class="split-grid">
+        <div><b>40–50%</b><span>Graphics card</span><p>Moves frame rate more than any other part.</p></div>
+        <div><b>15–20%</b><span>Processor</span><p>Enough to keep up with the card, no more.</p></div>
+        <div><b>~10%</b><span>Memory</span><p>16 GB to start; 32 GB on bigger budgets.</p></div>
+        <div><b>~10%</b><span>Storage</span><p>A fast NVMe drive first, more space later.</p></div>
+        <div><b>~10%</b><span>Power and case</span><p>A poor supply can damage other parts.</p></div>
+        <div><b>~5%</b><span>Cooling</span><p>Follow the processor’s power rating.</p></div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>Build questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/psu-calculator">Size the power supply exactly</a></li>
+        <li><a href="/gpu-tier-list">Graphics cards ranked for {SEO_YEAR}</a></li>
+        <li><a href="/upgrade-advisor">Upgrading instead of building?</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .budget-switch { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+  .bbtn {
+    background: transparent; border: 1px solid var(--line-strong); color: var(--muted);
+    padding: 10px 20px; border-radius: 3px; font: inherit; font-size: 14px; cursor: pointer;
+    transition: all .2s var(--ease);
+  }
+  .bbtn:hover { color: var(--text); }
+  .bbtn.active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+
+  .build { margin-bottom: 40px; }
+  .build-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 20px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .build-head h2 { font-size: 24px; margin: 8px 0 0; }
+  .tgt { text-align: right; }
+  .tgt b { display: block; font-family: var(--font-display); font-size: 26px; color: var(--accent); }
+  .tgt span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .why { color: var(--muted); font-size: 13px; line-height: 1.55; }
+  .why a { color: var(--accent); }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+
+  .split-guide { margin-top: 56px; }
+  .split-guide h2 { font-size: 22px; margin-bottom: 18px; }
+  .split-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+  .split-grid > div { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; background: var(--surface); }
+  .split-grid b { display: block; font-family: var(--font-display); font-size: 26px; color: var(--accent); line-height: 1; }
+  .split-grid span { display: block; font-size: 13px; font-weight: 600; margin: 8px 0 6px; }
+  .split-grid p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+</style>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.bbtn');
+  const builds = document.querySelectorAll<HTMLElement>('.build');
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    builds.forEach(el => { el.hidden = el.dataset.build !== b.dataset.budget; });
+  }));
+</script>

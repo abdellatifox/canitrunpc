@@ -1,0 +1,255 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus } from '../lib/db';
+import { releasedGames } from '../lib/games';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitMeta } from '../lib/seo';
+
+// Same table as /gpus and every /gpu page, so a card's index never disagrees.
+const gpus = await getGpus(Astro.locals);
+const year = SEO_YEAR;
+
+/* Coverage is measured against released games whose publisher named a card we
+   can place — never against missing scores (`50 >= null` is true in JS). */
+const games = releasedGames().filter(g => g.rec_gpu_score != null);
+const coverage = (g: typeof gpus[number]) => {
+  const ok = games.filter(x => g.score >= x.rec_gpu_score! && (x.rec_vram_gb == null || g.vram_gb >= x.rec_vram_gb)).length;
+  return Math.round((ok / Math.max(1, games.length)) * 100);
+};
+const cov = new Map(gpus.map(g => [g.slug, coverage(g)]));
+
+const ROLE: Record<string, string> = {
+  S: '4K with ray tracing switched on',
+  A: 'high-refresh 1440p, and 4K with upscaling',
+  B: '1440p at high settings',
+  C: '1080p at high settings',
+  D: '1080p at medium settings',
+  F: 'older and lighter games'
+};
+
+const tiers = ['S', 'A', 'B', 'C', 'D', 'F']
+  .map(t => {
+    const cards = gpus.filter(g => g.tier === t);
+    const priced = cards.map(c => c.msrp_usd).filter((p): p is number => p != null);
+    const weakest = cards[cards.length - 1];
+    return {
+      tier: t,
+      cards,
+      lo: weakest?.score, hi: cards[0]?.score,
+      floor: weakest ? cov.get(weakest.slug)! : 0,
+      priceLo: priced.length ? Math.min(...priced) : null,
+      priceHi: priced.length ? Math.max(...priced) : null
+    };
+  })
+  .filter(t => t.cards.length > 0);
+
+const fastest = gpus[0];
+const recent = gpus.filter(g => g.msrp_usd && g.release_year >= fastest.release_year - 4 && !/laptop/i.test(g.name));
+const perDollar = [...recent]
+  .map(g => ({ g, v: (g.score / g.msrp_usd!) * 100 }))
+  .sort((a, b) => b.v - a.v)
+  .slice(0, 10);
+const under350 = recent.filter(g => g.msrp_usd! <= 350).sort((a, b) => b.score - a.score)[0];
+const first100 = gpus.filter(g => cov.get(g.slug) === 100).pop();
+
+const title = `GPU Tier List ${year}: ${gpus.length} Graphics Cards, S to F | ${SITE_NAME}`;
+const description = fitMeta([
+  `${gpus.length} graphics cards sorted into six tiers for ${year}, each with its index, VRAM, launch price and the share of PC games it meets at recommended settings.`,
+  'Updated with every new card.'
+]);
+
+const faq = [
+  {
+    q: `Which is the fastest graphics card in ${year}?`,
+    a: `The ${fastest.name}, with ${fastest.vram_gb} GB of memory. It sets 100 on our index; every other card is scored against it.`
+  },
+  {
+    q: 'How are the tiers cut?',
+    a: `By index band, and each band maps to a target: ${tiers.map(t => `${t.tier} for ${ROLE[t.tier]}`).join('; ')}.`
+  },
+  {
+    q: 'Which card gives the most performance for its launch price?',
+    a: perDollar[0]
+      ? `Among cards from the last few years, the ${perDollar[0].g.name}: ${perDollar[0].v.toFixed(1)} index points per $100 at a $${perDollar[0].g.msrp_usd} launch price. Street prices move, so compare against what it sells for today.`
+      : 'We do not have launch prices for enough recent cards to say.'
+  },
+  ...(under350 ? [{
+    q: 'What is the strongest card under $350?',
+    a: `By launch price, the ${under350.name} — index ${under350.score}, ${under350.vram_gb} GB.`
+  }] : []),
+  {
+    q: "Why did a card's index go down?",
+    a: 'The index is relative to the fastest card we track. When a faster flagship arrives the scale stretches and every other card is re-scored; the card itself is as fast as it was.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `GPU Tier List ${year}`,
+    "description": description,
+    "url": `${SITE_URL}/gpu-tier-list`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": gpus.length,
+      "itemListOrder": "https://schema.org/ItemListOrderDescending",
+      "itemListElement": gpus.slice(0, 40).map((g, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/gpu/${g.slug}`, "name": g.name }))
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout title={title} description={description} jsonLd={schema}
+  keywords={`gpu tier list ${year}, graphics card tier list, best graphics card ${year}, gpu ranking, gpu hierarchy`}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Graphics cards', href: '/gpus' }, { name: `Tier list ${year}` }]} />
+
+    <header class="head">
+      <span class="eyebrow">Ranking · {gpus.length} cards · measured against {games.length} games</span>
+      <h1>GPU Tier List {year}</h1>
+      <p class="lede">
+        Six bands, from S at the top to F at the bottom. Next to every card is the share of PC games whose
+        publisher-recommended graphics card it matches or beats — a plain measure of how much of the library
+        it runs as intended.
+      </p>
+    </header>
+
+    <ol class="ladder" aria-label="Tiers at a glance">
+      {tiers.map(t => (
+        <li>
+          <a href={`#tier-${t.tier}`}>
+            <span class={`tb t-${t.tier}`}>{t.tier}</span>
+            <span class="lad-body">
+              <b>{ROLE[t.tier]}</b>
+              <small class="mono">index {t.lo}–{t.hi} · {t.cards.length} cards</small>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    {tiers.map(t => (
+      <section class="tier" id={`tier-${t.tier}`}>
+        <div class="tier-top">
+          <span class={`tb big t-${t.tier}`}>{t.tier}</span>
+          <div>
+            <h2>{t.tier} tier: {ROLE[t.tier]}</h2>
+            <p>
+              Even the slowest card in this band meets the recommended graphics card of <b>{t.floor}%</b> of the games we track.
+              {t.priceLo != null && (t.priceLo === t.priceHi
+                ? <> Launch price ${t.priceLo}.</>
+                : <> Launch prices ran from ${t.priceLo} to ${t.priceHi}.</>)}
+            </p>
+          </div>
+        </div>
+        <ul class="rows">
+          {t.cards.map(g => (
+            <li>
+              <a href={`/gpu/${g.slug}`} class="row">
+                <span class="nm">{g.name}</span>
+                <span class="bar" aria-hidden="true"><i style={`width:${g.score}%`}></i></span>
+                <span class="mono idx">{g.score}</span>
+                <span class="meta">{g.vram_gb} GB memory{g.msrp_usd ? ` · launched at $${g.msrp_usd}` : ''}</span>
+                <span class="mono cv" title="Share of games at recommended">runs {cov.get(g.slug)}%</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    {perDollar.length > 0 && (
+      <section class="value">
+        <h2>Most index for the launch price</h2>
+        <p class="sub">Desktop cards from {fastest.release_year - 4} onward, ranked by index points per $100 of launch price.</p>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Card</th><th>Index</th><th>Launch price</th><th>Per $100</th><th>Games at recommended</th></tr></thead>
+            <tbody>
+              {perDollar.map(({ g, v }) => (
+                <tr>
+                  <td><a href={`/gpu/${g.slug}`}>{g.name}</a></td>
+                  <td class="mono">{g.score}</td>
+                  <td class="mono">${g.msrp_usd}</td>
+                  <td class="mono"><b>{v.toFixed(1)}</b></td>
+                  <td class="mono">{cov.get(g.slug)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    <section class="faq">
+      <h2>About this ranking</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+      {first100 && <p class="note">The slowest card that still meets every tracked game's recommended graphics card is the <a href={`/gpu/${first100.slug}`}>{first100.name}</a>.</p>}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/cpu-tier-list">The {year} processor ranking</a></li>
+        <li><a href="/compare-gpu">Put two cards head to head</a></li>
+        <li><a href="/upgrade-advisor">Find your next upgrade</a></li>
+        <li><a href="/psu-calculator">Size the power supply</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 26px; }
+  .head h1 { font-size: clamp(30px, 5vw, 46px); margin: 6px 0 12px; }
+
+  .ladder { list-style: none; padding: 0; margin: 0 0 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .ladder a { display: flex; gap: 12px; align-items: center; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  .ladder a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .lad-body { display: flex; flex-direction: column; min-width: 0; }
+  .lad-body b { font-size: 13.5px; line-height: 1.3; }
+  .lad-body small { color: var(--faint); font-size: 11.5px; }
+
+  .tb { width: 34px; height: 34px; flex: none; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: var(--tier-ink); clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%); }
+  .tb.big { width: 50px; height: 50px; font-size: 24px; }
+  .t-S { background: var(--tier-S); } .t-A { background: var(--tier-A); } .t-B { background: var(--tier-B); }
+  .t-C { background: var(--tier-C); } .t-D { background: var(--tier-D); } .t-F { background: var(--tier-F); }
+
+  .tier { margin-bottom: 44px; scroll-margin-top: 80px; }
+  .tier-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+  .tier-top h2 { font-size: 20px; margin-bottom: 4px; }
+  .tier-top p { color: var(--muted); font-size: 14px; max-width: 72ch; }
+  .tier-top b { color: var(--text); }
+
+  .rows { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .rows li + li { border-top: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(60px, 1fr) 36px minmax(150px, .9fr) 76px; gap: 12px; align-items: center; padding: 9px 14px; background: var(--surface); font-size: 14px; }
+  .row:hover { background: var(--surface-2); }
+  .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--readout); }
+  .idx { color: var(--readout); text-align: right; }
+  .meta { color: var(--faint); font-size: 12.5px; }
+  .cv { text-align: right; color: var(--ok); }
+
+  .value { margin: 56px 0 44px; }
+  .value h2 { font-size: 22px; }
+  .sub { color: var(--muted); font-size: 14px; margin: 6px 0 14px; }
+  .note { color: var(--muted); font-size: 14px; margin-top: 14px; }
+  .note a { color: var(--accent); }
+
+  @media (max-width: 760px) {
+    .ladder { grid-template-columns: 1fr 1fr; }
+    .row { grid-template-columns: minmax(0, 1fr) 36px 76px; row-gap: 2px; }
+    .bar { display: none; }
+    .meta { grid-column: 1 / -1; grid-row: 2; }
+  }
+</style>

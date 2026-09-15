@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="presentation">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8F6F0"/><stop offset="1" stop-color="#ECE8DC"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#C2410C" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#C2410C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <circle cx="670" cy="170" r="250" fill="url(#glow)"/>
+  <g transform="rotate(9 600 210)" opacity="0.55">
+    <rect x="120" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.06"/><rect x="270" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.11"/><rect x="420" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.16"/><rect x="570" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.21000000000000002"/><rect x="720" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.06"/><rect x="870" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.11"/><rect x="1020" y="-90" width="7" height="600" rx="3.5" fill="#C2410C" opacity="0.16"/>
+  </g>
+  <rect x="0" y="0" width="1200" height="5" fill="#C2410C"/>
+</svg>

@@ -1,0 +1,241 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+const PATH = '/pc-value';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+const thisYear = new Date().getFullYear();
+
+const description = 'Selling or buying a used gaming PC? Pick its graphics card, processor, memory, storage and condition for a rough private-sale price range and per-part breakdown.';
+
+// Grouped by maker and sorted by name, so a reader can find their part quickly.
+const byMaker = <T extends { brand: string; name: string }>(list: T[]) =>
+  [...new Set(list.map(x => x.brand))].sort().map(brand => ({
+    brand,
+    items: list.filter(x => x.brand === brand).sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }))
+  }));
+const gpuGroups = byMaker(gpus);
+const cpuGroups = byMaker(cpus);
+
+const faq = [
+  {
+    q: 'How is the price worked out?',
+    a: 'Each part starts from a launch-price figure and loses value with age; condition then scales the total. The graphics card usually carries most of the value, which is why it is listed first in the breakdown.'
+  },
+  {
+    q: 'Whole PC or separate parts?',
+    a: 'Separate parts usually fetch more in total, because most used buyers are after one upgrade. A whole PC sells faster and with less hassle — the gap is what your time is worth.'
+  },
+  {
+    q: 'When do used graphics card prices fall fastest?',
+    a: 'Around the launch of a new generation. If you plan to sell, doing it before the announcement tends to get a better price.'
+  },
+  {
+    q: 'How far should I trust the estimate?',
+    a: 'As a starting point only. Local demand, stock shortages and new launches move used prices a lot, so check recently sold listings where you live before you set a price.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `PC Value Calculator (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": description,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`PC Value Calculator: What's My Gaming PC Worth? | ${SITE_NAME}`}
+  description={description}
+  keywords={`how much is my gaming pc worth, pc value calculator, used gaming pc price, sell gaming pc ${SEO_YEAR}`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'PC Value Calculator' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Resale estimate</span>
+      <h1>How much is my gaming PC worth?</h1>
+      <p class="lede">
+        Six quick choices give a rough price range for a used gaming PC, with each part’s share of the total — handy whether
+        you are listing one, checking an offer, or deciding if selling beats upgrading.
+      </p>
+    </header>
+
+    <div class="tool-panel">
+      <div class="fields">
+        <label>
+          <span>Graphics card</span>
+          <select id="gpu">
+            {gpuGroups.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(g => <option selected={g.slug === 'nvidia-geforce-rtx-4060'} value={`${g.msrp_usd || 0}|${g.release_year}`}>{g.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Processor</span>
+          <select id="cpu">
+            {cpuGroups.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(c => <option selected={c.slug === 'amd-ryzen-5-5600'} value={`${Math.round(c.score * 5.5)}|${c.release_year}`}>{c.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Memory (RAM)</span>
+          <select id="ram">
+            <option value="30">8 GB</option>
+            <option value="55" selected>16 GB</option>
+            <option value="105">32 GB</option>
+            <option value="200">64 GB</option>
+          </select>
+        </label>
+        <label>
+          <span>Storage</span>
+          <select id="storage">
+            <option value="35">500 GB SSD</option>
+            <option value="60" selected>1 TB NVMe</option>
+            <option value="105">2 TB NVMe</option>
+            <option value="190">4 TB NVMe</option>
+          </select>
+        </label>
+        <label>
+          <span>Case, motherboard, power supply</span>
+          <select id="rest">
+            <option value="120">Basic</option>
+            <option value="220" selected>Mid-range</option>
+            <option value="400">High-end</option>
+          </select>
+        </label>
+        <label>
+          <span>Condition</span>
+          <select id="cond">
+            <option value="1.0">As new, with boxes</option>
+            <option value="0.9" selected>Used, everything works</option>
+            <option value="0.75">Worn, marked or repaired</option>
+          </select>
+        </label>
+      </div>
+      <button id="calc" class="btn btn-primary full">Price my PC</button>
+    </div>
+
+    <div id="result" class="result" hidden>
+      <div class="headline">
+        <span class="eyebrow">Likely private-sale range</span>
+        <div class="range"><span id="low"></span> <em>–</em> <span id="high"></span></div>
+        <p class="sub">For the PC sold whole. Selling parts one by one usually brings in more.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Part</th><th>Worth about</th><th>Of total</th></tr></thead>
+          <tbody id="breakdown"></tbody>
+        </table>
+      </div>
+      <p class="disclaimer">
+        A model of launch price and age, not a quote. Look at recently sold listings near you before you set a price.
+      </p>
+    </div>
+
+    <section class="faq">
+      <h2>Resale questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/upgrade-advisor">Upgrade instead of selling?</a></li>
+        <li><a href="/gpus">Launch prices of every card</a></li>
+        <li><a href="/build-suggest">What a new build costs</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .tool-panel { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 26px; margin-bottom: 30px; }
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .fields label { display: block; }
+  .fields span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+  .fields select { width: 100%; background: var(--bg-soft); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 11px 12px; color: var(--text); font: inherit; outline: none; }
+  .fields select:focus { border-color: var(--accent); }
+  .btn.full { width: 100%; }
+
+  .result { background: var(--surface); border: 1px solid var(--accent); border-radius: var(--radius); padding: 28px; margin-bottom: 44px; }
+  .headline { text-align: center; margin-bottom: 26px; }
+  .range { font-family: var(--font-display); font-size: clamp(30px, 6vw, 46px); font-weight: 700; color: var(--accent); margin: 10px 0 8px; }
+  .range em { font-style: normal; color: var(--faint); }
+  .sub { color: var(--muted); font-size: 14px; margin: 0; }
+  .disclaimer { color: var(--faint); font-size: 13px; line-height: 1.7; margin-top: 18px; }
+  section { margin-bottom: 48px; }
+  section h2 { font-size: 22px; margin-bottom: 18px; }
+</style>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!;
+  const YEAR = new Date().getFullYear();
+  const money = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
+
+  /** Depreciation curve: steep in year one, flattening afterwards. */
+  function depreciate(msrp: number, year: number, annual: number) {
+    const age = Math.max(0, YEAR - year);
+    return msrp * Math.pow(1 - annual, age) * (age === 0 ? 0.85 : 1);
+  }
+
+  $('calc').addEventListener('click', () => {
+    const [gMsrpS, gYearS] = ($('gpu') as HTMLSelectElement).value.split('|');
+    const [cMsrpS, cYearS] = ($('cpu') as HTMLSelectElement).value.split('|');
+    const ram = +($('ram') as HTMLSelectElement).value;
+    const storage = +($('storage') as HTMLSelectElement).value;
+    const rest = +($('rest') as HTMLSelectElement).value;
+    const cond = +($('cond') as HTMLSelectElement).value;
+
+    const gpuVal = depreciate(+gMsrpS, +gYearS, 0.22) * cond;
+    const cpuVal = depreciate(+cMsrpS, +cYearS, 0.15) * cond;
+    const ramVal = ram * 0.62 * cond;
+    const stoVal = storage * 0.58 * cond;
+    const restVal = rest * 0.45 * cond;
+
+    const parts = [
+      { name: 'Graphics card', v: gpuVal },
+      { name: 'Processor', v: cpuVal },
+      { name: 'Memory', v: ramVal },
+      { name: 'Storage', v: stoVal },
+      { name: 'Case, board & PSU', v: restVal }
+    ];
+    const total = parts.reduce((s, p) => s + p.v, 0);
+
+    $('low').textContent = money(total * 0.85);
+    $('high').textContent = money(total * 1.12);
+    $('breakdown').innerHTML = parts
+      .map(p => `<tr><td>${p.name}</td><td>${money(p.v)}</td><td>${total ? Math.round(p.v / total * 100) : 0}%</td></tr>`)
+      .join('') + `<tr><td><b>Total</b></td><td><b>${money(total)}</b></td><td>100%</td></tr>`;
+
+    ($('result') as HTMLElement).hidden = false;
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

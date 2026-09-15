@@ -1,0 +1,22 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+_archive/
+
+.env
+.env.*
+!.env.example
+.dev.vars
+
+*.log
+npm-debug.log*
+
+.DS_Store
+Thumbs.db
+
+# Local ledger for scripts/sync-r2.mjs — build state, not source.
+src/lib/r2-uploaded.json
+
+# Cloudflare API token for this account — never committed.
+.cloudflare/

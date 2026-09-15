@@ -1,0 +1,248 @@
+---
+import { SEO_YEAR } from '../lib/year';
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+const PATH = '/vr-ready';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+
+/* Each headset is pinned to a named card and processor we judge able to hold its
+   full refresh rate at native resolution — our estimate, since headset makers
+   publish only loose minimums. Scores come from the hardware table, so the
+   thresholds follow the index when it is rescaled. */
+const ANCHORS = [
+  { name: 'Meta Quest 3 (Link)', gpu: 'nvidia-geforce-rtx-3060-12gb', cpu: 'amd-ryzen-5-3600', ram: 8,  hz: 120, res: '2064 × 2208' },
+  { name: 'Valve Index',         gpu: 'nvidia-geforce-rtx-2070',      cpu: 'amd-ryzen-5-3600', ram: 8,  hz: 144, res: '1440 × 1600' },
+  { name: 'HTC Vive Pro 2',      gpu: 'nvidia-geforce-rtx-3060-ti',   cpu: 'amd-ryzen-5-3600', ram: 16, hz: 120, res: '2448 × 2448' },
+  { name: 'Varjo Aero',          gpu: 'nvidia-geforce-rtx-3080',      cpu: 'amd-ryzen-5-5600', ram: 16, hz: 90,  res: '2880 × 2720' },
+  { name: 'Pimax Crystal',       gpu: 'nvidia-geforce-rtx-4070-ti',   cpu: 'amd-ryzen-5-5600', ram: 16, hz: 120, res: '2880 × 2880' }
+];
+const HEADSETS = ANCHORS.map(a => {
+  const g = gpus.find(x => x.slug === a.gpu)!;
+  const c = cpus.find(x => x.slug === a.cpu)!;
+  return { ...a, gpuCard: g, cpuChip: c, gpu: g.score, cpu: c.score };
+});
+
+const description = `Is your PC VR ready in ${SEO_YEAR}? Pick your graphics card, processor and memory to see which of five PC VR headsets it can drive, from Quest 3 Link to Pimax Crystal.`;
+
+// Grouped by maker and sorted by name, so a reader can find their part quickly.
+const byMaker = <T extends { brand: string; name: string }>(list: T[]) =>
+  [...new Set(list.map(x => x.brand))].sort().map(brand => ({
+    brand,
+    items: list.filter(x => x.brand === brand).sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }))
+  }));
+const gpuGroups = byMaker(gpus);
+const cpuGroups = byMaker(cpus);
+
+const faq = [
+  {
+    q: 'What makes a PC "VR ready"?',
+    a: 'Keeping the headset at its full refresh rate without missing frames. A headset draws a separate image for each eye, many times a second, and a missed frame is felt as judder or discomfort — so the bar is higher than for a monitor.'
+  },
+  {
+    q: 'How were the headset thresholds set?',
+    a: 'Each headset is matched to a graphics card and processor we judge able to hold its full refresh rate, based on its per-eye resolution; your parts pass if they score at least as high on our index. Headset makers publish only loose minimums, so treat this as a guide.'
+  },
+  {
+    q: 'Does the processor matter for VR?',
+    a: 'More than on a monitor. Tracking, reprojection and the VR runtime all run alongside the game, and a busy processor shows up as stutter even when the graphics card has room left.'
+  },
+  {
+    q: 'Can a gaming laptop run PC VR?',
+    a: 'Yes, provided its graphics chip clears the threshold and it has a video output the headset can use. Laptop chips usually trail the desktop card with the same name, so allow a margin.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `VR Ready Test (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": description,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`Is My PC VR Ready? VR Ready Test for ${SEO_YEAR} Headsets | ${SITE_NAME}`}
+  description={description}
+  keywords={`is my pc vr ready, vr ready test, pc vr requirements ${SEO_YEAR}, quest 3 link requirements, pimax crystal requirements`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'VR Ready Test' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Headset check</span>
+      <h1>Is my PC VR ready?</h1>
+      <p class="lede">
+        Three parts, five headsets. Choose what is in your PC and see which headsets it can keep at full refresh rate,
+        which it can only just manage, and which part holds it back on the rest.
+      </p>
+    </header>
+
+    <div class="tool-panel">
+      <div class="fields">
+        <label>
+          <span>Graphics card</span>
+          <select id="gpu">
+            {gpuGroups.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(g => <option selected={g.slug === 'nvidia-geforce-rtx-4060'} value={`${g.score}|${g.vram_gb}`}>{g.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Processor</span>
+          <select id="cpu">
+            {cpuGroups.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(c => <option selected={c.slug === 'amd-ryzen-5-5600'} value={c.score}>{c.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Memory (RAM)</span>
+          <select id="ram">
+            <option value="8">8 GB</option>
+            <option value="16" selected>16 GB</option>
+            <option value="32">32 GB</option>
+            <option value="64">64 GB</option>
+          </select>
+        </label>
+      </div>
+      <button id="test" class="btn btn-primary full">Check the headsets</button>
+    </div>
+
+    <script type="application/json" id="hs-data" set:html={JSON.stringify(HEADSETS.map(({ name, gpu, cpu, ram, hz, res }) => ({ name, gpu, cpu, ram, hz, res })))}></script>
+    <div id="result" class="result" hidden>
+      <h2 id="summary"></h2>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr><th>Headset</th><th>Resolution</th><th>Refresh</th><th>Verdict</th></tr>
+          </thead>
+          <tbody id="hs-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <section class="reqs">
+      <h2>What each headset needs</h2>
+      <p class="sub">The parts named are our estimate of what holds each headset at full refresh; anything scoring at least as high on our index passes.</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr><th>Headset</th><th>Pixels per eye</th><th>Top refresh</th><th>Graphics card, about</th><th>Processor, about</th><th>Memory</th></tr>
+          </thead>
+          <tbody>
+            {HEADSETS.map(h => (
+              <tr>
+                <td><b>{h.name}</b></td>
+                <td>{h.res}</td>
+                <td>{h.hz} Hz</td>
+                <td><a href={`/gpu/${h.gpuCard.slug}`}>{h.gpuCard.name}</a></td>
+                <td><a href={`/cpu/${h.cpuChip.slug}`}>{h.cpuChip.name}</a></td>
+                <td>{h.ram} GB</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>VR questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/gpu-tier-list">Where your card ranks</a></li>
+        <li><a href="/upgrade-advisor">Short of a headset? Plan the upgrade</a></li>
+        <li><a href="/bottleneck">Check the processor keeps up</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .sub { color: var(--muted); font-size: 14px; margin: -6px 0 12px; }
+
+  .tool-panel { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 26px; margin-bottom: 30px; }
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .fields label { display: block; }
+  .fields span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+  .fields select { width: 100%; background: var(--bg-soft); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 11px 12px; color: var(--text); font: inherit; outline: none; }
+  .fields select:focus { border-color: var(--accent); }
+  .btn.full { width: 100%; }
+  .result { background: var(--surface); border: 1px solid var(--accent); border-radius: var(--radius); padding: 26px; margin-bottom: 44px; }
+  .result h2 { font-size: 22px; margin: 0 0 18px; }
+  section { margin-bottom: 48px; }
+  section h2 { font-size: 22px; margin-bottom: 18px; }
+  .v { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 3px; white-space: nowrap; }
+</style>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!;
+
+  const HEADSETS = JSON.parse(document.getElementById('hs-data')!.textContent || '[]') as { name: string; gpu: number; cpu: number; ram: number; hz: number; res: string }[];
+
+  $('test').addEventListener('click', () => {
+    const [gS] = ($('gpu') as HTMLSelectElement).value.split('|');
+    const gpu = +gS;
+    const cpu = +($('cpu') as HTMLSelectElement).value;
+    const ram = +($('ram') as HTMLSelectElement).value;
+
+    let ready = 0;
+    const rows = HEADSETS.map(h => {
+      const okGpu = gpu >= h.gpu, okCpu = cpu >= h.cpu, okRam = ram >= h.ram;
+      const all = okGpu && okCpu && okRam;
+      const marginal = gpu >= h.gpu * 0.85 && cpu >= h.cpu * 0.85 && okRam;
+      if (all) ready++;
+
+      const missing: string[] = [];
+      if (!okGpu) missing.push('GPU');
+      if (!okCpu) missing.push('CPU');
+      if (!okRam) missing.push('RAM');
+
+      const verdict = all
+        ? '<span class="v" style="background:rgb(var(--ok-rgb) / .12);color:var(--ok)">Ready</span>'
+        : marginal
+          ? '<span class="v" style="background:rgb(var(--warn-rgb) / .12);color:var(--warn)">Marginal</span>'
+          : `<span class="v" style="background:rgb(var(--bad-rgb) / .12);color:var(--bad)">Below spec (${missing.join(', ')})</span>`;
+
+      return `<tr><td><b>${h.name}</b></td><td>${h.res}</td><td>${h.hz} Hz</td><td>${verdict}</td></tr>`;
+    });
+
+    $('summary').textContent = ready === HEADSETS.length
+      ? 'Your PC is ready for every headset we test against.'
+      : ready > 0
+        ? `Your PC is VR ready for ${ready} of ${HEADSETS.length} headsets.`
+        : 'Your PC falls below the bar for the headsets we test against.';
+
+    $('hs-body').innerHTML = rows.join('');
+    ($('result') as HTMLElement).hidden = false;
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

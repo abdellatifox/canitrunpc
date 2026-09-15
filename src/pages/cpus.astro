@@ -1,0 +1,149 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getCpus } from '../lib/db';
+import { releasedGames } from '../lib/games';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+import { fitMeta } from '../lib/seo';
+
+const cpus = await getCpus(Astro.locals);
+const makers = [...new Set(cpus.map(c => c.brand))].sort();
+const newest = Math.max(...cpus.map(c => c.release_year));
+const mostCores = Math.max(...cpus.map(c => c.cores));
+
+const games = releasedGames().filter(g => g.rec_cpu_score != null);
+const coverage = (score: number) =>
+  Math.round((games.filter(g => score >= g.rec_cpu_score!).length / Math.max(1, games.length)) * 100);
+
+const description = fitMeta([
+  `Look up any of ${cpus.length} AMD and Intel processors: cores, threads, top speed, power, gaming index and how many PC games it meets at the recommended processor.`,
+  'Filter by maker or core count.'
+]);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Processor database",
+  "description": description,
+  "url": `${SITE_URL}/cpus`,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": cpus.length,
+    "itemListElement": cpus.slice(0, 40).map((c, i) => ({ "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/cpu/${c.slug}`, "name": c.name }))
+  }
+};
+---
+<BaseLayout title={`Processor Database: ${cpus.length} Gaming CPUs Compared | ${SITE_NAME}`} description={description}
+  keywords="cpu database, processor list, gaming cpu list, cpu cores and threads, amd vs intel processors" jsonLd={schema}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Processors' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Database</span>
+      <h1>Processor database</h1>
+      <p class="lede">
+        Every chip we score, strongest for gaming first. The last column is the share of games whose publisher-recommended
+        processor it matches or beats.
+      </p>
+      <dl class="readouts">
+        <div><dt>Processors</dt><dd class="mono">{cpus.length}</dd></div>
+        <div><dt>Makers</dt><dd class="mono">{makers.length}</dd></div>
+        <div><dt>Newest</dt><dd class="mono">{newest}</dd></div>
+        <div><dt>Most cores</dt><dd class="mono">{mostCores}</dd></div>
+      </dl>
+    </header>
+
+    <div class="filters">
+      <input type="search" id="q" placeholder="Type a model, e.g. 7800X3D" aria-label="Find a processor">
+      <select id="maker" aria-label="Maker">
+        <option value="">Every maker</option>
+        {makers.map(m => <option value={m}>{m}</option>)}
+      </select>
+      <select id="cores" aria-label="Minimum cores">
+        <option value="0">Any core count</option>
+        <option value="6">6 cores or more</option>
+        <option value="8">8 cores or more</option>
+        <option value="12">12 cores or more</option>
+      </select>
+    </div>
+    <p class="count mono" id="count" aria-live="polite">{cpus.length} processors</p>
+
+    <div class="table-scroll">
+      <table class="data-table" id="list">
+        <thead><tr><th>Processor</th><th>Released</th><th>Cores / threads</th><th>Top speed</th><th>Power</th><th>Index</th><th>Games at recommended</th></tr></thead>
+        <tbody>
+          {cpus.map(c => (
+            <tr data-maker={c.brand} data-name={c.name.toLowerCase()} data-cores={c.cores}>
+              <td><a href={`/cpu/${c.slug}`}>{c.name}</a></td>
+              <td class="mono">{c.release_year}</td>
+              <td class="mono">{c.cores} / {c.threads}</td>
+              <td class="mono">{c.boost_ghz} GHz</td>
+              <td class="mono">{c.tdp_watts} W</td>
+              <td class="mono idx">{c.score}</td>
+              <td class="mono cov">{coverage(c.score)}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/cpu-tier-list">Processors grouped into tiers for {SEO_YEAR}</a></li>
+        <li><a href="/compare-cpu">Put two processors head to head</a></li>
+        <li><a href="/bottleneck">Check a CPU and GPU pairing</a></li>
+        <li><a href="/gpus">The graphics card database</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .readouts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 20px 0 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .readouts div { padding: 10px 14px; }
+  .readouts div + div { border-left: 1px solid var(--line); }
+  .readouts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .readouts dd { margin: 3px 0 0; font-size: 1.25rem; font-weight: 600; color: var(--readout); }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0; }
+  .filters input, .filters select { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px 12px; color: var(--text); font: inherit; min-height: 44px; }
+  .filters input { flex: 1 1 220px; }
+  .filters input:focus, .filters select:focus { border-color: var(--accent); outline: none; }
+  .count { color: var(--faint); font-size: 12.5px; margin-bottom: 12px; }
+  .idx { color: var(--readout); font-weight: 600; }
+  .cov { color: var(--ok); }
+
+  @media (max-width: 760px) {
+    .readouts { grid-template-columns: 1fr 1fr; }
+    .readouts div:nth-child(3) { border-left: 0; }
+    .readouts div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+</style>
+
+<script>
+  const rows = [...document.querySelectorAll<HTMLTableRowElement>('#list tbody tr')];
+  const q = document.getElementById('q') as HTMLInputElement;
+  const maker = document.getElementById('maker') as HTMLSelectElement;
+  const cores = document.getElementById('cores') as HTMLSelectElement;
+  const count = document.getElementById('count')!;
+
+  function apply() {
+    const term = q.value.trim().toLowerCase();
+    const min = Number(cores.value);
+    let shown = 0;
+    for (const r of rows) {
+      const ok = (!term || (r.dataset.name || '').includes(term))
+        && (!maker.value || r.dataset.maker === maker.value)
+        && Number(r.dataset.cores) >= min;
+      r.hidden = !ok;
+      if (ok) shown++;
+    }
+    count.textContent = `${shown} ${shown === 1 ? 'processor' : 'processors'}`;
+  }
+  [q, maker, cores].forEach(el => el.addEventListener('input', apply));
+</script>

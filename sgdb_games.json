@@ -1,0 +1,2682 @@
+{
+  "cyberpunk-2077": {
+    "name": "Cyberpunk 2077",
+    "gameId": 5209422,
+    "grid": "https://cdn2.steamgriddb.com/grid/f39b781760a403dedaa05587e8889c1a.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/f39b781760a403dedaa05587e8889c1a.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/73338368669a521b1fff24d636c6bf7e.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/73338368669a521b1fff24d636c6bf7e.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f39b781760a403dedaa05587e8889c1a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f39b781760a403dedaa05587e8889c1a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4030e2eebb977639f8836aa25a293e40.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4030e2eebb977639f8836aa25a293e40.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e8a68217f2c512a63bac2f9244d9c1b5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e8a68217f2c512a63bac2f9244d9c1b5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/055c25fa28c4eb8c6bb0672e557eef80.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/055c25fa28c4eb8c6bb0672e557eef80.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2e9338c53c594d37b10ee12ab5c22eb2.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2e9338c53c594d37b10ee12ab5c22eb2.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/73338368669a521b1fff24d636c6bf7e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/73338368669a521b1fff24d636c6bf7e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/09a824a09b7734ea1cfd2f9a34dedbfd.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/09a824a09b7734ea1cfd2f9a34dedbfd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2b3aa41ec493d9908c56dcd665d08d22.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2b3aa41ec493d9908c56dcd665d08d22.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/78ca117852cadc43f9f3d00af3001701.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/78ca117852cadc43f9f3d00af3001701.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/bba64e6137c253f4ae556a97869e31b1.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/bba64e6137c253f4ae556a97869e31b1.jpg"
+      }
+    ]
+  },
+  "grand-theft-auto-v": {
+    "name": "Grand Theft Auto V",
+    "gameId": 3674,
+    "grid": "https://cdn2.steamgriddb.com/grid/af0a25e27510f77d97634a6bbe653b13.jpg",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/af0a25e27510f77d97634a6bbe653b13.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/48a0fbc23cf60d3a99d3e4e233243fa0.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/48a0fbc23cf60d3a99d3e4e233243fa0.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/af0a25e27510f77d97634a6bbe653b13.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/af0a25e27510f77d97634a6bbe653b13.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e68aea589393df47d1ffb43dcdbdff49.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e68aea589393df47d1ffb43dcdbdff49.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7a87609a1305e8c75748d20fd3a410ba.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7a87609a1305e8c75748d20fd3a410ba.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3adbfaee1489722750addf10a9b884bc.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3adbfaee1489722750addf10a9b884bc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0b09ad16128d5e6d534df5bce24ac7d9.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0b09ad16128d5e6d534df5bce24ac7d9.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/48a0fbc23cf60d3a99d3e4e233243fa0.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/48a0fbc23cf60d3a99d3e4e233243fa0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e6293d6df91c1f64f6ce1d86c8be87e4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e6293d6df91c1f64f6ce1d86c8be87e4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/48dfb0e62ef53dc160c26788433c2d1a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/48dfb0e62ef53dc160c26788433c2d1a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/5c645cc19a53ac1dfb155840d886050c.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/5c645cc19a53ac1dfb155840d886050c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/da90fdf234654eb69d7d14654641134f.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/da90fdf234654eb69d7d14654641134f.jpg"
+      }
+    ]
+  },
+  "elden-ring": {
+    "name": "Elden Ring",
+    "gameId": 5277816,
+    "grid": "https://cdn2.steamgriddb.com/grid/039e0a2e69c61382675497c24a820cb3.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/039e0a2e69c61382675497c24a820cb3.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/d1fcdf15cb97c47d0ed1e1e10773ae36.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/d1fcdf15cb97c47d0ed1e1e10773ae36.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/039e0a2e69c61382675497c24a820cb3.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/039e0a2e69c61382675497c24a820cb3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/afae4a727a138b562116c01fcaac77c7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/afae4a727a138b562116c01fcaac77c7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a0abf0396a718b8982fce0b80181d8cb.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a0abf0396a718b8982fce0b80181d8cb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6482c2777a2a76298c117412c8e83b31.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6482c2777a2a76298c117412c8e83b31.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b7dc60f5a597d2a0687c2c43a3cd3417.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b7dc60f5a597d2a0687c2c43a3cd3417.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d1fcdf15cb97c47d0ed1e1e10773ae36.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d1fcdf15cb97c47d0ed1e1e10773ae36.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4fc7fd6e1cf252fb1a7403a8b1ce0476.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4fc7fd6e1cf252fb1a7403a8b1ce0476.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b751142d1db64622c665bf40839bba13.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b751142d1db64622c665bf40839bba13.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/840aa06493f6efae8a912df6bd5ba889.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/840aa06493f6efae8a912df6bd5ba889.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/fa36ce3924dac70defd1e81ffebfc71c.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/fa36ce3924dac70defd1e81ffebfc71c.jpg"
+      }
+    ]
+  },
+  "red-dead-redemption-2": {
+    "name": "Red Dead Redemption 2",
+    "gameId": 5249031,
+    "grid": "https://cdn2.steamgriddb.com/grid/a5bff26f8f2adb1ec19661b4c4bc9f86.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/a5bff26f8f2adb1ec19661b4c4bc9f86.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/964e7520947a0d3ac39504daea604d83.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/964e7520947a0d3ac39504daea604d83.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a5bff26f8f2adb1ec19661b4c4bc9f86.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a5bff26f8f2adb1ec19661b4c4bc9f86.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3940304b536796dcc176aa83203a3955.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3940304b536796dcc176aa83203a3955.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/22774e7dbd2a3030e3e0c0b7381dee3e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/22774e7dbd2a3030e3e0c0b7381dee3e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/319e347045adac498a731984c7f178a6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/319e347045adac498a731984c7f178a6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/414993dd850f6af49b3c51a26206aca3.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/414993dd850f6af49b3c51a26206aca3.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/964e7520947a0d3ac39504daea604d83.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/964e7520947a0d3ac39504daea604d83.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e4037822f631cf13d894ef7837c90ad6.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e4037822f631cf13d894ef7837c90ad6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4d57c8ac8153e8565a307084434a7355.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4d57c8ac8153e8565a307084434a7355.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/cd758e8f59dfdf06a852adad277986ca.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/cd758e8f59dfdf06a852adad277986ca.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/81e5f81db77c596492e6f1a5a792ed53.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/81e5f81db77c596492e6f1a5a792ed53.jpg"
+      }
+    ]
+  },
+  "fortnite": {
+    "name": "Fortnite",
+    "gameId": 36136,
+    "grid": "https://cdn2.steamgriddb.com/grid/6c4d541fc68d426aa028bc05f38164d1.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/6c4d541fc68d426aa028bc05f38164d1.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/33e4954478a4c91de8be3b9feb28e972.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/33e4954478a4c91de8be3b9feb28e972.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6c4d541fc68d426aa028bc05f38164d1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6c4d541fc68d426aa028bc05f38164d1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b63252a1a96d4f2020bc0d8330004497.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b63252a1a96d4f2020bc0d8330004497.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5cd640a92e39656a944041ee615efbdc.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5cd640a92e39656a944041ee615efbdc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/514fd8cb8670e6207696b4b1b05abec3.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/514fd8cb8670e6207696b4b1b05abec3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/22cf81a31679d06266f8bb3420762834.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/22cf81a31679d06266f8bb3420762834.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/33e4954478a4c91de8be3b9feb28e972.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/33e4954478a4c91de8be3b9feb28e972.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0ce98f53e3aa229aa2f31b16e5dcbb4b.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0ce98f53e3aa229aa2f31b16e5dcbb4b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/7fcc48d22804dbbe9b66b607d51389d4.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/7fcc48d22804dbbe9b66b607d51389d4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/560cc70f255b94b8408709e810914593.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/560cc70f255b94b8408709e810914593.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/44b0beb7e5bdb5c5a53048a3bdfd123b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/44b0beb7e5bdb5c5a53048a3bdfd123b.jpg"
+      }
+    ]
+  },
+  "valorant": {
+    "name": "Valorant",
+    "gameId": 5258249,
+    "grid": "https://cdn2.steamgriddb.com/grid/9edb6b9b7fc3b263b86740c635839dc4.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/9edb6b9b7fc3b263b86740c635839dc4.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/fb6c84779f12283a81d739d8f088fc12.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/fb6c84779f12283a81d739d8f088fc12.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9edb6b9b7fc3b263b86740c635839dc4.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9edb6b9b7fc3b263b86740c635839dc4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/58d68bcc829b2abb88f8fc1e035a9dc3.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/58d68bcc829b2abb88f8fc1e035a9dc3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b46469c5851be7facec604ceeef9aaaf.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b46469c5851be7facec604ceeef9aaaf.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/32ce1658e63deda163b520b83fb1af23.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/32ce1658e63deda163b520b83fb1af23.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3a06f95569b14f0db46a80796966456b.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3a06f95569b14f0db46a80796966456b.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/fb6c84779f12283a81d739d8f088fc12.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/fb6c84779f12283a81d739d8f088fc12.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f5e4dd47222b23ebadd17e3ec33744c6.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f5e4dd47222b23ebadd17e3ec33744c6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/de66dbc30377a1f7908db45298324aa3.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/de66dbc30377a1f7908db45298324aa3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ae4e1f508b15f661538831c21eae288b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ae4e1f508b15f661538831c21eae288b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e6493eb237fea3510d4d17da634a5952.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e6493eb237fea3510d4d17da634a5952.jpg"
+      }
+    ]
+  },
+  "counter-strike-2": {
+    "name": "Counter-Strike 2",
+    "gameId": 5363838,
+    "grid": "https://cdn2.steamgriddb.com/grid/0662aa1719017e0efa5fa8daf0880c6e.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/0662aa1719017e0efa5fa8daf0880c6e.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/2b1ec9ecde3fcfa54840a68765c3f647.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/2b1ec9ecde3fcfa54840a68765c3f647.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0662aa1719017e0efa5fa8daf0880c6e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0662aa1719017e0efa5fa8daf0880c6e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/96b4fb6dee79d9f1d0703e15a13c58a1.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/96b4fb6dee79d9f1d0703e15a13c58a1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/dde7346dd3fed2553e363fca97537ca6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/dde7346dd3fed2553e363fca97537ca6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/74d2bd1261cd7590e2acdfa9990b64e5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/74d2bd1261cd7590e2acdfa9990b64e5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5f8818f0dee696cf4a89cb5afce6d367.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5f8818f0dee696cf4a89cb5afce6d367.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2b1ec9ecde3fcfa54840a68765c3f647.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2b1ec9ecde3fcfa54840a68765c3f647.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0be779dca25300224c509c437a880fad.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0be779dca25300224c509c437a880fad.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/1f2d707cafe476cb48abd674bed3f7b8.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/1f2d707cafe476cb48abd674bed3f7b8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/092f29f442ac94f4bdc2872ff5ff0d02.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/092f29f442ac94f4bdc2872ff5ff0d02.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/64ea74600b4ef6441db62fd3ad3ce754.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/64ea74600b4ef6441db62fd3ad3ce754.png"
+      }
+    ]
+  },
+  "apex-legends": {
+    "name": "Apex Legends",
+    "gameId": 35001,
+    "grid": "https://cdn2.steamgriddb.com/grid/0d7a3aef18b1eb97e70a5148e2a2646f.jpg",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/0d7a3aef18b1eb97e70a5148e2a2646f.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/e888d54c6981b4e7e92bbd874655a3bf.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/e888d54c6981b4e7e92bbd874655a3bf.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0d7a3aef18b1eb97e70a5148e2a2646f.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0d7a3aef18b1eb97e70a5148e2a2646f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ba14961ae2176d0e7426952d44b846c7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ba14961ae2176d0e7426952d44b846c7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7c7922c652bad16a28517e5559790728.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7c7922c652bad16a28517e5559790728.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/fe564f1694bc9205529f7bdd580418ff.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/fe564f1694bc9205529f7bdd580418ff.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0511648c4a3c0ca25bcf7e0b7242b524.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0511648c4a3c0ca25bcf7e0b7242b524.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e888d54c6981b4e7e92bbd874655a3bf.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e888d54c6981b4e7e92bbd874655a3bf.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/978d76676f5e7918f81d28e7d092ca0d.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/978d76676f5e7918f81d28e7d092ca0d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ec5decca5ed3d6b8079e2e7e7bacc9f2.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ec5decca5ed3d6b8079e2e7e7bacc9f2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ad041f9b96370d724c8a8400350276ed.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ad041f9b96370d724c8a8400350276ed.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/034c10ab1b11b364665ebd9d26a19a49.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/034c10ab1b11b364665ebd9d26a19a49.jpg"
+      }
+    ]
+  },
+  "baldurs-gate-3": {
+    "name": "Baldur's Gate 3",
+    "gameId": 5464113,
+    "grid": "https://cdn2.steamgriddb.com/grid/1a5e9d05fdce82f98b56382addb8c888.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/1a5e9d05fdce82f98b56382addb8c888.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/282583c8cb71f1be30f6448db7fca6e9.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/282583c8cb71f1be30f6448db7fca6e9.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/1a5e9d05fdce82f98b56382addb8c888.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/1a5e9d05fdce82f98b56382addb8c888.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e28cbe0f3cf7bf3ac340d0b3afe96a00.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e28cbe0f3cf7bf3ac340d0b3afe96a00.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a2918a9d673a34bfedb6c466028f37e4.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a2918a9d673a34bfedb6c466028f37e4.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/282583c8cb71f1be30f6448db7fca6e9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/282583c8cb71f1be30f6448db7fca6e9.jpg"
+      }
+    ]
+  },
+  "hogwarts-legacy": {
+    "name": "Hogwarts Legacy",
+    "gameId": 5267354,
+    "grid": "https://cdn2.steamgriddb.com/grid/43db2b7df1cff247f7efaa0e7e8d7e3c.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/43db2b7df1cff247f7efaa0e7e8d7e3c.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/8b33ab221257b074d1d967042ad1d9d0.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/8b33ab221257b074d1d967042ad1d9d0.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/43db2b7df1cff247f7efaa0e7e8d7e3c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/43db2b7df1cff247f7efaa0e7e8d7e3c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/27b13bb902631bcfeacb1fc53480c101.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/27b13bb902631bcfeacb1fc53480c101.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e6170934bdc5ac51306b5aebecfe9aba.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e6170934bdc5ac51306b5aebecfe9aba.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/31df6ab4fe7d2af750a4e1b5a78b47cd.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/31df6ab4fe7d2af750a4e1b5a78b47cd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6a88e8216b7627c700d928f1344e2270.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6a88e8216b7627c700d928f1344e2270.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8b33ab221257b074d1d967042ad1d9d0.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8b33ab221257b074d1d967042ad1d9d0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/11bf946eb9cea00d0219ced02accddcd.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/11bf946eb9cea00d0219ced02accddcd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b841e30384cebf7ddb6c940f9faad1dd.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b841e30384cebf7ddb6c940f9faad1dd.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/cb7933ccd76d62025f0aeb8ab05d9078.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/cb7933ccd76d62025f0aeb8ab05d9078.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0ea52380fcb81ff831b5b02ec3b57ca1.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0ea52380fcb81ff831b5b02ec3b57ca1.jpg"
+      }
+    ]
+  },
+  "star-wars-outlaws": {
+    "name": "Star Wars Outlaws",
+    "gameId": 5442017,
+    "grid": "https://cdn2.steamgriddb.com/grid/3997668eb69d05df1319e04539a5f476.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/3997668eb69d05df1319e04539a5f476.png",
+    "hero": "https://cdn2.steamgriddb.com/hero/541c74d635df1a4b0f279a0c3bc2e00f.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/541c74d635df1a4b0f279a0c3bc2e00f.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3997668eb69d05df1319e04539a5f476.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3997668eb69d05df1319e04539a5f476.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9cddcc96feade261665f0a3ef5dbe6ea.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9cddcc96feade261665f0a3ef5dbe6ea.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f8e7de0ffe9062be9b40ede7ed42efc7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f8e7de0ffe9062be9b40ede7ed42efc7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9b30b31153a310f2685b1f03cbaf5b95.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9b30b31153a310f2685b1f03cbaf5b95.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/bd9e7066981c836973ced77c249f21ca.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/bd9e7066981c836973ced77c249f21ca.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/541c74d635df1a4b0f279a0c3bc2e00f.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/541c74d635df1a4b0f279a0c3bc2e00f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a7b7331fcecc71733544d0db1f386888.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a7b7331fcecc71733544d0db1f386888.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/48c4a2049c4daee5dccd3efff6271770.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/48c4a2049c4daee5dccd3efff6271770.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/889c4418850d9ca2f72254c55aa5c3f7.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/889c4418850d9ca2f72254c55aa5c3f7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ae709777bdfc9e9bc3eb186bebd223c9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ae709777bdfc9e9bc3eb186bebd223c9.jpg"
+      }
+    ]
+  },
+  "alan-wake-2": {
+    "name": "Alan Wake 2",
+    "gameId": 5309266,
+    "grid": "https://cdn2.steamgriddb.com/grid/a7147fd59ab64d16e49e819733ad2187.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/a7147fd59ab64d16e49e819733ad2187.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/e13147c18aa5e4aa4cf75185d01cf826.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/e13147c18aa5e4aa4cf75185d01cf826.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a7147fd59ab64d16e49e819733ad2187.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a7147fd59ab64d16e49e819733ad2187.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d0c40ef3f0bd63a8c7aac896260ed946.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d0c40ef3f0bd63a8c7aac896260ed946.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/92531eb9092d5eab7ebfab67bac7fdf0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/92531eb9092d5eab7ebfab67bac7fdf0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/54a2fcdb88bda0c4012cb9d898e56c81.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/54a2fcdb88bda0c4012cb9d898e56c81.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3aa076105715732a0e4bc86f820d609e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3aa076105715732a0e4bc86f820d609e.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e13147c18aa5e4aa4cf75185d01cf826.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e13147c18aa5e4aa4cf75185d01cf826.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d60f2d5d05b4c46d470d5cbd5d1fb252.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d60f2d5d05b4c46d470d5cbd5d1fb252.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/991e430c00831fcaec1087462d3223fa.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/991e430c00831fcaec1087462d3223fa.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/97cdaade24d073d4f1f8861514054790.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/97cdaade24d073d4f1f8861514054790.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d53a683ae5daa34edb84c7607c92d6a1.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d53a683ae5daa34edb84c7607c92d6a1.jpg"
+      }
+    ]
+  },
+  "the-witcher-3": {
+    "name": "The Witcher 3: Wild Hunt",
+    "gameId": 4265,
+    "grid": "https://cdn2.steamgriddb.com/grid/4904f82c12cecf6ec070fe77d7e913ce.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/4904f82c12cecf6ec070fe77d7e913ce.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/4d19b37a2c399deace9082d464930022.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/4d19b37a2c399deace9082d464930022.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4904f82c12cecf6ec070fe77d7e913ce.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4904f82c12cecf6ec070fe77d7e913ce.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c091cbe2d95f1a36914064bb37e1aafa.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c091cbe2d95f1a36914064bb37e1aafa.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c5d76cca317966602bb28a668a2c4cd8.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c5d76cca317966602bb28a668a2c4cd8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4603ecb8849a0c24f54e7953d49dd4d9.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4603ecb8849a0c24f54e7953d49dd4d9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e1f97acc82e002084daded5c269d4d93.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e1f97acc82e002084daded5c269d4d93.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4d19b37a2c399deace9082d464930022.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4d19b37a2c399deace9082d464930022.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/63c27708f9cf591e878c155f23c25b5a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/63c27708f9cf591e878c155f23c25b5a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8ec7ff1ac324a4bed44cc51d362e5b94.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8ec7ff1ac324a4bed44cc51d362e5b94.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/965bdf833cb20c44b33a6224298bf14f.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/965bdf833cb20c44b33a6224298bf14f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/5b0fa0e4c041548bb6289e15d865a696.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/5b0fa0e4c041548bb6289e15d865a696.jpg"
+      }
+    ]
+  },
+  "black-myth-wukong": {
+    "name": "Black Myth: Wukong",
+    "gameId": 5269886,
+    "grid": "https://cdn2.steamgriddb.com/grid/9130e5ada60abd2e13efb19571cede1d.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/9130e5ada60abd2e13efb19571cede1d.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/55ffbc6f00eda5781c6a4f5d91a17a2a.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/55ffbc6f00eda5781c6a4f5d91a17a2a.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9130e5ada60abd2e13efb19571cede1d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9130e5ada60abd2e13efb19571cede1d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/294dbeaa35d3fd15a7eb0843e65272ee.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/294dbeaa35d3fd15a7eb0843e65272ee.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/20d1d26ccbd1d008ab554922c7401935.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/20d1d26ccbd1d008ab554922c7401935.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/57bc9596033a61dba1c4df9a1c728d61.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/57bc9596033a61dba1c4df9a1c728d61.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d193b688361ffe71e8a18d819eb86d4f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d193b688361ffe71e8a18d819eb86d4f.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/55ffbc6f00eda5781c6a4f5d91a17a2a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/55ffbc6f00eda5781c6a4f5d91a17a2a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/23021cdcfb38fe29dcea064ebe1ecce4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/23021cdcfb38fe29dcea064ebe1ecce4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/538bb178cf73205573bf842c265f1a69.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/538bb178cf73205573bf842c265f1a69.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f952877d70eceb554578bc0a0826d4a9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f952877d70eceb554578bc0a0826d4a9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/5d899028f3260a25f037f37db9aeeb5b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/5d899028f3260a25f037f37db9aeeb5b.jpg"
+      }
+    ]
+  },
+  "helldivers-2": {
+    "name": "Helldivers 2",
+    "gameId": 5403655,
+    "grid": "https://cdn2.steamgriddb.com/grid/d91629568769942e0569a5ee2844b5da.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/d91629568769942e0569a5ee2844b5da.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/ff95fc4f5e2fc78ac9330e4c595a4985.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/ff95fc4f5e2fc78ac9330e4c595a4985.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d91629568769942e0569a5ee2844b5da.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d91629568769942e0569a5ee2844b5da.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/88804947ad9f43ab446f7ed938060ef8.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/88804947ad9f43ab446f7ed938060ef8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0e3900565e35576ba54faf1c53093932.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0e3900565e35576ba54faf1c53093932.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f097cfbb02280b31c19982d9e56e7bb5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f097cfbb02280b31c19982d9e56e7bb5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ce717f86165fb8c5501b22af7a1b8a38.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ce717f86165fb8c5501b22af7a1b8a38.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ff95fc4f5e2fc78ac9330e4c595a4985.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ff95fc4f5e2fc78ac9330e4c595a4985.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b505e3ffdeb4c55b7f412c76a0535d3a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b505e3ffdeb4c55b7f412c76a0535d3a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/07f2c6224423c478ffb0b381a53fed08.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/07f2c6224423c478ffb0b381a53fed08.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/58a97c95c23b3d8e1567d444c1e024a0.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/58a97c95c23b3d8e1567d444c1e024a0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ae0e1b9353d3f43727c6bd6b902c8499.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ae0e1b9353d3f43727c6bd6b902c8499.jpg"
+      }
+    ]
+  },
+  "palworld": {
+    "name": "Palworld",
+    "gameId": 5286879,
+    "grid": "https://cdn2.steamgriddb.com/grid/d0c2b1e87b18968832aec662ff2889dd.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/d0c2b1e87b18968832aec662ff2889dd.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/4d700a364c315c0edaee18980cc74ad3.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/4d700a364c315c0edaee18980cc74ad3.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d0c2b1e87b18968832aec662ff2889dd.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d0c2b1e87b18968832aec662ff2889dd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/305f70ad1aefcea6f982b121e4ffce75.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/305f70ad1aefcea6f982b121e4ffce75.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/369661449aa6f3488ff91cde02ba4ebc.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/369661449aa6f3488ff91cde02ba4ebc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/011c8eb7baf37e4e82f7c6872773169a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/011c8eb7baf37e4e82f7c6872773169a.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/953f325650b8582b822658a5abdee38d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/953f325650b8582b822658a5abdee38d.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4d700a364c315c0edaee18980cc74ad3.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4d700a364c315c0edaee18980cc74ad3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b12d24919e9df602efa0a0af9d99eb32.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b12d24919e9df602efa0a0af9d99eb32.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3c4533bbdbc479b1f8d2f8e5190e82eb.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3c4533bbdbc479b1f8d2f8e5190e82eb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9cb9addcfcd3dc9f950f27025ef20fdc.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9cb9addcfcd3dc9f950f27025ef20fdc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/dcba90e7265f12accf0eb33b8fcb6ca4.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/dcba90e7265f12accf0eb33b8fcb6ca4.jpg"
+      }
+    ]
+  },
+  "starfield": {
+    "name": "Starfield",
+    "gameId": 5285219,
+    "grid": "https://cdn2.steamgriddb.com/grid/a5da7635c3838897d47e0f4e30e7c556.jpg",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/a5da7635c3838897d47e0f4e30e7c556.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/4380b176bb2d4f63b0e58e0d08ed4d5a.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/4380b176bb2d4f63b0e58e0d08ed4d5a.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a5da7635c3838897d47e0f4e30e7c556.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a5da7635c3838897d47e0f4e30e7c556.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/8d6cfdd1677222306165a15667f29fa6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/8d6cfdd1677222306165a15667f29fa6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ac79bc4536e67368f7a054716ebdf36f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ac79bc4536e67368f7a054716ebdf36f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b974fe0f44d786bc4dfb339b7b5d4541.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b974fe0f44d786bc4dfb339b7b5d4541.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/1e5365d18d2cb70c593018888a692beb.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/1e5365d18d2cb70c593018888a692beb.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4380b176bb2d4f63b0e58e0d08ed4d5a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4380b176bb2d4f63b0e58e0d08ed4d5a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/89c62b07ff8cf6421f954d92e43160b1.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/89c62b07ff8cf6421f954d92e43160b1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/938c7ff58d074545cd0caa95ce8b32f6.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/938c7ff58d074545cd0caa95ce8b32f6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/895bbadee80b41e98a5e78ecf1ece53d.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/895bbadee80b41e98a5e78ecf1ece53d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e3475b139e865a5320bf0dcd0243c548.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e3475b139e865a5320bf0dcd0243c548.jpg"
+      }
+    ]
+  },
+  "avatar-frontiers-of-pandora": {
+    "name": "Avatar: Frontiers of Pandora",
+    "gameId": 5438536,
+    "grid": "https://cdn2.steamgriddb.com/grid/0608e6241fcd68f251d8685af6e6b4cf.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/0608e6241fcd68f251d8685af6e6b4cf.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/e5c9a9b84b65dfc5ba62c677aefc5d4a.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/e5c9a9b84b65dfc5ba62c677aefc5d4a.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0608e6241fcd68f251d8685af6e6b4cf.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0608e6241fcd68f251d8685af6e6b4cf.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/574ce0b9519bc6c6fc64960fd9e5a7a5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/574ce0b9519bc6c6fc64960fd9e5a7a5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2858816eb908f14de2719a8f619c5cb6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2858816eb908f14de2719a8f619c5cb6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6c6e1688251cead3a9d77794bce3694e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6c6e1688251cead3a9d77794bce3694e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/57fb0b060c583d1a6b5b59f9627c71fd.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/57fb0b060c583d1a6b5b59f9627c71fd.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e5c9a9b84b65dfc5ba62c677aefc5d4a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e5c9a9b84b65dfc5ba62c677aefc5d4a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8bc1088135b4a0d1f65bb4b1242ceb71.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8bc1088135b4a0d1f65bb4b1242ceb71.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/edd0801561707be35d9e80b339af58a5.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/edd0801561707be35d9e80b339af58a5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e2de28e09c79d4b812ffecf41a837235.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e2de28e09c79d4b812ffecf41a837235.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2ccc111fd6f761a25b488d0a0ed36611.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2ccc111fd6f761a25b488d0a0ed36611.jpg"
+      }
+    ]
+  },
+  "god-of-war-ragnarok": {
+    "name": "God of War Ragnarok",
+    "gameId": 5296432,
+    "grid": "https://cdn2.steamgriddb.com/grid/fd93fd1de50e084dd7d3b0b9f6950450.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/fd93fd1de50e084dd7d3b0b9f6950450.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/768e9810f221e93905d462c8d601936e.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/768e9810f221e93905d462c8d601936e.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/fd93fd1de50e084dd7d3b0b9f6950450.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/fd93fd1de50e084dd7d3b0b9f6950450.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/df9e663fb6659069960184f2900898e8.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/df9e663fb6659069960184f2900898e8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2ac990c336cb2f55dc06ba3c417dd250.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2ac990c336cb2f55dc06ba3c417dd250.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4287bc7ddb8bd45575602f111ba670da.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4287bc7ddb8bd45575602f111ba670da.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/46ff72e7667eeea18a0baefd2227ed73.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/46ff72e7667eeea18a0baefd2227ed73.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/768e9810f221e93905d462c8d601936e.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/768e9810f221e93905d462c8d601936e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/6c73e29b5c799f2bd212a97678a3a197.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/6c73e29b5c799f2bd212a97678a3a197.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/41a9bc427ade9d587aa7762c1e9350f6.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/41a9bc427ade9d587aa7762c1e9350f6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/1dc7b3e7df9feca6fdce1b575b11ae8a.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/1dc7b3e7df9feca6fdce1b575b11ae8a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a1fffd8b6b0fe8cd5bb2b1efb059fbe9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a1fffd8b6b0fe8cd5bb2b1efb059fbe9.jpg"
+      }
+    ]
+  },
+  "horizon-forbidden-west": {
+    "name": "Horizon Forbidden West",
+    "gameId": 5264941,
+    "grid": "https://cdn2.steamgriddb.com/grid/79dd8d1460dc545befcfa33f4087c397.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/79dd8d1460dc545befcfa33f4087c397.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/8afe7323856249c73fe99086157110e2.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/8afe7323856249c73fe99086157110e2.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/79dd8d1460dc545befcfa33f4087c397.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/79dd8d1460dc545befcfa33f4087c397.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/509e2df19b9539b6feb63e375650a9de.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/509e2df19b9539b6feb63e375650a9de.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/30696310b0bbf55bd3508217b4004f79.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/30696310b0bbf55bd3508217b4004f79.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/812b270294c90349bf31d833982dd445.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/812b270294c90349bf31d833982dd445.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a0855e990baa3b957b7ec2e03d3a1ced.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a0855e990baa3b957b7ec2e03d3a1ced.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8afe7323856249c73fe99086157110e2.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8afe7323856249c73fe99086157110e2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4ef10445b952a8b3c93a9379d581146a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4ef10445b952a8b3c93a9379d581146a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/279b369266fbc65a0f271fe465b9e8e0.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/279b369266fbc65a0f271fe465b9e8e0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c2d66337ca53fe0c1c58a92f2665ef70.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c2d66337ca53fe0c1c58a92f2665ef70.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/23a3e6f194568999c9a9737703423dfa.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/23a3e6f194568999c9a9737703423dfa.jpg"
+      }
+    ]
+  },
+  "marvels-spider-man-2": {
+    "name": "Marvel's Spider-Man 2",
+    "gameId": 5295908,
+    "grid": "https://cdn2.steamgriddb.com/grid/2572510b22e85f491270becf2fc166f7.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/2572510b22e85f491270becf2fc166f7.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/74c12bbaa74d13c2b891cd7673d61370.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/74c12bbaa74d13c2b891cd7673d61370.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2572510b22e85f491270becf2fc166f7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2572510b22e85f491270becf2fc166f7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/99d09b5f3432c5e31090717611c2cfa5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/99d09b5f3432c5e31090717611c2cfa5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/985237c8b1d9271eca3c96e23cbf83b6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/985237c8b1d9271eca3c96e23cbf83b6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e20a2baf262963a13df995bd05ad41c9.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e20a2baf262963a13df995bd05ad41c9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/1ac9b4579415b2cf177ab797c89aeab0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/1ac9b4579415b2cf177ab797c89aeab0.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/74c12bbaa74d13c2b891cd7673d61370.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/74c12bbaa74d13c2b891cd7673d61370.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/751ae00881785f5939f04db589adeb22.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/751ae00881785f5939f04db589adeb22.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/beb5ad322e679d0a6045c6cfc56e8b92.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/beb5ad322e679d0a6045c6cfc56e8b92.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d9b5281f78f39fbaca95e80f80ec1ef4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d9b5281f78f39fbaca95e80f80ec1ef4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/32c7c0d75d714d975a6255d352b3359a.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/32c7c0d75d714d975a6255d352b3359a.jpg"
+      }
+    ]
+  },
+  "indiana-jones-great-circle": {
+    "name": "Indiana Jones and the Great Circle",
+    "gameId": 5441885,
+    "grid": "https://cdn2.steamgriddb.com/grid/0e85248d5624de50ca8e01f1e9fdd5cb.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/0e85248d5624de50ca8e01f1e9fdd5cb.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/69c465a79781ae900005cebddfb758d8.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/69c465a79781ae900005cebddfb758d8.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0e85248d5624de50ca8e01f1e9fdd5cb.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0e85248d5624de50ca8e01f1e9fdd5cb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/43e457bc586f06a3693b2d6e90ce0e00.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/43e457bc586f06a3693b2d6e90ce0e00.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6451c5983237e0b53ace3bf39cb8e5fb.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6451c5983237e0b53ace3bf39cb8e5fb.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/96245ee9cea049a1952de9db18033406.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/96245ee9cea049a1952de9db18033406.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/bdc91465b458eb2bd016fd5888fc6f00.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/bdc91465b458eb2bd016fd5888fc6f00.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/69c465a79781ae900005cebddfb758d8.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/69c465a79781ae900005cebddfb758d8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0b4a7b183837c441dbe027acf7fbc1d1.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0b4a7b183837c441dbe027acf7fbc1d1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d2d28361fabf5051fcc29fb17dbbe4ae.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d2d28361fabf5051fcc29fb17dbbe4ae.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/587872ea3b21c03ffd4e2a03450c5665.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/587872ea3b21c03ffd4e2a03450c5665.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/eee9bf07b136cc4ec40360746f31304d.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/eee9bf07b136cc4ec40360746f31304d.jpg"
+      }
+    ]
+  },
+  "call-of-duty-modern-warfare-3": {
+    "name": "Call of Duty: Modern Warfare III",
+    "gameId": 5420962,
+    "grid": "https://cdn2.steamgriddb.com/grid/2d5cc87642543b37adc1c39cf44bf811.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/2d5cc87642543b37adc1c39cf44bf811.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/7497ac98d391ce836d17a1fd7f213770.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/7497ac98d391ce836d17a1fd7f213770.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2d5cc87642543b37adc1c39cf44bf811.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2d5cc87642543b37adc1c39cf44bf811.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/05ed1987620e03be7b15b9322ed05cfa.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/05ed1987620e03be7b15b9322ed05cfa.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/63614c09267554e7fc7b5473afb987b2.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/63614c09267554e7fc7b5473afb987b2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ca6987ae3a5d098c9c357061f857b8e3.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ca6987ae3a5d098c9c357061f857b8e3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/eb4a6810a00679775a30a89f1ea6c434.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/eb4a6810a00679775a30a89f1ea6c434.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/7497ac98d391ce836d17a1fd7f213770.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/7497ac98d391ce836d17a1fd7f213770.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/059a8aa8273c69364b11c325ff8b060f.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/059a8aa8273c69364b11c325ff8b060f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b8fce3c702e762d4ca4395d64edd1378.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b8fce3c702e762d4ca4395d64edd1378.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8091b5dc45f7cc3b2d10db60a198eeb2.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8091b5dc45f7cc3b2d10db60a198eeb2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/32f032f26cfe99da74a69b1847325bac.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/32f032f26cfe99da74a69b1847325bac.jpg"
+      }
+    ]
+  },
+  "diablo-4": {
+    "name": "Diablo IV",
+    "gameId": 5250133,
+    "grid": "https://cdn2.steamgriddb.com/grid/71c46aef15c9997a5bd7e70b65a720dd.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/71c46aef15c9997a5bd7e70b65a720dd.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/3029352d500acce2c1d5b2c6575c5718.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/3029352d500acce2c1d5b2c6575c5718.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/71c46aef15c9997a5bd7e70b65a720dd.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/71c46aef15c9997a5bd7e70b65a720dd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d81f3fc41fc0037e8a9044dc05ede41e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d81f3fc41fc0037e8a9044dc05ede41e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/473007ba95fb52f756d72cedeb0c105b.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/473007ba95fb52f756d72cedeb0c105b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/539d27ee3d4d2ed0ee337baaecad3323.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/539d27ee3d4d2ed0ee337baaecad3323.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/65bd4c200504d2362d6502879fa77f7c.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/65bd4c200504d2362d6502879fa77f7c.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3029352d500acce2c1d5b2c6575c5718.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3029352d500acce2c1d5b2c6575c5718.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/5e98d23afe19a774d1b2dcbefd5103eb.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/5e98d23afe19a774d1b2dcbefd5103eb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/de5b9939cb64c828db4806df02b88cfb.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/de5b9939cb64c828db4806df02b88cfb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9ea03e806cc334209ba28075233c55e9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9ea03e806cc334209ba28075233c55e9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a7dff860109d7892b023bab07e44aed3.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a7dff860109d7892b023bab07e44aed3.jpg"
+      }
+    ]
+  },
+  "overwatch-2": {
+    "name": "Overwatch 2",
+    "gameId": 5253388,
+    "grid": "https://cdn2.steamgriddb.com/grid/f8013fd6d898ca4374d8113f0939c70c.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/f8013fd6d898ca4374d8113f0939c70c.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/098253021f12c391839ab1496b9e7dea.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/098253021f12c391839ab1496b9e7dea.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f8013fd6d898ca4374d8113f0939c70c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f8013fd6d898ca4374d8113f0939c70c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6f393e0f39b06507be03ba445f2e3830.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6f393e0f39b06507be03ba445f2e3830.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c42f51bcc56ab9447f8e3336e766f804.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c42f51bcc56ab9447f8e3336e766f804.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0b1859cd80cf086b1c8a8ba42d601570.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0b1859cd80cf086b1c8a8ba42d601570.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/faee1769b6ee597719cba89967c5755f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/faee1769b6ee597719cba89967c5755f.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/098253021f12c391839ab1496b9e7dea.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/098253021f12c391839ab1496b9e7dea.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a7eb93ef92a8a65cf69d578336b6be20.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a7eb93ef92a8a65cf69d578336b6be20.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/05561ba7af957b0c8a230204ef4d691e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/05561ba7af957b0c8a230204ef4d691e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e9cd5717d7468318071f2643481312f1.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e9cd5717d7468318071f2643481312f1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/40262352ed6dc77f564704f1d9267ba5.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/40262352ed6dc77f564704f1d9267ba5.jpg"
+      }
+    ]
+  },
+  "minecraft": {
+    "name": "Minecraft",
+    "gameId": 38365,
+    "grid": "https://cdn2.steamgriddb.com/grid/a73027901f88055aaa0fd1a9e25d36c7.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/a73027901f88055aaa0fd1a9e25d36c7.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/ecd812da02543c0269cfc2c56ab3c3c0.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/ecd812da02543c0269cfc2c56ab3c3c0.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a73027901f88055aaa0fd1a9e25d36c7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a73027901f88055aaa0fd1a9e25d36c7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0ed5055450adbd836945761a6fa43ee0.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0ed5055450adbd836945761a6fa43ee0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ee897a8699b37568c5c8dd72f78c2bf1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ee897a8699b37568c5c8dd72f78c2bf1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/286afc63607600765569a515dabc500d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/286afc63607600765569a515dabc500d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7344bcd24a4a0393f45cad1a212c62e7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7344bcd24a4a0393f45cad1a212c62e7.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ecd812da02543c0269cfc2c56ab3c3c0.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ecd812da02543c0269cfc2c56ab3c3c0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/55d7bfc270b101f7ce074ae6396e54f5.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/55d7bfc270b101f7ce074ae6396e54f5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/47f4b6321e9fd8e8f7326a6adc1a7c1e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/47f4b6321e9fd8e8f7326a6adc1a7c1e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2eabf4a6f53a918aac3d976359b989a2.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2eabf4a6f53a918aac3d976359b989a2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ae93f6696a2a89b67aa6fb45092eded7.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ae93f6696a2a89b67aa6fb45092eded7.jpg"
+      }
+    ]
+  },
+  "rocket-league": {
+    "name": "Rocket League",
+    "gameId": 3113,
+    "grid": "https://cdn2.steamgriddb.com/grid/e4e4005042cf598805d581754fe9256f.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/e4e4005042cf598805d581754fe9256f.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/e6da32eef072f987685b6eddca072d4f.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/e6da32eef072f987685b6eddca072d4f.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e4e4005042cf598805d581754fe9256f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e4e4005042cf598805d581754fe9256f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a94595e22a11a0e271943269b1605e8d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a94595e22a11a0e271943269b1605e8d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5fe5b01f95f050c99c170481f6dc88fb.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5fe5b01f95f050c99c170481f6dc88fb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b85b115b1b513335f99703a7e0b01d0a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b85b115b1b513335f99703a7e0b01d0a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/43b368ab4e23e7be479586c25975c8c7.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/43b368ab4e23e7be479586c25975c8c7.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e6da32eef072f987685b6eddca072d4f.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e6da32eef072f987685b6eddca072d4f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e00406144c1e7e35240afed70f34166a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e00406144c1e7e35240afed70f34166a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b353d984bb7fcc173edea010bd999b98.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b353d984bb7fcc173edea010bd999b98.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3f998e713a6e02287c374fd26835d87e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3f998e713a6e02287c374fd26835d87e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/38c754fbd23954a232a7f84019ba8092.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/38c754fbd23954a232a7f84019ba8092.jpg"
+      }
+    ]
+  },
+  "league-of-legends": {
+    "name": "League of Legends",
+    "gameId": 1865,
+    "grid": "https://cdn2.steamgriddb.com/grid/cf29ee336b07c0572c810f62f5543525.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/cf29ee336b07c0572c810f62f5543525.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/d69116f8b0140cdeb1f99a4d5096ffe4.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/d69116f8b0140cdeb1f99a4d5096ffe4.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/cf29ee336b07c0572c810f62f5543525.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/cf29ee336b07c0572c810f62f5543525.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/199c79ae66904c729433196aad9ee951.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/199c79ae66904c729433196aad9ee951.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/67559abce761a57a4e0782a9f60e4adc.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/67559abce761a57a4e0782a9f60e4adc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/739ba8f780c1b9a7bc5e17d61cb8cb41.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/739ba8f780c1b9a7bc5e17d61cb8cb41.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/8e65aff4b74febf52c314c22e34c2d32.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/8e65aff4b74febf52c314c22e34c2d32.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d69116f8b0140cdeb1f99a4d5096ffe4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d69116f8b0140cdeb1f99a4d5096ffe4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d20be76a86c0d71c75035fced631f874.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d20be76a86c0d71c75035fced631f874.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3fffb98d728238ddea957f0fc3ebe428.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3fffb98d728238ddea957f0fc3ebe428.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/21186d7b1482412ab14f0332b8aee119.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/21186d7b1482412ab14f0332b8aee119.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b6c29b32ba3e1f2aaa20084072c81347.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b6c29b32ba3e1f2aaa20084072c81347.jpg"
+      }
+    ]
+  },
+  "path-of-exile-2": {
+    "name": "Path of Exile 2",
+    "gameId": 5437810,
+    "grid": "https://cdn2.steamgriddb.com/grid/579b8ed826a6b614ac5654924627477d.jpg",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/579b8ed826a6b614ac5654924627477d.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/0496f9b544243ec5dff64344d1477858.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/0496f9b544243ec5dff64344d1477858.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/579b8ed826a6b614ac5654924627477d.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/579b8ed826a6b614ac5654924627477d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/494b08f5ba3e464e99d3ffa5ed13535a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/494b08f5ba3e464e99d3ffa5ed13535a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7ba2351dc60c3081635df6e40ea89eae.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7ba2351dc60c3081635df6e40ea89eae.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7b01843b5ccfdf5af98f8d84866a9dd0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7b01843b5ccfdf5af98f8d84866a9dd0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/602dc7261c04c9ae1d85e4ef3d191f0a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/602dc7261c04c9ae1d85e4ef3d191f0a.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0496f9b544243ec5dff64344d1477858.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0496f9b544243ec5dff64344d1477858.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c2cb5756ab726e065755c4743ef4cb87.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c2cb5756ab726e065755c4743ef4cb87.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/16228c0b296eb1e41d6820f27059bf40.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/16228c0b296eb1e41d6820f27059bf40.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/daf3a8509903b9dc5c719d644505bd4e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/daf3a8509903b9dc5c719d644505bd4e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/23ca2bc6358b97b675c4c10d2cc58761.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/23ca2bc6358b97b675c4c10d2cc58761.jpg"
+      }
+    ]
+  },
+  "world-of-warcraft": {
+    "name": "World of Warcraft",
+    "gameId": 33707,
+    "grid": "https://cdn2.steamgriddb.com/grid/1ccc0ad70725fbdef023f6c431881114.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/1ccc0ad70725fbdef023f6c431881114.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/a1b63b36ba67b15d2f47da55cdb8018d.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/a1b63b36ba67b15d2f47da55cdb8018d.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/1ccc0ad70725fbdef023f6c431881114.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/1ccc0ad70725fbdef023f6c431881114.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/8a56f2672e9d6bce3f4fdff4f9dbc3b4.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/8a56f2672e9d6bce3f4fdff4f9dbc3b4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/087c6bf7a45314a337e9aec9b0151479.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/087c6bf7a45314a337e9aec9b0151479.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/766f8d6ccc5f433cfb55828605dfa1a9.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/766f8d6ccc5f433cfb55828605dfa1a9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/96266be4cc1e737bdec4a4ce4a212218.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/96266be4cc1e737bdec4a4ce4a212218.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a1b63b36ba67b15d2f47da55cdb8018d.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a1b63b36ba67b15d2f47da55cdb8018d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c20ad4d76fe97759aa27a0c99bff6710.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c20ad4d76fe97759aa27a0c99bff6710.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/6512bd43d9caa6e02c990b0a82652dca.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/6512bd43d9caa6e02c990b0a82652dca.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/46877f60236dde1914dbf8d4cc60b3d7.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/46877f60236dde1914dbf8d4cc60b3d7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3bbd91d5a1fd0a9d74370736fbb8be8d.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3bbd91d5a1fd0a9d74370736fbb8be8d.jpg"
+      }
+    ]
+  },
+  "warframe": {
+    "name": "Warframe",
+    "gameId": 2506,
+    "grid": "https://cdn2.steamgriddb.com/grid/4e2a3c5332c92654090b105e3723479f.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/4e2a3c5332c92654090b105e3723479f.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/d867ac1eb97bfb5268f09f638bee0f84.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/d867ac1eb97bfb5268f09f638bee0f84.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4e2a3c5332c92654090b105e3723479f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4e2a3c5332c92654090b105e3723479f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/04766957db82a24eaa3006fb015798ba.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/04766957db82a24eaa3006fb015798ba.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/399039ad1a8b24219241ea10b387e7b6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/399039ad1a8b24219241ea10b387e7b6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/dfaa42f6026dd1bc8a76797fc0d191ce.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/dfaa42f6026dd1bc8a76797fc0d191ce.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/049885f05b697775e0d46be8c0311b6a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/049885f05b697775e0d46be8c0311b6a.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d867ac1eb97bfb5268f09f638bee0f84.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d867ac1eb97bfb5268f09f638bee0f84.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b25b911ffc2b76a647454e5a53edf8b5.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b25b911ffc2b76a647454e5a53edf8b5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f925407353b2aaefee1a0c3b31be5fc1.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f925407353b2aaefee1a0c3b31be5fc1.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/97bf6036e7669246dad4e84d1abec531.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/97bf6036e7669246dad4e84d1abec531.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d86ea612dec96096c5e0fcc8dd42ab6d.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d86ea612dec96096c5e0fcc8dd42ab6d.jpg"
+      }
+    ]
+  },
+  "destiny-2": {
+    "name": "Destiny 2",
+    "gameId": 5103051,
+    "grid": "https://cdn2.steamgriddb.com/grid/5e93ee9a764cf2326a92f61f8fefdb1f.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/5e93ee9a764cf2326a92f61f8fefdb1f.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/0ddfce009feef8de73f1d781e16290ad.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/0ddfce009feef8de73f1d781e16290ad.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5e93ee9a764cf2326a92f61f8fefdb1f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5e93ee9a764cf2326a92f61f8fefdb1f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/20e64ecc8467f72baa3ba3adbaa4fa0f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/20e64ecc8467f72baa3ba3adbaa4fa0f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c5833d3c67e9569a9194994e96c72a90.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c5833d3c67e9569a9194994e96c72a90.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ed0ffe44fefcf1ae95176bd0c917d840.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ed0ffe44fefcf1ae95176bd0c917d840.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/24a04281f84baa7cefe8346c3b4b5f35.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/24a04281f84baa7cefe8346c3b4b5f35.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0ddfce009feef8de73f1d781e16290ad.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0ddfce009feef8de73f1d781e16290ad.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e1740c5223422374b7fb1888478aabb9.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e1740c5223422374b7fb1888478aabb9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ee04d7461f4c27af47fb49708e132073.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ee04d7461f4c27af47fb49708e132073.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/72fa288df9f22f7167dff80cf89fd4e5.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/72fa288df9f22f7167dff80cf89fd4e5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e9412ee564384b987d086df32d4ce6b7.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e9412ee564384b987d086df32d4ce6b7.jpg"
+      }
+    ]
+  },
+  "pubg-battlegrounds": {
+    "name": "PUBG: BATTLEGROUNDS",
+    "gameId": 16195,
+    "grid": "https://cdn2.steamgriddb.com/grid/13816ba0dd3a36209cbc3cfef265dc7c.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/13816ba0dd3a36209cbc3cfef265dc7c.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/f387624df552cea2f369918c5e1e12bc.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/f387624df552cea2f369918c5e1e12bc.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/13816ba0dd3a36209cbc3cfef265dc7c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/13816ba0dd3a36209cbc3cfef265dc7c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/93e834de5ae9c81bc0e429317ad399c1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/93e834de5ae9c81bc0e429317ad399c1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/66cbf6fda03b07313d2494dc01e63e78.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/66cbf6fda03b07313d2494dc01e63e78.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6736c4dd6607c9bc500bb287afe1bef5.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6736c4dd6607c9bc500bb287afe1bef5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6af8fef1ff62f4cb1b8e602ad5ab0e80.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6af8fef1ff62f4cb1b8e602ad5ab0e80.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f387624df552cea2f369918c5e1e12bc.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f387624df552cea2f369918c5e1e12bc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ad644e9304513dd34ebab678e9c3840d.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ad644e9304513dd34ebab678e9c3840d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9812886076e5749e00292cc3c9777ab3.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9812886076e5749e00292cc3c9777ab3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4dcf435435894a4d0972046fc566af76.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4dcf435435894a4d0972046fc566af76.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/033522d9bdf796d13c4b594cbdf03184.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/033522d9bdf796d13c4b594cbdf03184.jpg"
+      }
+    ]
+  },
+  "grand-theft-auto-6": {
+    "name": "Grand Theft Auto VI",
+    "gameId": 5309313,
+    "grid": "https://cdn2.steamgriddb.com/grid/a55e72542860596de2ef8c0d847b6f03.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/a55e72542860596de2ef8c0d847b6f03.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/46a428fa75c714ab98a8e9348c85179a.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/46a428fa75c714ab98a8e9348c85179a.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a55e72542860596de2ef8c0d847b6f03.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a55e72542860596de2ef8c0d847b6f03.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a321748e05e6be6dc5c5052fe927e55e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a321748e05e6be6dc5c5052fe927e55e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3f8172ec318a44eb0307e9e45615b579.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3f8172ec318a44eb0307e9e45615b579.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4cd0dfab5edb695fe22af3a62836f288.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4cd0dfab5edb695fe22af3a62836f288.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/98d1afe943d53bef27984cf64f9c88f1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/98d1afe943d53bef27984cf64f9c88f1.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/46a428fa75c714ab98a8e9348c85179a.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/46a428fa75c714ab98a8e9348c85179a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2d5fb1ecd865bff5dd1b6afd6da8d2a4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2d5fb1ecd865bff5dd1b6afd6da8d2a4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f8f3e2e64f15fb85c3e630d6c6553e9e.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f8f3e2e64f15fb85c3e630d6c6553e9e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2bb2d7cd82fbb47f72d832d9500a3751.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2bb2d7cd82fbb47f72d832d9500a3751.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/838c3442d88f204d75d335378e18c5ec.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/838c3442d88f204d75d335378e18c5ec.jpg"
+      }
+    ]
+  },
+  "stardew-valley": {
+    "name": "Stardew Valley",
+    "gameId": 9569,
+    "grid": "https://cdn2.steamgriddb.com/grid/cf30b40a1573a32248fcd0ba94e67652.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/cf30b40a1573a32248fcd0ba94e67652.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/d44c78dcad9de0aed2f37902ea02cef2.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/d44c78dcad9de0aed2f37902ea02cef2.png",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/cf30b40a1573a32248fcd0ba94e67652.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/cf30b40a1573a32248fcd0ba94e67652.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7085307072925ee2a3e84f0d2d1ca6a1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7085307072925ee2a3e84f0d2d1ca6a1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/19e2a40db4e1365c35a66e97de3783a5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/19e2a40db4e1365c35a66e97de3783a5.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/996e24639b91722571c81723760023e0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/996e24639b91722571c81723760023e0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/1dfb80b940917fc3de183e9405cb2043.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/1dfb80b940917fc3de183e9405cb2043.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d44c78dcad9de0aed2f37902ea02cef2.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d44c78dcad9de0aed2f37902ea02cef2.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/866d051deb3437d40731901ae7fd9092.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/866d051deb3437d40731901ae7fd9092.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8ee3c97728fc56a229d2234ce1bd7cec.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8ee3c97728fc56a229d2234ce1bd7cec.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ccd198800cc50cc84ee327cec2f4336c.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ccd198800cc50cc84ee327cec2f4336c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a606db731d30029173a3cedca5085ae9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a606db731d30029173a3cedca5085ae9.jpg"
+      }
+    ]
+  },
+  "hollow-knight": {
+    "name": "Hollow Knight",
+    "gameId": 7545,
+    "grid": "https://cdn2.steamgriddb.com/grid/d18c832e8c956b4ef8b92862e6bf470d.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/d18c832e8c956b4ef8b92862e6bf470d.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/222c44c26a02c54e3a9fd0d895b12df4.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/222c44c26a02c54e3a9fd0d895b12df4.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d18c832e8c956b4ef8b92862e6bf470d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d18c832e8c956b4ef8b92862e6bf470d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9122e6917c43df2c068332f00db0ff97.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9122e6917c43df2c068332f00db0ff97.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0d1e5791e6d9f5d290a9eedc1d825e1e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0d1e5791e6d9f5d290a9eedc1d825e1e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2c6a7cab01fdcceb4ca738306c7c3559.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2c6a7cab01fdcceb4ca738306c7c3559.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d8b78c8db1461144222fb66df2d4d972.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d8b78c8db1461144222fb66df2d4d972.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/222c44c26a02c54e3a9fd0d895b12df4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/222c44c26a02c54e3a9fd0d895b12df4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e19099504769f3f7eb7e2f8b933db898.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e19099504769f3f7eb7e2f8b933db898.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8a1854f491c11482630ebb4135df2d2b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8a1854f491c11482630ebb4135df2d2b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2a23698064df1354a4ba703528ef20e9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2a23698064df1354a4ba703528ef20e9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/6f971b8a5752c9a4a44306db39282683.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/6f971b8a5752c9a4a44306db39282683.jpg"
+      }
+    ]
+  },
+  "celeste": {
+    "name": "Celeste",
+    "gameId": 13136,
+    "grid": "https://cdn2.steamgriddb.com/grid/074aed57c243ae7020971ca7c9fe0f29.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/074aed57c243ae7020971ca7c9fe0f29.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/c66e591693fd6e7b26fc5a60efb68817.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/c66e591693fd6e7b26fc5a60efb68817.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/074aed57c243ae7020971ca7c9fe0f29.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/074aed57c243ae7020971ca7c9fe0f29.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/571784f34c5991869e3112fdb6ea4140.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/571784f34c5991869e3112fdb6ea4140.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0d45814d8f22968ee3cfe99b8904d746.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0d45814d8f22968ee3cfe99b8904d746.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/41ed419ab4a0d14a54f9c09526c03ccd.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/41ed419ab4a0d14a54f9c09526c03ccd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/8c433a09bd26b943147c4d9bacb15efc.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/8c433a09bd26b943147c4d9bacb15efc.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c66e591693fd6e7b26fc5a60efb68817.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c66e591693fd6e7b26fc5a60efb68817.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0a552abf945aad2831a917bd58bbdc70.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0a552abf945aad2831a917bd58bbdc70.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8b9b3436fc4466e9d5432fb4296d23fd.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8b9b3436fc4466e9d5432fb4296d23fd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/894a9b94bcc5969b60bd18e8ea9c0ddc.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/894a9b94bcc5969b60bd18e8ea9c0ddc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/262e7707a161061c2b75c75215c2c4a9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/262e7707a161061c2b75c75215c2c4a9.jpg"
+      }
+    ]
+  },
+  "among-us": {
+    "name": "Among Us",
+    "gameId": 31588,
+    "grid": "https://cdn2.steamgriddb.com/grid/09246ffb824ca2c5bc47a64cb302d3cb.jpg",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/09246ffb824ca2c5bc47a64cb302d3cb.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/4ce000edd5012969a87a83d06ea8f914.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/4ce000edd5012969a87a83d06ea8f914.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/09246ffb824ca2c5bc47a64cb302d3cb.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/09246ffb824ca2c5bc47a64cb302d3cb.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/42acab51cf2973d1b174ec59f11c9795.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/42acab51cf2973d1b174ec59f11c9795.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0e842f09998bbdab42e25cb57b438b58.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0e842f09998bbdab42e25cb57b438b58.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0d65c8aca9a5269a7863c6fe6a3b18e1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0d65c8aca9a5269a7863c6fe6a3b18e1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2366712656a3d67db868f3838d927b98.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2366712656a3d67db868f3838d927b98.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4ce000edd5012969a87a83d06ea8f914.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4ce000edd5012969a87a83d06ea8f914.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/14749bb109fb4d289fd6969319dbce5b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/14749bb109fb4d289fd6969319dbce5b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/335656f07e73e44e19221e6649796c54.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/335656f07e73e44e19221e6649796c54.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a2cf154360e8cff829af082a701c07f4.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a2cf154360e8cff829af082a701c07f4.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/54f3fa6166fe3b6fbc596defb3ebd78b.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/54f3fa6166fe3b6fbc596defb3ebd78b.jpg"
+      }
+    ]
+  },
+  "hades-2": {
+    "name": "Hades II",
+    "gameId": 5376530,
+    "grid": "https://cdn2.steamgriddb.com/grid/ac0169aeecebc5576074bb1dce51e382.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/ac0169aeecebc5576074bb1dce51e382.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/a4d849d331d0a9857b8b599475460dad.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/a4d849d331d0a9857b8b599475460dad.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ac0169aeecebc5576074bb1dce51e382.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ac0169aeecebc5576074bb1dce51e382.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3461b61c6c1cf0732967b57f4739d556.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3461b61c6c1cf0732967b57f4739d556.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b2c6c5b4f6992b115368bcb678c4662a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b2c6c5b4f6992b115368bcb678c4662a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/05e9ed6f0387943bd20f443781b0d98a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/05e9ed6f0387943bd20f443781b0d98a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b4996474b6ebdb8ff8c822f5481b4ce2.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b4996474b6ebdb8ff8c822f5481b4ce2.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a4d849d331d0a9857b8b599475460dad.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a4d849d331d0a9857b8b599475460dad.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/65213c6e8d5775f36ff71550663ca3fd.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/65213c6e8d5775f36ff71550663ca3fd.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9f7ca46be20128ebfab0facf2c648af7.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9f7ca46be20128ebfab0facf2c648af7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3a9edbf6448b7c62148262926a1ea93c.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3a9edbf6448b7c62148262926a1ea93c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9394b999c2330f04b64b53ed3ebb8d45.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9394b999c2330f04b64b53ed3ebb8d45.jpg"
+      }
+    ]
+  },
+  "resident-evil-4-remake": {
+    "name": "Resident Evil 4",
+    "gameId": 3168,
+    "grid": "https://cdn2.steamgriddb.com/grid/46cc597bae1fee3cd19314f32c6cb4f0.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/46cc597bae1fee3cd19314f32c6cb4f0.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/e2ccf95a7f2e1878fcafc8376649b6e8.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/e2ccf95a7f2e1878fcafc8376649b6e8.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/46cc597bae1fee3cd19314f32c6cb4f0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/46cc597bae1fee3cd19314f32c6cb4f0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a7ee11c99daa86125832bfc5e5a06cce.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a7ee11c99daa86125832bfc5e5a06cce.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/828953f3468ffe61ad4887857afc4d4a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/828953f3468ffe61ad4887857afc4d4a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/6e6d3a48505c9144377de6cf01dcfd23.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/6e6d3a48505c9144377de6cf01dcfd23.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/4c55cc422cab2389c9f1d88eda34da57.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/4c55cc422cab2389c9f1d88eda34da57.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e2ccf95a7f2e1878fcafc8376649b6e8.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e2ccf95a7f2e1878fcafc8376649b6e8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8fc019d475d2d5220014dd496524b7d0.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8fc019d475d2d5220014dd496524b7d0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/7e806cac30fa898ea5f94dd6224f49c8.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/7e806cac30fa898ea5f94dd6224f49c8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/55c11616b1aeb14d5166f02b07e17eb7.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/55c11616b1aeb14d5166f02b07e17eb7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/00841c11a439c66f349544070b8ae045.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/00841c11a439c66f349544070b8ae045.jpg"
+      }
+    ]
+  },
+  "dead-space-remake": {
+    "name": "Dead Space",
+    "gameId": 1559,
+    "grid": "https://cdn2.steamgriddb.com/grid/26203c6ab63ff66fef12bbc3b8dad1c0.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/26203c6ab63ff66fef12bbc3b8dad1c0.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/4f4adcbf8c6f66dcfc8a3282ac2bf10a.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/4f4adcbf8c6f66dcfc8a3282ac2bf10a.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/26203c6ab63ff66fef12bbc3b8dad1c0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/26203c6ab63ff66fef12bbc3b8dad1c0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f891e4b484284a04c56f08c507d731a6.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f891e4b484284a04c56f08c507d731a6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/53ee48dc92c2165cdee91bee0ab28638.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/53ee48dc92c2165cdee91bee0ab28638.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5678ea4a62b351691bd67effc1951e83.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5678ea4a62b351691bd67effc1951e83.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/ff0e87ce334d5a9d1559b3d5632caf28.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/ff0e87ce334d5a9d1559b3d5632caf28.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/4f4adcbf8c6f66dcfc8a3282ac2bf10a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/4f4adcbf8c6f66dcfc8a3282ac2bf10a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/389bc7bb1e1c2a5e7e147703232a88f6.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/389bc7bb1e1c2a5e7e147703232a88f6.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9a8a7205e2aa8f927bd0ee99371f8e41.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9a8a7205e2aa8f927bd0ee99371f8e41.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/1f591c0d09bbc2473bcb436439df2a54.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/1f591c0d09bbc2473bcb436439df2a54.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8757150decbd89b0f5442ca3db4d0e0e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8757150decbd89b0f5442ca3db4d0e0e.jpg"
+      }
+    ]
+  },
+  "the-last-of-us-part-1": {
+    "name": "The Last of Us Part I",
+    "gameId": 5335165,
+    "grid": "https://cdn2.steamgriddb.com/grid/769fda94fbd3dd567d4cf6e296226fc8.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/769fda94fbd3dd567d4cf6e296226fc8.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/ae5e9154ff3754a3a942ca2417701560.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/ae5e9154ff3754a3a942ca2417701560.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/769fda94fbd3dd567d4cf6e296226fc8.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/769fda94fbd3dd567d4cf6e296226fc8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c40c33b6356d23b62714112ace355abe.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c40c33b6356d23b62714112ace355abe.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a854beb9ca7853ef4646eae178f9f570.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a854beb9ca7853ef4646eae178f9f570.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d2360e87e05c41ca104ea8116f8fd1fc.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d2360e87e05c41ca104ea8116f8fd1fc.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c1154d4269821242b8494a26e233f87e.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c1154d4269821242b8494a26e233f87e.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ae5e9154ff3754a3a942ca2417701560.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ae5e9154ff3754a3a942ca2417701560.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/daeda29c74e60aabcc26e5982323ce64.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/daeda29c74e60aabcc26e5982323ce64.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/bae65a46f2a01ecfb0f065ef8550be2c.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/bae65a46f2a01ecfb0f065ef8550be2c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/96af3ae0374f2367bb402af8fbeea9ae.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/96af3ae0374f2367bb402af8fbeea9ae.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/88d9ca3f2fa9c76489ca9631bee7e169.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/88d9ca3f2fa9c76489ca9631bee7e169.jpg"
+      }
+    ]
+  },
+  "final-fantasy-16": {
+    "name": "Final Fantasy XVI",
+    "gameId": 5267223,
+    "grid": "https://cdn2.steamgriddb.com/grid/818efb7d312c7baa2a0af45c3c959837.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/818efb7d312c7baa2a0af45c3c959837.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/2922207bf47569056f4252d168e17d07.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/2922207bf47569056f4252d168e17d07.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/818efb7d312c7baa2a0af45c3c959837.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/818efb7d312c7baa2a0af45c3c959837.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e8b23dddb7d104335b8d6c32836ba5c1.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e8b23dddb7d104335b8d6c32836ba5c1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9245c6b6ad413336553235bfbb257ef6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9245c6b6ad413336553235bfbb257ef6.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/307eeedf15a28b34cc80c749eb0a7c82.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/307eeedf15a28b34cc80c749eb0a7c82.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/553d541442819fa8836f90435d4c31d5.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/553d541442819fa8836f90435d4c31d5.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2922207bf47569056f4252d168e17d07.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2922207bf47569056f4252d168e17d07.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b80f5fa15a1d40b33245084686ebeac2.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b80f5fa15a1d40b33245084686ebeac2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/38d293713c7d61963d583f339409abc3.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/38d293713c7d61963d583f339409abc3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/cfa9eb4df5bdf3aea7b8b139e42b7090.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/cfa9eb4df5bdf3aea7b8b139e42b7090.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/e2f232687833a4fd8664f759d6474309.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/e2f232687833a4fd8664f759d6474309.jpg"
+      }
+    ]
+  },
+  "assassins-creed-mirage": {
+    "name": "Assassin's Creed Mirage",
+    "gameId": 5352379,
+    "grid": "https://cdn2.steamgriddb.com/grid/b00be8459cbd14caad11bf6c22c1dc2b.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/b00be8459cbd14caad11bf6c22c1dc2b.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/bc1c60cf6a087b5651fad5a765a75cda.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/bc1c60cf6a087b5651fad5a765a75cda.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b00be8459cbd14caad11bf6c22c1dc2b.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b00be8459cbd14caad11bf6c22c1dc2b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0ff1795f0ad93c5c39d2fdee9de2ce41.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0ff1795f0ad93c5c39d2fdee9de2ce41.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/78b2884cada2f3630a4fe0c9d2348031.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/78b2884cada2f3630a4fe0c9d2348031.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c101b3cd6b1831640ee21dcc88fcf278.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c101b3cd6b1831640ee21dcc88fcf278.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d36bcf639a2dce51e463f0658ce2f0a6.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d36bcf639a2dce51e463f0658ce2f0a6.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/bc1c60cf6a087b5651fad5a765a75cda.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/bc1c60cf6a087b5651fad5a765a75cda.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f37a5da5c19586431f2c62b56b387bbf.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f37a5da5c19586431f2c62b56b387bbf.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c2a5e1c8ded60c7302c37274b5668f21.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c2a5e1c8ded60c7302c37274b5668f21.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c1cda6bc4f20f7ddc816a30d1397957b.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c1cda6bc4f20f7ddc816a30d1397957b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d11e396548e529826fb14edf0489aa50.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d11e396548e529826fb14edf0489aa50.jpg"
+      }
+    ]
+  },
+  "dave-the-diver": {
+    "name": "Dave the Diver",
+    "gameId": 5325005,
+    "grid": "https://cdn2.steamgriddb.com/grid/1d50a96e0e3d7b721de8aafbb246067d.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/1d50a96e0e3d7b721de8aafbb246067d.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/75d77479813538a916b1eda17e06a551.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/75d77479813538a916b1eda17e06a551.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/1d50a96e0e3d7b721de8aafbb246067d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/1d50a96e0e3d7b721de8aafbb246067d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d8eab57349feee07bb0a69a848e24982.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d8eab57349feee07bb0a69a848e24982.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b61cac944c729af3e736b1074143c0d8.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b61cac944c729af3e736b1074143c0d8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5b23d5afe19e6f468826b69eaee83f8c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5b23d5afe19e6f468826b69eaee83f8c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/72dddb66de97e01bb404f0ea6e7490f2.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/72dddb66de97e01bb404f0ea6e7490f2.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/75d77479813538a916b1eda17e06a551.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/75d77479813538a916b1eda17e06a551.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/d3c371e8bcff5911665e1cd569522973.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/d3c371e8bcff5911665e1cd569522973.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9135d68826af2d0802c03554d508446e.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9135d68826af2d0802c03554d508446e.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/44d21d4798f1f11195763debdaeba60b.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/44d21d4798f1f11195763debdaeba60b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/40ab5635391fe4ae6b3211682dd4178c.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/40ab5635391fe4ae6b3211682dd4178c.jpg"
+      }
+    ]
+  },
+  "returnal": {
+    "name": "Returnal",
+    "gameId": 5274173,
+    "grid": "https://cdn2.steamgriddb.com/grid/d2ee1af2ad7267720b07d301b0e3c9c2.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/d2ee1af2ad7267720b07d301b0e3c9c2.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/9ab9bcbc1042df71c09f578b790e2310.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/9ab9bcbc1042df71c09f578b790e2310.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/d2ee1af2ad7267720b07d301b0e3c9c2.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/d2ee1af2ad7267720b07d301b0e3c9c2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c0d67de6ea0001220a23f987704a7d64.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c0d67de6ea0001220a23f987704a7d64.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/a7c356bb1bbb4b7cc39f570e612d6c80.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/a7c356bb1bbb4b7cc39f570e612d6c80.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/818d53b55289eb2fafebbf7a4987a67d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/818d53b55289eb2fafebbf7a4987a67d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0a25f8c6ab34350950694a9d82998d4d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0a25f8c6ab34350950694a9d82998d4d.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9ab9bcbc1042df71c09f578b790e2310.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9ab9bcbc1042df71c09f578b790e2310.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3c3961f8fc1f905eb7d2a9d96cd84298.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3c3961f8fc1f905eb7d2a9d96cd84298.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/3fbc6b1731194c5f7ec098299a1247f2.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/3fbc6b1731194c5f7ec098299a1247f2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ccda9f553bd6da98cdd6d7536ee67873.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ccda9f553bd6da98cdd6d7536ee67873.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/cdeb4894869cbdaf5b55ed25012c0c10.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/cdeb4894869cbdaf5b55ed25012c0c10.jpg"
+      }
+    ]
+  },
+  "demons-souls": {
+    "name": "Demon's Souls",
+    "gameId": 37584,
+    "grid": "https://cdn2.steamgriddb.com/grid/f80afec6b887f5f8a5c7ca6bdb08a769.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/f80afec6b887f5f8a5c7ca6bdb08a769.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/dbdc69ea6ccbdea0ca2d796e1af24ebf.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/dbdc69ea6ccbdea0ca2d796e1af24ebf.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f80afec6b887f5f8a5c7ca6bdb08a769.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f80afec6b887f5f8a5c7ca6bdb08a769.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/54471185d1a61c5898ad78b54c178362.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/54471185d1a61c5898ad78b54c178362.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/59a2c0de0ff373abd712a182471e7e32.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/59a2c0de0ff373abd712a182471e7e32.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/53b352e0ebfc4f34c2fc7503f41b0895.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/53b352e0ebfc4f34c2fc7503f41b0895.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/90cc2b422d863a34e116202e89691b98.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/90cc2b422d863a34e116202e89691b98.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/dbdc69ea6ccbdea0ca2d796e1af24ebf.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/dbdc69ea6ccbdea0ca2d796e1af24ebf.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/42e7e1210aed7043d64111e71e0796af.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/42e7e1210aed7043d64111e71e0796af.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/a7bcf3bc23946c7d69a73acb147ca8e8.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/a7bcf3bc23946c7d69a73acb147ca8e8.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ffad99a1f556e0e0595aec7b8060662d.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ffad99a1f556e0e0595aec7b8060662d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/6622392eb0d8dfdacc44c7f7397ce4ab.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/6622392eb0d8dfdacc44c7f7397ce4ab.jpg"
+      }
+    ]
+  },
+  "ratchet-and-clank-rift-apart": {
+    "name": "Ratchet & Clank: Rift Apart",
+    "gameId": 5266059,
+    "grid": "https://cdn2.steamgriddb.com/grid/5abe467682d9d6369c022f426b4f1397.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/5abe467682d9d6369c022f426b4f1397.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/9e0aaeef6b914a9091beaaec19cc2e34.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/9e0aaeef6b914a9091beaaec19cc2e34.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/5abe467682d9d6369c022f426b4f1397.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/5abe467682d9d6369c022f426b4f1397.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e30c7d71dd22da8264499ef52ad97c81.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e30c7d71dd22da8264499ef52ad97c81.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/56ec7068f5d655af5740593931634862.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/56ec7068f5d655af5740593931634862.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/3ad75d4f43ae2379b5b1843182d89ede.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/3ad75d4f43ae2379b5b1843182d89ede.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/7f043598bd4cc7aca8d20576a609d0b0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/7f043598bd4cc7aca8d20576a609d0b0.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9e0aaeef6b914a9091beaaec19cc2e34.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9e0aaeef6b914a9091beaaec19cc2e34.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/90d7348fce3c310aa923fc635bf7170f.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/90d7348fce3c310aa923fc635bf7170f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/f761efa8e6a59d222cd4b70a0accfd87.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/f761efa8e6a59d222cd4b70a0accfd87.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/9fb39fd910a6708e156d228c541bb278.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/9fb39fd910a6708e156d228c541bb278.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/220ddf008416e895e6e649a2bba33484.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/220ddf008416e895e6e649a2bba33484.jpg"
+      }
+    ]
+  },
+  "terraria": {
+    "name": "Terraria",
+    "gameId": 1226,
+    "grid": "https://cdn2.steamgriddb.com/grid/9ef7f9b81c2532880cfe5cf53f0c906d.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/9ef7f9b81c2532880cfe5cf53f0c906d.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/32e8e6c03f3fa46eb672dc5680bff7da.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/32e8e6c03f3fa46eb672dc5680bff7da.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9ef7f9b81c2532880cfe5cf53f0c906d.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9ef7f9b81c2532880cfe5cf53f0c906d.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/9bc661e8362657d8cbbe4bb41d17c7f3.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/9bc661e8362657d8cbbe4bb41d17c7f3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f176d133844a5ebfe61354500b9a6d18.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f176d133844a5ebfe61354500b9a6d18.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/605dca368f0500b327bc645f2a8081e0.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/605dca368f0500b327bc645f2a8081e0.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/b70188491798e86129a57180426213ff.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/b70188491798e86129a57180426213ff.png"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/32e8e6c03f3fa46eb672dc5680bff7da.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/32e8e6c03f3fa46eb672dc5680bff7da.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8cc73dd2a42ac2d64984ddb3c72f633b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8cc73dd2a42ac2d64984ddb3c72f633b.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/38dadc9fae7b5a4415d01986ee4907fe.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/38dadc9fae7b5a4415d01986ee4907fe.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/191eb5aada767fe0ea3042ee38da74b9.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/191eb5aada767fe0ea3042ee38da74b9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/1913e525d6acdf2a6196b42b3a749035.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/1913e525d6acdf2a6196b42b3a749035.jpg"
+      }
+    ]
+  },
+  "sekiro-shadows-die-twice": {
+    "name": "Sekiro: Shadows Die Twice",
+    "gameId": 26258,
+    "grid": "https://cdn2.steamgriddb.com/grid/97771715c7dd7daf009feeb60c49915a.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/97771715c7dd7daf009feeb60c49915a.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/2ee2b71a912ddc28699435eca8bd6486.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/2ee2b71a912ddc28699435eca8bd6486.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/97771715c7dd7daf009feeb60c49915a.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/97771715c7dd7daf009feeb60c49915a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/acfa41c81ad86a8713bdc3c9ec0d0b68.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/acfa41c81ad86a8713bdc3c9ec0d0b68.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f10b79d9153a1c071814c29383204db2.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f10b79d9153a1c071814c29383204db2.png"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/324fd03958724e32847aa8b8e35b511f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/324fd03958724e32847aa8b8e35b511f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/e8ffe1d4afb66a00c7c92be0c007a32c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/e8ffe1d4afb66a00c7c92be0c007a32c.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2ee2b71a912ddc28699435eca8bd6486.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2ee2b71a912ddc28699435eca8bd6486.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/5636cbbbf9d5624b172862ee276bec73.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/5636cbbbf9d5624b172862ee276bec73.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/0df5627695c1aaf2a2be5c738a80f0c3.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/0df5627695c1aaf2a2be5c738a80f0c3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/2750dc2828e8f769ede73fd216f19b62.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/2750dc2828e8f769ede73fd216f19b62.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/8b2ced7428b64f653036b4a67d32302b.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/8b2ced7428b64f653036b4a67d32302b.jpg"
+      }
+    ]
+  },
+  "ghostwire-tokyo": {
+    "name": "Ghostwire: Tokyo",
+    "gameId": 5322723,
+    "grid": "https://cdn2.steamgriddb.com/grid/23e074dd8c6693de55e923ccf961acb9.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/23e074dd8c6693de55e923ccf961acb9.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/373e6ed5a7f859820f6a6be334a8208c.jpg",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/373e6ed5a7f859820f6a6be334a8208c.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/23e074dd8c6693de55e923ccf961acb9.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/23e074dd8c6693de55e923ccf961acb9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/f8db1389df5ac42b28f8a58a497655a7.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/f8db1389df5ac42b28f8a58a497655a7.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/66e5f46005814062fae22079b9523bc1.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/66e5f46005814062fae22079b9523bc1.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2acbb2a8fdb8dbf33a4173e577d4af22.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2acbb2a8fdb8dbf33a4173e577d4af22.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/0a5abbb7e6bf939bd2c0874bbec84e06.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/0a5abbb7e6bf939bd2c0874bbec84e06.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/373e6ed5a7f859820f6a6be334a8208c.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/373e6ed5a7f859820f6a6be334a8208c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/288ba9abad93ef50e6a76089ae84aab3.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/288ba9abad93ef50e6a76089ae84aab3.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/ba2fec29f2b60a1abc9ec8ada34ec9e2.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/ba2fec29f2b60a1abc9ec8ada34ec9e2.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/1e7a14be6349a4d61e56ae52c61b82c9.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/1e7a14be6349a4d61e56ae52c61b82c9.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/c56202b66d431a16fbc0260c3d2bd1f6.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/c56202b66d431a16fbc0260c3d2bd1f6.jpg"
+      }
+    ]
+  },
+  "f1-24": {
+    "name": "F1 24",
+    "gameId": 5445331,
+    "grid": "https://cdn2.steamgriddb.com/grid/c974abb3730fbedc5af80a02c335cf2f.png",
+    "gridThumb": "https://cdn2.steamgriddb.com/thumb/c974abb3730fbedc5af80a02c335cf2f.jpg",
+    "hero": "https://cdn2.steamgriddb.com/hero/eb376d76bdd7de77f67d4afaed3e1159.png",
+    "heroThumb": "https://cdn2.steamgriddb.com/hero_thumb/eb376d76bdd7de77f67d4afaed3e1159.jpg",
+    "allGrids": [
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/c974abb3730fbedc5af80a02c335cf2f.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/c974abb3730fbedc5af80a02c335cf2f.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/cf4b9776603536f7067a9837ebbb0a93.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/cf4b9776603536f7067a9837ebbb0a93.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/2800d36e17df28179b16356a3e38bb3c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/2800d36e17df28179b16356a3e38bb3c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/806d29a08da036284ba1845d8f39600c.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/806d29a08da036284ba1845d8f39600c.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/grid/154e0d8dc952c9988b03019f2e7f9842.png",
+        "thumb": "https://cdn2.steamgriddb.com/thumb/154e0d8dc952c9988b03019f2e7f9842.jpg"
+      }
+    ],
+    "allHeroes": [
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/eb376d76bdd7de77f67d4afaed3e1159.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/eb376d76bdd7de77f67d4afaed3e1159.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/43cd8871d0cb5e4e2e4dd2ab72628857.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/43cd8871d0cb5e4e2e4dd2ab72628857.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/cea68d6ebdfe9c190898c10aad14018a.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/cea68d6ebdfe9c190898c10aad14018a.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/7d640983ff475a670d4b02a31b1832cf.png",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/7d640983ff475a670d4b02a31b1832cf.jpg"
+      },
+      {
+        "url": "https://cdn2.steamgriddb.com/hero/b6a1d5de6e0101f3886464727fc6fb22.jpg",
+        "thumb": "https://cdn2.steamgriddb.com/hero_thumb/b6a1d5de6e0101f3886464727fc6fb22.jpg"
+      }
+    ]
+  }
+}

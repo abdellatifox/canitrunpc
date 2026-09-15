@@ -1,0 +1,325 @@
+---
+import { SEO_YEAR } from '../lib/year';
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+const PATH = '/upgrade-advisor';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+
+const description = 'Not sure whether to replace your graphics card, processor, memory or drive? Enter what you have, your screen and budget, and get an upgrade order for your PC.';
+
+// Grouped by maker and sorted by name, so a reader can find their part quickly.
+const byMaker = <T extends { brand: string; name: string }>(list: T[]) =>
+  [...new Set(list.map(x => x.brand))].sort().map(brand => ({
+    brand,
+    items: list.filter(x => x.brand === brand).sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }))
+  }));
+const gpuGroups = byMaker(gpus);
+const cpuGroups = byMaker(cpus);
+
+/* Candidates for named suggestions, and the card we treat as comfortable at each
+   resolution on high settings (our judgement, pinned to named cards). */
+const perfOf = (p: { perf?: number; score: number }) => p.perf ?? p.score;
+const latestGpu = Math.max(...gpus.map(g => g.release_year));
+const latestCpu = Math.max(...cpus.map(c => c.release_year));
+const advisorData = {
+  gpus: gpus.filter(g => !/laptop/i.test(g.name) && g.msrp_usd && g.release_year >= latestGpu - 3)
+    .map(g => ({ n: g.name, s: g.slug, p: perfOf(g), m: g.msrp_usd, v: g.vram_gb })),
+  cpus: cpus.filter(c => c.release_year >= latestCpu - 3 && c.cores >= 6)
+    .map(c => ({ n: c.name, s: c.slug, p: perfOf(c) })),
+  target: Object.fromEntries(([['1080p', 'nvidia-geforce-rtx-4060'], ['1440p', 'nvidia-geforce-rtx-4070-super'], ['4k', 'nvidia-geforce-rtx-4080']] as const)
+    .map(([res, slug]) => { const g = gpus.find(x => x.slug === slug)!; return [res, { n: g.name, p: perfOf(g) }]; }))
+};
+
+const faq = [
+  {
+    q: 'Graphics card or processor first?',
+    a: 'Whichever sits further behind. A card far below your processor is capping every game, so it goes first. A processor far below your card means a new card would spend its time waiting, and deliver much less than its reviews suggest.'
+  },
+  {
+    q: `How much memory does a gaming PC need in ${SEO_YEAR}?`,
+    a: '16 GB is where most new games set their recommended spec, and 32 GB leaves room for a browser, voice chat and launchers running alongside. On 8 GB, newer games tend to stutter as textures load.'
+  },
+  {
+    q: 'Is adding memory alone worth it?',
+    a: 'If you are on 8 GB, or running a single memory stick, yes — it is the cheapest upgrade that changes how a game feels. It smooths out hitches more than it raises the average frame rate.'
+  },
+  {
+    q: 'Will an SSD give me more FPS?',
+    a: 'Not on average. It cuts loading times and the pauses when an open world streams in new areas, which is why moving off a hard drive is still worthwhile.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `PC Upgrade Advisor (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": description,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`Upgrade Advisor ${SEO_YEAR}: What Should I Upgrade First? | ${SITE_NAME}`}
+  description={description}
+  keywords={`what should i upgrade first, gpu or cpu upgrade, pc upgrade advisor, pc upgrade guide ${SEO_YEAR}`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'Upgrade Advisor' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Upgrade order</span>
+      <h1>What should I upgrade first?</h1>
+      <p class="lede">
+        Six choices about the PC you have and the money you want to spend. The advisor weighs your parts against each other
+        and against what current games ask for, then lists upgrades in the order they will pay off.
+      </p>
+    </header>
+
+    <div class="tool-panel">
+      <div class="fields">
+        <label>
+          <span>Graphics card</span>
+          <select id="gpu">
+            {gpuGroups.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(g => <option selected={g.slug === 'nvidia-geforce-rtx-4060'} value={`${perfOf(g)}|${g.vram_gb}|${g.name}`}>{g.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Processor</span>
+          <select id="cpu">
+            {cpuGroups.map(gr => (
+              <optgroup label={gr.brand}>
+                {gr.items.map(c => <option selected={c.slug === 'amd-ryzen-5-5600'} value={`${perfOf(c)}|${c.cores}|${c.name}`}>{c.name}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Memory (RAM)</span>
+          <select id="ram">
+            <option value="4">4 GB</option>
+            <option value="8">8 GB</option>
+            <option value="16" selected>16 GB</option>
+            <option value="32">32 GB</option>
+            <option value="64">64 GB</option>
+          </select>
+        </label>
+        <label>
+          <span>Game drive</span>
+          <select id="storage">
+            <option value="nvme" selected>NVMe SSD</option>
+            <option value="sata">SATA SSD</option>
+            <option value="hdd">Spinning hard drive</option>
+          </select>
+        </label>
+        <label>
+          <span>Screen resolution</span>
+          <select id="res">
+            <option value="1080p" selected>1080p</option>
+            <option value="1440p">1440p</option>
+            <option value="4k">4K</option>
+          </select>
+        </label>
+        <label>
+          <span>Spend</span>
+          <select id="budget">
+            <option value="150">Up to $150</option>
+            <option value="300" selected>Up to $300</option>
+            <option value="600">Up to $600</option>
+            <option value="1200">More than $600</option>
+          </select>
+        </label>
+      </div>
+      <button id="advise" class="btn btn-primary full">Show my upgrade order</button>
+    </div>
+
+    <script type="application/json" id="advisor-data" set:html={JSON.stringify(advisorData)}></script>
+    <div id="result" class="result" hidden>
+      <div class="verdict-head">
+        <span class="eyebrow">Do this first</span>
+        <h2 id="v-title"></h2>
+        <p id="v-why"></p>
+      </div>
+      <div class="balance">
+        <div class="bar-row">
+          <span>GPU</span>
+          <div class="track"><div class="fill gpu" id="bar-gpu"></div></div>
+          <b id="val-gpu"></b>
+        </div>
+        <div class="bar-row">
+          <span>CPU</span>
+          <div class="track"><div class="fill cpu" id="bar-cpu"></div></div>
+          <b id="val-cpu"></b>
+        </div>
+        <div class="bar-row">
+          <span>RAM</span>
+          <div class="track"><div class="fill ram" id="bar-ram"></div></div>
+          <b id="val-ram"></b>
+        </div>
+      </div>
+      <ol id="steps" class="steps"></ol>
+      <div class="cta-row">
+        <a href="/bottleneck" class="btn btn-ghost">Check the pairing</a>
+        <a href="/psu-calculator" class="btn btn-ghost">Will my power supply cope?</a>
+      </div>
+    </div>
+
+    <section class="faq">
+      <h2>Upgrade questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/gpu-tier-list">Where your card ranks</a></li>
+        <li><a href="/build-suggest">Or start a new build</a></li>
+        <li><a href="/pc-value">What your current parts are worth</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .tool-panel {
+    background: var(--surface); border: 1px solid var(--line-strong);
+    border-radius: var(--radius); padding: 26px; margin-bottom: 30px;
+  }
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .fields label { display: block; }
+  .fields span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+  .fields select {
+    width: 100%; background: var(--bg-soft); border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm); padding: 11px 12px; color: var(--text); font: inherit; outline: none;
+  }
+  .fields select:focus { border-color: var(--accent); }
+  .btn.full { width: 100%; }
+
+  .result {
+    background: var(--surface); border: 1px solid var(--accent);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 40px;
+  }
+  .verdict-head h2 { font-size: 26px; margin: 8px 0 10px; }
+  .verdict-head p { color: var(--muted); line-height: 1.7; margin: 0 0 24px; max-width: 70ch; }
+
+  .balance { margin-bottom: 26px; }
+  .bar-row { display: grid; grid-template-columns: 46px 1fr 54px; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bar-row span { font-size: 12px; color: var(--muted); }
+  .bar-row b { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
+  .track { height: 8px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 3px; transition: width .5s var(--ease); }
+  .fill.gpu { background: var(--accent); }
+  .fill.cpu { background: var(--readout); }
+  .fill.ram { background: var(--warn); }
+
+  .steps { margin: 0 0 24px; padding-left: 20px; }
+  .steps li { color: var(--muted); line-height: 1.7; margin-bottom: 10px; }
+  .steps li b { color: var(--text); }
+  .steps li a { color: var(--accent); }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+</style>
+
+<script>
+  import { cpuNeeded } from '../lib/perf';
+
+  const $ = (id: string) => document.getElementById(id)!;
+  type G = { n: string; s: string; p: number; m: number; v: number };
+  type C = { n: string; s: string; p: number };
+  const data = JSON.parse($('advisor-data').textContent || '{}') as { gpus: G[]; cpus: C[]; target: Record<string, { n: string; p: number }> };
+  // Path built separately so the inlined script holds no literal "/..." href for link checkers to misread.
+  const link = (kind: 'gpu' | 'cpu', x: { n: string; s: string }) => { const path = ['', kind, x.s].join('/'); return `<a href="${path}">${x.n}</a>`; };
+
+  $('advise').addEventListener('click', () => {
+    const [gPerfS, gVramS, gName] = ($('gpu') as HTMLSelectElement).value.split('|');
+    const [cPerfS, cCoresS, cName] = ($('cpu') as HTMLSelectElement).value.split('|');
+    const gpuPerf = +gPerfS, vram = +gVramS, cpuPerf = +cPerfS, cores = +cCoresS;
+    const ram = +($('ram') as HTMLSelectElement).value;
+    const storage = ($('storage') as HTMLSelectElement).value;
+    const res = ($('res') as HTMLSelectElement).value;
+    const budget = +($('budget') as HTMLSelectElement).value;
+    const resLabel = res === '4k' ? '4K' : res;
+    const target = data.target[res];
+
+    // Same model as /bottleneck: how much processor this card needs at this resolution.
+    const needed = cpuNeeded(gpuPerf, res);
+    const gpuHealth = gpuPerf / target.p;
+    const cpuHealth = cpuPerf / needed;
+    const pct = (x: number) => Math.round(Math.min(1, x) * 100);
+
+    ($('bar-gpu') as HTMLElement).style.width = pct(gpuHealth) + '%';
+    ($('bar-cpu') as HTMLElement).style.width = pct(cpuHealth) + '%';
+    ($('bar-ram') as HTMLElement).style.width = pct(ram / 16) + '%';
+    $('val-gpu').textContent = pct(gpuHealth) + '%';
+    $('val-cpu').textContent = pct(cpuHealth) + '%';
+    $('val-ram').textContent = pct(ram / 16) + '%';
+
+    let title = '', why = '';
+    const steps: string[] = [];
+    const vramFloor = res === '4k' ? 16 : res === '1440p' ? 12 : 8;
+
+    if (ram < 16) {
+      title = 'Add memory first';
+      why = `${ram} GB is under what most current games ask for. More memory is the cheapest change on this list and it smooths out stutter.`;
+      steps.push('Go to <b>16 GB</b> — or 32 GB if the budget stretches — as <b>two matching sticks</b>.');
+    } else if (cpuHealth < 0.9) {
+      title = 'Upgrade the processor';
+      why = `At ${resLabel} the ${cName} can’t keep your ${gName} fully used, so a faster card now would mostly wait on it.`;
+      const pick = data.cpus.filter(c => c.p >= needed).sort((a, b) => a.p - b.p)[0];
+      if (pick) steps.push(`A processor at the level of the ${link('cpu', pick)} or above keeps this card fed at ${resLabel}.`);
+      if (cores < 6) steps.push(`With <b>${cores} cores</b> you are under the six most new games are built around.`);
+      steps.push('Check the new chip fits your motherboard; a processor change often means a new board and memory too.');
+    } else if (gpuHealth < 0.95) {
+      title = 'Upgrade the graphics card';
+      why = `Your ${gName} is the part holding you back at ${resLabel}, and the ${cName} has room to feed something faster.`;
+      // Within the calculator's 10% "well matched" band, so the advice agrees with /bottleneck.
+      const fits = data.gpus.filter(g => g.p >= target.p * 0.95 && g.v >= vramFloor && cpuNeeded(g.p, res) * 0.9 <= cpuPerf).sort((a, b) => a.m - b.m || b.p - a.p);
+      const inBudget = fits.filter(g => g.m <= budget);
+      const pick = inBudget[0] ?? fits[0];
+      if (pick) {
+        steps.push(`Aim for ${target.n}-level performance or better at ${resLabel}. The lowest launch price among recent cards that get there and suit your processor: the ${link('gpu', pick)} ($${pick.m}).`);
+        if (!inBudget.length) steps.push(`That is more than your $${budget} budget. Within it, upscaling or a lower resolution gets you further than a small card upgrade.`);
+      } else {
+        steps.push(`No recent card at ${target.n} level suits your processor at ${resLabel}; plan the processor and card together.`);
+      }
+      if (vram < vramFloor) steps.push(`Your <b>${vram} GB</b> of video memory is tight for ${resLabel}; get at least ${vramFloor} GB on the next card.`);
+    } else {
+      title = `No upgrade needed for ${resLabel}`;
+      why = `Your ${gName} reaches the ${target.n} level we treat as comfortable at ${resLabel}, and the ${cName} keeps it fully used.`;
+      steps.push('For more, the next step is a higher resolution or refresh rate rather than a new part.');
+    }
+
+    if (storage === 'hdd') steps.push('Put your games on an <b>SSD</b>. Frame rate stays the same, but loading and open-world hitching improve a lot.');
+    if (ram >= 16 && ram < 32 && res !== '1080p') steps.push('<b>32 GB</b> is a sensible later step if you run a browser and voice chat while playing.');
+    steps.push('Test the part you plan to buy in the <a href="/bottleneck">bottleneck calculator</a> before ordering.');
+
+    $('v-title').textContent = title;
+    $('v-why').textContent = why;
+    $('steps').innerHTML = steps.map(x => `<li>${x}</li>`).join('');
+    ($('result') as HTMLElement).hidden = false;
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

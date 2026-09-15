@@ -1,0 +1,96 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { getGpus, getCpus } from '../lib/db';
+import { gameCounts } from '../lib/games';
+import { SITE_URL, CONTACT_EMAIL, SITE_NAME, SITE_NAME_SPACED } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+const counts = gameCounts();
+---
+<BaseLayout
+  title={`About ${SITE_NAME}: What the Site Does and How | ${SITE_NAME}`}
+  description={`${SITE_NAME} answers one question — will this game run on my PC? — using publishers' own requirements and an index of ${gpus.length} graphics cards and ${cpus.length} processors.`}
+  keywords={`about ${SITE_NAME.toLowerCase()}, ${SITE_NAME_SPACED.toLowerCase()}, can my pc run it site`}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": `About ${SITE_NAME}`,
+    "url": `${SITE_URL}/about`,
+    "mainEntity": { "@id": `${SITE_URL}/#organization` }
+  }}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'About' }]} />
+
+    <header class="head">
+      <span class="eyebrow">About</span>
+      <h1>{SITE_NAME_SPACED}, in short</h1>
+      <p class="lede">
+        The name is the question. Before buying a game — or a part to play it on — you want to know whether it will run,
+        and at what settings. This site answers that from the requirements publishers publish, not from guesswork.
+      </p>
+    </header>
+
+    <dl class="readouts">
+      <div><dt>Games</dt><dd class="mono">{counts.total}</dd></div>
+      <div><dt>Unreleased</dt><dd class="mono">{counts.upcoming}</dd></div>
+      <div><dt>Graphics cards</dt><dd class="mono">{gpus.length}</dd></div>
+      <div><dt>Processors</dt><dd class="mono">{cpus.length}</dd></div>
+    </dl>
+
+    <div class="prose">
+      <h2>Where the answers come from</h2>
+      <p>
+        <strong>Game requirements</strong> are the minimum and recommended specs each publisher lists on the game’s Steam page, kept
+        in their original wording. When a publisher leaves a line out or writes something vague, the site says “not stated”
+        instead of filling the gap.
+      </p>
+      <p>
+        <strong>Hardware</strong> sits on a performance index: every graphics card and processor has a score relative to the
+        fastest one we list, built from published gaming benchmark results. A requirement such as “GTX 1060” can then be placed
+        on the same scale as the card in your PC.
+      </p>
+      <p>
+        <strong>Frame rates</strong> are modelled, and labelled as such wherever they appear. They are good for comparing one
+        setup with another; they are not a recording of someone playing the game.
+      </p>
+
+      <h2>What we cover in {SEO_YEAR}</h2>
+      <p>
+        Released PC games with published requirements, plus announced games heading for release — {counts.upcomingWithReqs} of
+        which already have requirements out. New cards and processors are added as they launch.
+      </p>
+
+      <h2>What we don’t do</h2>
+      <ul>
+        <li>We don’t test hardware in-house, and we don’t review games.</li>
+        <li>We don’t sell placement. No maker or publisher pays for a score, a tier or a spot on a list.</li>
+        <li>We don’t ask you to sign up or install anything, and we don’t keep the specs you type into the tools.</li>
+      </ul>
+
+      <h2>Found a mistake?</h2>
+      <p>
+        Send the page address and what you believe is correct to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        How corrections are handled is set out in our <a href="/editorial-standards">editorial standards</a>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 18px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .readouts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 36px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); max-width: 760px; }
+  .readouts div { padding: 10px 14px; }
+  .readouts div + div { border-left: 1px solid var(--line); }
+  .readouts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .readouts dd { margin: 3px 0 0; font-size: 1.3rem; font-weight: 600; color: var(--readout); }
+  @media (max-width: 640px) {
+    .readouts { grid-template-columns: 1fr 1fr; }
+    .readouts div:nth-child(3) { border-left: 0; }
+    .readouts div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+</style>

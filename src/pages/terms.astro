@@ -1,0 +1,85 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL, SITE_NAME, SITE_DOMAIN, CONTACT_EMAIL } from '../lib/site';
+
+const updated = '2026-09-14';
+---
+<BaseLayout
+  title={`Terms of Use | ${SITE_NAME}`}
+  description={`The terms for using ${SITE_DOMAIN}: estimates are guidance rather than guarantees, how the data may and may not be reused, and the limits of our responsibility.`}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Terms of use",
+    "url": `${SITE_URL}/terms`,
+    "dateModified": updated
+  }}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Terms' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Terms · updated 14 September 2026</span>
+      <h1>Terms of use</h1>
+      <p class="lede">Using {SITE_DOMAIN} means accepting the terms below. They are written to be read, not skimmed past.</p>
+    </header>
+
+    <div class="prose">
+      <h2>The service</h2>
+      <p>
+        {SITE_NAME} is a free website that compares PC hardware with the requirements of PC games: requirement checks, frame-rate
+        estimates, pairing and upgrade suggestions, hardware rankings and power-supply sizing. It is offered for information.
+      </p>
+
+      <h2>Estimates are guidance</h2>
+      <p>
+        Frame rates, bottleneck gaps, resale values, wattages and similar outputs are produced by models from published
+        requirements and hardware data. Your real results depend on drivers, game updates, settings, cooling, memory
+        configuration and the individual parts in your PC. Please check independent reviews — and the seller’s return policy —
+        before spending money on the strength of a figure from this site.
+      </p>
+
+      <h2>Requirements can change</h2>
+      <p>
+        Publishers revise requirements, especially before release. We update our copy, but the store page remains the
+        authoritative version, and each game page links to it.
+      </p>
+
+      <h2>Using our content</h2>
+      <p>You are welcome to link to any page and to quote short parts with a link back. Without written permission you may not:</p>
+      <ul>
+        <li>copy the site, its tables or its dataset in bulk, by scraping or otherwise;</li>
+        <li>send traffic intended to overload or break the service, or try to access parts of it that aren’t public;</li>
+        <li>pass our estimates off as measured benchmark results.</li>
+      </ul>
+
+      <h2>Names and trademarks</h2>
+      <p>
+        Game titles, logos, and hardware brand and model names belong to their owners and are used only to identify the products.
+        {SITE_NAME} is not affiliated with or endorsed by any of them.
+      </p>
+
+      <h2>Links to other sites</h2>
+      <p>Pages link to store listings and sources elsewhere. Those sites are outside our control and have their own terms.</p>
+
+      <h2>No warranty; limited liability</h2>
+      <p>
+        The site is provided as it is and as available, without warranties of any kind. As far as the law allows, {SITE_NAME} is
+        not liable for losses arising from using it or relying on its output, including purchases made on that basis.
+      </p>
+
+      <h2>Changes</h2>
+      <p>These terms may be revised; the date at the top shows the latest version. Continuing to use the site after a change means you accept it.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about these terms: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 18px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+</style>

@@ -1,0 +1,209 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Autocomplete from '../components/Autocomplete.astro';
+import Icon from '../components/Icon.astro';
+import { SITE_URL, SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+const PATH = '/fps-estimator';
+
+const RES_OPTIONS = [
+  { label: '1080p (1920 × 1080)', value: '1080p' },
+  { label: '1440p (2560 × 1440)', value: '1440p' },
+  { label: '4K (3840 × 2160)', value: '4k' }
+];
+const PRESET_OPTIONS = [
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'High', value: 'high' },
+  { label: 'Ultra', value: 'ultra' }
+];
+
+const faq = [
+  {
+    q: 'Where does the number come from?',
+    a: 'From the game’s own recommended spec. We treat a PC that exactly matches it as running at 60 FPS at 1080p on high, then scale up or down by how much faster or slower your graphics card and processor are, and by the resolution and preset you choose.'
+  },
+  {
+    q: 'How close to my real frame rate will it be?',
+    a: 'Close enough to tell 40 FPS from 90, not close enough to promise 73. Driver versions, patches, background apps, memory speed and the scene you are in all move a real reading.'
+  },
+  {
+    q: 'Why is my frame rate the same at 1080p and 1440p?',
+    a: 'Because the processor is the limit in that game. Resolution loads the graphics card, not the processor, so once the processor is maxed out a lower resolution adds nothing.'
+  },
+  {
+    q: 'Does it include DLSS or FSR?',
+    a: 'No — every figure is native resolution. Turning on an upscaler in Quality mode generally lands you a good step above what is shown.'
+  }
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `FPS Calculator (${SEO_YEAR})`,
+    "url": `${SITE_URL}${PATH}`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "description": 'Estimates the average frame rate of a graphics card and processor in a chosen PC game, resolution and preset.',
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+  }
+];
+---
+<BaseLayout
+  title={`FPS Calculator ${SEO_YEAR}: How Many FPS Will I Get? | ${SITE_NAME}`}
+  description="How many FPS will you get? Choose a game, your graphics card and processor, a resolution and preset, and get a modelled average frame rate at 1080p, 1440p and 4K."
+  keywords={`fps calculator, how many fps will i get, fps estimator, frame rate calculator ${SEO_YEAR}, game fps checker`}
+  jsonLd={schema}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Tools', href: '/tools' }, { name: 'FPS Calculator' }]} />
+
+    <header class="head">
+      <span class="eyebrow">Frame-rate model</span>
+      <h1>FPS Calculator</h1>
+      <p class="lede">
+        How many FPS will you get? This works from each game’s published recommended spec rather than one curve for every game,
+        so a heavy release and a light indie game give very different answers on the same card.
+      </p>
+    </header>
+
+    <section class="tool">
+      <form class="panel" id="fps-form" novalidate>
+        <Autocomplete id="game" label="Game" placeholder="Which game?" endpoint="/api/games/search" hint="Missing? Keep typing and Steam is searched too." required />
+        <Autocomplete id="gpu" label="Graphics card" placeholder="Your card, e.g. RTX 4060 Ti" endpoint="/api/gpus/search" required />
+        <Autocomplete id="cpu" label="Processor" placeholder="Your chip, e.g. Ryzen 7 5700X3D" endpoint="/api/cpus/search" hint="Leave empty to see the graphics card alone." />
+        <Autocomplete id="res" label="Resolution" placeholder="Pick a resolution" endpoint="" options={RES_OPTIONS} value="1080p (1920 × 1080)" required />
+        <Autocomplete id="preset" label="Quality preset" placeholder="Pick a preset" endpoint="" options={PRESET_OPTIONS} value="High" required />
+        <button type="submit" class="btn btn-primary submit">Show my frame rate &rarr;</button>
+        <p class="err" id="fps-err" role="alert" hidden></p>
+      </form>
+
+      <div class="results" id="fps-results" aria-live="polite">
+        <div class="placeholder">
+          <Icon name="speedometer2" />
+          <h2>Your estimate appears here</h2>
+          <p>All three resolutions are shown side by side.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div><h2>01 · Anchor</h2><p>The publisher’s recommended spec counts as 60 FPS at 1080p on high.</p></div>
+      <div><h2>02 · Scale</h2><p>Your graphics card’s index against that spec moves the number up or down.</p></div>
+      <div><h2>03 · Cap</h2><p>Your processor sets a ceiling the card can’t pass, whatever the resolution.</p></div>
+    </section>
+
+    <section class="faq">
+      <h2>Frame-rate questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <nav class="related" aria-label="Next steps">
+      <h2>Keep going</h2>
+      <ul>
+        <li><a href="/benchmarks">Compare cards in the heaviest games</a></li>
+        <li><a href="/bottleneck">Find out if your processor caps you</a></li>
+        <li><a href="/dlss-fsr">What upscaling renders at</a></li>
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .head { padding: 28px 0 22px; }
+  .head h1 { font-size: clamp(30px, 5vw, 44px); margin: 6px 0 12px; }
+  .explain { margin: 0 0 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .explain > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .explain h2 { font-size: 15px; margin-bottom: 6px; color: var(--readout); font-family: var(--font-mono); letter-spacing: .02em; }
+  .explain p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  .tool { display: grid; grid-template-columns: minmax(290px, 370px) 1fr; gap: 24px; align-items: start; margin-bottom: 52px; }
+  @media (max-width: 900px) { .tool { grid-template-columns: 1fr; } }
+  .panel { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 22px; display: grid; gap: 16px; }
+  .submit { width: 100%; margin-top: 4px; }
+  .err { color: var(--bad); font-size: 13.5px; margin: 0; }
+
+  .results { min-height: 300px; }
+  .placeholder {
+    min-height: 300px; display: grid; place-content: center; justify-items: center; gap: 10px;
+    text-align: center; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 40px 24px;
+  }
+  .placeholder :global(.icon) { font-size: 38px; color: var(--faint); }
+  .placeholder h2 { font-size: 18px; margin: 0; }
+  .placeholder p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  :global(.fps-card) { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 26px; }
+  :global(.fps-hero) { text-align: center; margin-bottom: 24px; }
+  :global(.fps-big) { font-family: var(--font-display); font-size: clamp(46px, 10vw, 72px); font-weight: 700; line-height: 1; color: var(--accent); }
+  :global(.fps-big small) { font-size: 18px; color: var(--faint); font-weight: 500; margin-left: 6px; }
+  :global(.fps-band) { color: var(--muted); font-size: 14px; margin: 8px 0 0; }
+  :global(.fps-ctx) { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+  :global(.fps-ctx b) { color: var(--text); }
+  :global(.fps-limit) {
+    display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 3px; background: var(--surface-3); color: var(--muted);
+  }
+  :global(.fps-note) { color: var(--faint); font-size: 12.5px; line-height: 1.6; margin-top: 16px; }
+  :global(.fps-note a) { color: var(--accent); }
+</style>
+
+<script>
+  const form = document.getElementById('fps-form') as HTMLFormElement;
+  const out = document.getElementById('fps-results')!;
+  const err = document.getElementById('fps-err') as HTMLElement;
+
+  const val = (id: string) => (document.getElementById(`${id}-value`) as HTMLInputElement)?.value?.trim() || '';
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    err.hidden = true;
+
+    const game = val('game'), gpu = val('gpu'), cpu = val('cpu');
+    const resolution = val('res') || '1080p';
+    const preset = val('preset') || 'high';
+
+    if (!game) { err.textContent = 'Pick a game from the suggestions.'; err.hidden = false; return; }
+    if (!gpu) { err.textContent = 'Pick your graphics card from the suggestions.'; err.hidden = false; return; }
+
+    const r = await fetch('/api/tools/fps-estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ game, gpu, cpu, resolution, preset })
+    });
+    const d = await r.json();
+    if (!r.ok) { err.textContent = d.error || 'Could not estimate that.'; err.hidden = false; return; }
+
+    const rows = d.table.map((t: any) => `
+      <tr${t.current ? ' style="color:var(--accent)"' : ''}>
+        <td>${esc(t.resolution)}</td>
+        <td>${t.low}–${t.high}</td>
+        <td><b>${t.fps}</b></td>
+      </tr>`).join('');
+
+    out.innerHTML = `
+      <div class="fps-card">
+        <div class="fps-hero">
+          <div class="fps-big">${d.fps}<small>FPS</small></div>
+          <p class="fps-band">Likely range ${d.low}–${d.high} FPS</p>
+          <p class="fps-ctx"><b>${esc(d.game.name)}</b> · ${esc(d.resolution)} · ${esc(d.preset)} preset</p>
+          <span class="fps-limit">${esc(d.limitedBy)}</span>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Resolution</th><th>Range</th><th>Estimate</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <p class="fps-note">${d.note}</p>
+      </div>`;
+  });
+</script>

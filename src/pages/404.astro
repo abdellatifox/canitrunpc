@@ -1,0 +1,53 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { TOOLS } from '../lib/site-data';
+import { SITE_NAME } from '../lib/site';
+import { SEO_YEAR } from '../lib/year';
+
+const shortcuts = ['/can-it-run', '/what-can-my-pc-run', '/fps-estimator', '/gpu-tier-list']
+  .map(h => TOOLS.find(t => t.href === h))
+  .filter(Boolean) as typeof TOOLS;
+---
+<BaseLayout
+  title={`Not Found | ${SITE_NAME}`}
+  description="This address doesn't lead anywhere on the site. Search for a game or pick up from one of the main tools."
+  noindex={true}
+>
+  <div class="wrap nf">
+    <p class="code mono" aria-hidden="true">ERR · 404</p>
+    <h1>Nothing at this address</h1>
+    <p class="lede">
+      It may be an old link, or a game or part that has since been renamed. Try searching for the game, or carry on from one
+      of these.
+    </p>
+
+    <form class="find" method="get" action="/games" role="search">
+      <Icon name="search" />
+      <input type="search" name="q" placeholder="Game title" aria-label="Find a game" autocomplete="off">
+      <button type="submit" class="btn btn-primary btn-sm">Find</button>
+    </form>
+
+    <ul class="go">
+      {shortcuts.map(t => (
+        <li><a href={t.href}><Icon name={t.icon} /> <span>{t.name}</span></a></li>
+      ))}
+      <li><a href={`/upcoming-games-${SEO_YEAR}`}><Icon name="stars" /> <span>{SEO_YEAR} releases</span></a></li>
+      <li><a href="/"><Icon name="arrow-right" /> <span>Home page</span></a></li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .nf { padding: 64px 0 72px; max-width: 720px; }
+  .code { color: var(--readout); font-size: 14px; letter-spacing: .12em; }
+  .nf h1 { font-size: clamp(30px, 5vw, 44px); margin: 8px 0 12px; }
+  .find { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 8px 12px; margin: 24px 0 18px; }
+  .find :global(.icon) { color: var(--muted); }
+  .find input { flex: 1; background: none; border: 0; color: var(--text); font: inherit; outline: none; min-width: 0; min-height: 40px; }
+  .go { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+  .go a { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); min-height: 48px; }
+  .go a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .go :global(.icon) { color: var(--accent); }
+</style>

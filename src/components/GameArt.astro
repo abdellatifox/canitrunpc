@@ -1,0 +1,60 @@
+---
+/**
+ * Renders a game's cover or logo as a <picture> with an AVIF/WebP ladder.
+ *
+ * The local files are produced by scripts/build-art.mjs. When a game has none
+ * yet, this degrades to a plain <img> against the original SteamGridDB URL, so
+ * partial coverage never shows a hole.
+ */
+import { getArtSources, type GameArt } from '../lib/images';
+
+interface Props {
+  slug: string;
+  art: GameArt;
+  /** Layout width hint, e.g. "(max-width: 640px) 45vw, 220px". */
+  sizes?: string;
+  /** Skip lazy-loading for anything above the fold. */
+  eager?: boolean;
+  className?: string;
+}
+
+const { slug, art, sizes = '(max-width: 640px) 45vw, 240px', eager = false, className = '' } = Astro.props;
+
+const remote = art.kind === 'cover' ? art.src : art.kind === 'logo' ? art.src : '';
+const sources = remote ? getArtSources(slug, remote, sizes) : null;
+
+const loading = eager ? 'eager' : 'lazy';
+const fetchpriority = eager ? 'high' : 'auto';
+// Covers are cropped to the 2:3 card; logos keep their own shape.
+const w = art.kind === 'cover' ? 320 : 320;
+const h = art.kind === 'cover' ? 480 : 180;
+---
+{art.kind === 'none' ? (
+  <span class={`art-initials ${className}`} aria-hidden="true">{art.initials}</span>
+) : sources ? (
+  <picture>
+    <source type="image/avif" srcset={sources.avif} sizes={sources.sizes} />
+    <source type="image/webp" srcset={sources.webp} sizes={sources.sizes} />
+    <img
+      src={sources.src}
+      alt={art.alt}
+      class={className}
+      width={w}
+      height={h}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      decoding="async"
+    />
+  </picture>
+) : (
+  <img
+    src={remote}
+    alt={art.alt}
+    class={className}
+    width={w}
+    height={h}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+  />
+)}

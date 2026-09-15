@@ -1,0 +1,256 @@
+---
+export const prerender = false;
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import GameArt from '../../../components/GameArt.astro';
+import { getGame, getGpu, getGpus, getCpus } from '../../../lib/db';
+import { getGameArt, getGameOgImage } from '../../../lib/images';
+import { estimateFps, PRESET_FACTOR } from '../../../lib/perf';
+import { SITE_NAME } from '../../../lib/site';
+import { SEO_YEAR } from '../../../lib/year';
+import { fitTitle, fitMeta } from '../../../lib/seo';
+
+const { game: gameSlug, gpu: gpuSlug } = Astro.params;
+const [game, gpu] = await Promise.all([getGame(Astro.locals, gameSlug!), getGpu(Astro.locals, gpuSlug!)]);
+
+// An unknown game or card is a real 404, never an invented pairing.
+if (!game || !gpu) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const [gpus, cpus] = await Promise.all([getGpus(Astro.locals), getCpus(Astro.locals)]);
+const art = getGameArt(game.slug, game.name);
+const ogImage = getGameOgImage(game.slug);
+
+/* Everything below needs both graphics requirements to be placeable. Missing
+   ones must never be compared: in JavaScript `27 >= null` is true, which is how
+   a card used to "meet" requirements that were never published. */
+const measurable = game.min_gpu_score != null && game.rec_gpu_score != null;
+const vramOk = (need: number | null) => need == null || gpu.vram_gb >= need;
+const atMin = measurable && gpu.score >= game.min_gpu_score! && vramOk(game.min_vram_gb);
+const atRec = measurable && gpu.score >= game.rec_gpu_score! && vramOk(game.rec_vram_gb);
+const margin = measurable ? Math.round((gpu.score / Math.max(1, game.rec_gpu_score!) - 1) * 100) : null;
+
+// A processor that clears the game's own recommendation, so the result is about the card.
+const refCpu = (game.rec_cpu_score != null ? [...cpus].reverse().find(c => c.score >= game.rec_cpu_score!) : null) ?? cpus[0];
+
+const CAP = 300;
+const show = (n: number) => (n >= CAP ? `${CAP}+` : String(n));
+const RES = [['1080p', '1080p'], ['1440p', '1440p'], ['4k', '4K']] as const;
+const fps = measurable ? RES.map(([r]) => estimateFps(game, gpu.score, refCpu.score, r, 'high')) : null;
+
+// The richest preset that still averages 60 at each resolution, or none at all.
+const ORDER = ['ultra', 'high', 'medium', 'low'] as const;
+const presetFor = (atHigh: number) =>
+  ORDER.find(p => atHigh * (PRESET_FACTOR[p] / PRESET_FACTOR.high) >= 60) ?? null;
+
+const tone = !measurable ? 'none' : !atMin ? 'bad' : !atRec ? 'warn' : 'ok';
+const headline = !measurable
+  ? 'Can’t be judged yet'
+  : !atMin ? 'No — under the minimum'
+  : !atRec ? 'Yes, below recommended'
+  : margin! >= 35 ? 'Yes, with room to spare' : 'Yes, at the recommended spec';
+
+const vramNote = (need: number | null, label: string) =>
+  need != null && gpu.vram_gb < need ? ` Its ${gpu.vram_gb} GB of video memory is under the ${need} GB the ${label} spec lists.` : '';
+
+const answer = !measurable
+  ? `${game.name}'s publisher hasn't named a graphics card we can place${game.upcoming ? ' yet — the game is not out' : ''}, so there is no fair way to say how the ${gpu.name} will do.`
+  : !atMin
+    ? `No. The ${gpu.name} doesn't reach the minimum graphics requirement for ${game.name}.${vramNote(game.min_vram_gb, 'minimum')} It may not start, or run far below a playable frame rate.`
+    : !atRec
+      ? (gpu.score >= game.rec_gpu_score!
+          ? `Yes, though the ${gpu.name} is fast enough for ${game.name}'s recommended card but has ${gpu.vram_gb} GB of video memory against the ${game.rec_vram_gb} GB listed. Expect about ${show(fps![0])} FPS at 1080p on high, with textures turned down a step.`
+          : `Yes, below the recommended spec: the ${gpu.name} clears ${game.name}'s minimum but not its recommended card. Expect about ${show(fps![0])} FPS at 1080p on high; ${presetFor(fps![0]) ? `the ${presetFor(fps![0])} preset should hold 60` : 'reaching 60 needs lower settings than low, or upscaling'}.${vramNote(game.rec_vram_gb, 'recommended')}`)
+      : `Yes. The ${gpu.name} ${margin! > 0 ? `is ${margin}% above` : 'matches'} the card ${game.name} recommends: about ${show(fps![0])} FPS at 1080p and ${show(fps![1])} at 1440p on high.`;
+
+// The nearest cards either side, for onward matchups.
+const idx = gpus.findIndex(g => g.slug === gpu.slug);
+const nearby = gpus.filter((g, i) => i !== idx && Math.abs(i - idx) <= 3 && !/laptop/i.test(g.name) === !/laptop/i.test(gpu.name));
+
+// The cheapest recent desktop card that reaches the recommended spec.
+const latest = Math.max(...gpus.map(g => g.release_year));
+const entryCard = measurable
+  ? gpus.filter(g => !/laptop/i.test(g.name) && g.msrp_usd && g.release_year >= latest - 4 && g.score >= game.rec_gpu_score! && (game.rec_vram_gb == null || g.vram_gb >= game.rec_vram_gb))
+      .sort((a, b) => a.msrp_usd! - b.msrp_usd!)[0] ?? null
+  : null;
+
+const title = fitTitle(`Can the ${gpu.name} Run ${game.name}?`, [` (${SEO_YEAR})`, ''], ` | ${SITE_NAME}`);
+const description = fitMeta([answer]);
+
+const faq = [
+  { q: `Can the ${gpu.name} run ${game.name}?`, a: answer },
+  ...(fps ? [{
+    q: `How many FPS does the ${gpu.name} get in ${game.name}?`,
+    a: `Modelled on high settings without upscaling: ${show(fps[0])} FPS at 1080p, ${show(fps[1])} at 1440p and ${show(fps[2])} at 4K, with a processor that meets the game's recommendation.`
+  }] : []),
+  ...(entryCard && !atRec ? [{
+    q: `Which card would run ${game.name} at the recommended spec?`,
+    a: `The lowest launch price among recent cards that meet it belongs to the ${entryCard.name} ($${entryCard.msrp_usd}).`
+  }] : []),
+  {
+    q: 'Does my processor change this?',
+    a: game.cpu_intensive === 1
+      ? `Yes, more than usual: ${game.name} leans on the processor, so an older chip can pull these numbers down. Check the pairing in the bottleneck calculator.`
+      : `The figures assume a processor at or above ${game.name}'s recommendation. A slower one lowers the ceiling, most noticeably at 1080p.`
+  }
+];
+
+const schema = [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faq.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+}];
+---
+<BaseLayout title={title} description={description} jsonLd={schema} ogImage={ogImage}
+  keywords={`can ${gpu.name} run ${game.name}, ${game.name} ${gpu.name} fps, ${game.name} on ${gpu.name}`}>
+  <div class="wrap">
+    <Breadcrumbs items={[{ name: 'Games', href: '/games' }, { name: game.name, href: `/game/${game.slug}` }, { name: gpu.name }]} />
+
+    <header class="mh">
+      <div class="art" data-kind={art.kind} style={art.kind !== 'cover' ? `--hue:${art.hue}` : undefined}>
+        <GameArt slug={game.slug} art={art} eager={true} sizes="(max-width: 720px) 120px, 200px"
+          className={art.kind === 'logo' ? 'logo' : art.kind === 'none' ? 'initials' : ''} />
+      </div>
+      <div class="mh-body">
+        <span class="eyebrow">Matchup{game.upcoming ? ` · unreleased, due ${game.release_date ?? 'TBA'}` : ''}</span>
+        <h1>Can the {gpu.name} run {game.name}?</h1>
+        <p class={`stamp ${tone}`}>{headline}</p>
+        <p class="answer">{answer}</p>
+      </div>
+    </header>
+
+    {fps && (
+      <section class="block">
+        <h2>Frame rate by resolution</h2>
+        <ul class="res">
+          {RES.map(([, label], k) => {
+            const p = presetFor(fps[k]);
+            return (
+              <li class={fps[k] >= 60 ? 'ok' : fps[k] >= 30 ? 'warn' : 'bad'}>
+                <span class="rl mono">{label}</span>
+                <b class="mono">{show(fps[k])}</b>
+                <small>FPS on high</small>
+                <span class="tip">{p ? `60 FPS on ${p}` : '60 FPS out of reach'}</span>
+              </li>
+            );
+          })}
+        </ul>
+        <p class="fine">Modelled at native resolution, paired with the {refCpu.name} or a faster processor. <a href="/editorial-standards">How the model works</a>.</p>
+      </section>
+    )}
+
+    <section class="block">
+      <h2>Next to the publisher’s spec</h2>
+      <div class="spec">
+        {[
+          { tier: 'Minimum', text: game.min_gpu_text, score: game.min_gpu_score, vram: game.min_vram_gb, ok: atMin },
+          { tier: 'Recommended', text: game.rec_gpu_text, score: game.rec_gpu_score, vram: game.rec_vram_gb, ok: atRec }
+        ].map(t => (
+          <div class="tier">
+            <h3>{t.tier}</h3>
+            <p class="quote">{t.text ?? 'Publisher didn’t say'}</p>
+            <dl>
+              <div><dt>Index</dt><dd class="mono">{t.score ?? '—'}</dd></div>
+              <div><dt>Video memory</dt><dd class="mono">{t.vram != null ? `${t.vram} GB` : 'not stated'}</dd></div>
+            </dl>
+            <span class={`chip ${t.score == null ? 'none' : t.ok ? 'ok' : 'bad'}`}>
+              {t.score == null ? 'Nothing to compare' : t.ok ? `${gpu.name} clears it` : `${gpu.name} falls short`}
+            </span>
+          </div>
+        ))}
+        <div class="tier yours">
+          <h3>Your card</h3>
+          <p class="quote">{gpu.name}</p>
+          <dl>
+            <div><dt>Index</dt><dd class="mono">{gpu.score}</dd></div>
+            <div><dt>Video memory</dt><dd class="mono">{gpu.vram_gb} GB</dd></div>
+          </dl>
+          <span class="chip info">{[gpu.supports_dlss && 'DLSS', gpu.supports_fsr && 'FSR', gpu.supports_xess && 'XeSS'].filter(Boolean).join(' · ') || 'No upscaler'}</span>
+        </div>
+      </div>
+      {game.supports_ray_tracing === 1 && (
+        <p class="fine">{game.name} has {(game.ray_tracing_intensity ?? 'medium').toLowerCase()} ray tracing{gpu.supports_ray_tracing ? `, which the ${gpu.name} can run — at a cost to the figures above.` : `; the ${gpu.name} has no ray-tracing hardware.`}</p>
+      )}
+    </section>
+
+    {nearby.length > 0 && (
+      <section class="block">
+        <h2>Same game, neighbouring cards</h2>
+        <ul class="near">
+          {nearby.map(g => {
+            const f = measurable ? estimateFps(game, g.score, refCpu.score, '1080p', 'high') : null;
+            return (
+              <li>
+                <a href={`/can-it-run/${game.slug}/${g.slug}`}>
+                  <span class="nn">{g.name}</span>
+                  <span class="mono nf">{f != null ? `${show(f)} FPS` : `index ${g.score}`}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    )}
+
+    <section class="faq">
+      <h2>{gpu.name} and {game.name}: questions</h2>
+      {faq.map(f => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <div class="cta-row">
+      <a href={`/can-it-run?game=${game.slug}`} class="btn btn-primary">Check with your whole PC</a>
+      <a href={`/game/${game.slug}`} class="btn btn-ghost">All {game.name} requirements</a>
+      <a href={`/gpu/${gpu.slug}`} class="btn btn-ghost">More on the {gpu.name}</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .mh { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 24px; align-items: center; padding: 26px 0 30px; border-bottom: 1px dashed var(--line-strong); margin-bottom: 36px; }
+  .art { aspect-ratio: 2 / 3; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: grid; place-items: center; }
+  .art :global(img) { width: 100%; height: 100%; object-fit: contain; padding: 12px; }
+  .mh h1 { font-size: clamp(26px, 4.2vw, 40px); margin: 6px 0 12px; }
+  .stamp { display: inline-block; font-weight: 700; padding: 6px 12px; border: 1px solid; border-radius: 3px; font-size: 15px; margin-bottom: 10px; }
+  .stamp.ok { color: var(--ok); background: rgb(var(--ok-rgb) / .08); }
+  .stamp.warn { color: var(--warn); background: rgb(var(--warn-rgb) / .08); }
+  .stamp.bad { color: var(--bad); background: rgb(var(--bad-rgb) / .08); }
+  .stamp.none { color: var(--muted); }
+  .answer { color: var(--muted); line-height: 1.7; max-width: 66ch; }
+
+  .block { margin-bottom: 42px; }
+  .block > h2 { font-size: 21px; margin-bottom: 14px; }
+  .fine { color: var(--faint); font-size: 13px; margin-top: 10px; }
+  .fine a { color: var(--accent); }
+
+  .res { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .res li { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--c); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; flex-direction: column; }
+  .res li.ok { --c: var(--ok); } .res li.warn { --c: var(--warn); } .res li.bad { --c: var(--bad); }
+  .rl { color: var(--faint); font-size: 12px; }
+  .res b { font-size: 34px; color: var(--c); line-height: 1.1; margin-top: 4px; }
+  .res small { color: var(--muted); font-size: 12px; }
+  .tip { margin-top: 8px; font-size: 13px; color: var(--text); }
+
+  .spec { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .tier { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .tier.yours { border-color: rgb(var(--accent-rgb) / .5); }
+  .tier h3 { font-size: 12px; font-family: var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+  .quote { font-size: 14px; overflow-wrap: anywhere; flex: 1; }
+  .tier dl { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0; }
+  .tier dt { font-size: 11px; color: var(--faint); }
+  .tier dd { margin: 0; color: var(--readout); }
+  .chip { align-self: flex-start; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 3px; }
+  .chip.ok { background: rgb(var(--ok-rgb) / .12); color: var(--ok); }
+  .chip.bad { background: rgb(var(--bad-rgb) / .12); color: var(--bad); }
+  .chip.none, .chip.info { background: var(--surface-2); color: var(--muted); }
+
+  .near { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; }
+  .near a { display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; }
+  .near a:hover { border-color: rgb(var(--accent-rgb) / .55); }
+  .nf { color: var(--readout); white-space: nowrap; }
+
+  @media (max-width: 760px) {
+    .mh { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; }
+    .res, .spec { grid-template-columns: 1fr; }
+  }
+</style>
