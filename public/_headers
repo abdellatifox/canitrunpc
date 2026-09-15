@@ -1,3 +1,12 @@
+# The pages.dev hostnames serve the same pages as canitrunpc.com. Keep them out
+# of search results so Google never indexes a duplicate of the real site (the
+# production *.pages.dev address and every per-deploy preview address).
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
 # HTTPS only, for a year. No includeSubDomains or preload: those commit every
 # future subdomain to HTTPS and are hard to undo.
 # X-Frame-Options: nothing here needs to be framed by another site (clickjacking).
