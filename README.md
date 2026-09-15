@@ -15,9 +15,15 @@ light "spec sheet" design and its own original articles.
 
 ## Deploy
 
-Not deployed yet. `wrangler.toml` holds `REPLACE_WITH_*` placeholders on
-purpose — see the comment at its top before creating anything. Once a
-Cloudflare Pages project is connected to this repo, pushing to `main` deploys.
+Push to `main`. Cloudflare Pages builds and deploys it (project `canitrunpc`,
+Git-connected to the private repo github.com/abdellatifox/canitrunpc, on the
+Abdellatifsite1 account). There is no manual deploy step. Until the domain is
+bought the site lives at https://canitrunpc.pages.dev, which sends
+`X-Robots-Tag: noindex` so search engines wait for canitrunpc.com.
+
+Everything else on Cloudflare goes through `npm run cf -- <wrangler args>`,
+which reads `.cloudflare/token.txt` and `.cloudflare/account.txt` (both
+git-ignored).
 
 Anything else on Cloudflare goes through `npm run cf -- <wrangler args>`, which
 reads the API token from `.cloudflare/token.txt` (git-ignored) so it can never
@@ -112,8 +118,8 @@ Domain, brand, contact address and fetcher User-Agent live only in
 | 01 Domain | canitrunpc.com chosen by the owner 2026-09-15 (RDAP free, no Wayback history), **not bought yet** |
 | 02 Keywords | done — Semrush US, PLAN.md |
 | 2027 coverage | 54 unreleased titles tracked, 21 with published requirements |
-| 04 Repo | local only (git init, no remote) |
-| 05 Cloudflare | not started — wrangler.toml ids are placeholders |
+| 04 Repo | github.com/abdellatifox/canitrunpc (private), push to main deploys |
+| 05 Cloudflare | done 2026-09-15: Pages (Git-connected), D1 canitrunpc-db, KV tools + session; custom domain waits on the purchase |
 | 07 Design | done — light spec-sheet tokens, new homepage copy; tool-page copy still RunsOnMyPC wording |
 | 08 Brand assets | done — brand/icon.svg, brand/logo.svg, logo-on-dark.svg; favicons, covers and 477 game share cards rebuilt |
 | Content | batch 1: 9 original articles (PLAN.md §1) |
