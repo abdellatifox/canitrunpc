@@ -6,8 +6,9 @@
  * which iOS does not support and silently ignores.
  *
  * Masters:
- *   brand/icon.png  square gauge-and-tick mark (rendered from brand/icon.svg), transparent
- *   brand/logo.png  full CanItRunPC wordmark lockup (rendered from brand/logo.svg), transparent
+ *   brand/icon.png  square C-and-tick mark, transparent (trimmed from brand/source-favicon.png)
+ *   brand/logo.png  full canitrun PC lockup, transparent (trimmed from brand/source-logo.png)
+ *   brand/logo-on-dark.png  the same lockup with a cream wordmark, for dark share cards
  *
  * Run: node scripts/build-brand.mjs
  */

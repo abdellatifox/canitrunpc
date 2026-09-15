@@ -49,7 +49,7 @@ const ground = Buffer.from(
 
 /* Brand lockup bottom-left. Game logos are almost all white, so the card
    ground is dark ink and the lockup is the light variant
-   (brand/logo-on-dark.svg), small enough to stay out of the artwork's way. */
+   (brand/logo-on-dark.png), small enough to stay out of the artwork's way. */
 const wordmark = await sharp(path.join(ROOT, 'brand', 'logo-on-dark.png'))
   .trim({ threshold: 1 })
   .resize({ height: 52 })

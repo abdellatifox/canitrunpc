@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <rect x="32" y="32" width="960" height="960" rx="210" fill="#16181D"/>
-  <!-- speed gauge: grey track, orange sweep -->
-  <path d="M232 660 A300 300 0 1 1 792 660" fill="none" stroke="#3A3E48" stroke-width="84" stroke-linecap="round"/>
-  <path d="M232 660 A300 300 0 0 1 648 284" fill="none" stroke="#FF6A2B" stroke-width="84" stroke-linecap="round"/>
-  <!-- tick: it runs -->
-  <path d="M370 540 L470 640 L672 420" fill="none" stroke="#FFFFFF" stroke-width="92" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="332" y="780" width="360" height="64" rx="32" fill="#FF6A2B"/>
-</svg>
